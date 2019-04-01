@@ -3,6 +3,7 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -38,6 +39,7 @@ INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`) VAL
 (26,	1,	'Planètes Laser',	'Laser game : Gilet électronique et pistolet laser comme matériel, vous voilà équipé.',	'laser.jpg',	'',	15.00),
 (27,	1,	'Fort Aventure',	'Découvrez Fort Aventure à Bainville-sur-Madon, un site Accropierre unique en Lorraine ! Des Parcours Acrobatiques pour petits et grands, Jeu Mission Aventure, Crypte de Crapahute, Tyrolienne, Saut à l\'élastique inversé, Toboggan géant... et bien plus encore.',	'fort.jpg',	'',	25.00);
 
+
 DROP TABLE IF EXISTS `liste`;
 CREATE TABLE `liste` (
   `no` int(11) NOT NULL AUTO_INCREMENT,
@@ -53,3 +55,18 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 (1,	1,	'Pour fêter le bac !',	'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	'2018-06-27',	'nosecure1'),
 (2,	2,	'Liste de mariage d\'Alice et Bob',	'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	'2018-06-30',	'nosecure2'),
 (3,	3,	'C\'est l\'anniversaire de Charlie',	'Pour lui préparer une fête dont il se souviendra :)',	'2017-12-12',	'nosecure3');
+
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `user` (`username`, `password`, `token`) VALUES
+('root',	'',	'2jhxjzbddcw088cs00480ko8wocoscocog4kkc4w8448w44kw8'),
+('vanille',	'chocolat',	'63yeltu5z24go8wsw84c0cg040oswsk084wg8kk4s4gggwg8s8');

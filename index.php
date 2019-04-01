@@ -2,19 +2,38 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Illuminate\Database\Capsule\Manager as DB;
-use wishlist\modele\Item;
-use wishlist\modele\Liste;
+//use Illuminate\Database\Capsule\Manager as DB;
 use wishlist\conf\ConnectionFactory as CF;
 
-use wishlist\fonction\DetailsItem as DI;
+use wishlist\modele\Item;
+use wishlist\modele\Liste;
+use wishlist\modele\User;
+
+use wishlist\fonction\FctnItem as FI;
+use wishlist\fonction\Identification as LOG;
+
 
 // db connection
 $cf = new CF();
 $cf->setConfig('src/conf/conf.ini');
 $db = $cf->makeConnection();
 
+
+// connection utilisateur
+$connected = LOG::IdentificationCookie();
+if (!$connected) LOG::FormulaireConnection();
+echo '<br/>';
+
 $app = new \Slim\Slim();
+
+$app->post('/connection', function(){
+  if (isset($_POST['signin']))
+    LOG::Connection($_POST['username'], $_POST['password']);
+  else if (isset($_POST['signup']))
+    LOG::Inscription($_POST['username'], $_POST['password']);
+});
+
+
 $app->get('/liste', function ()
 {
           $lists=Liste::get();
@@ -40,15 +59,14 @@ $app->get('/liste', function ()
           }
 });
 
+// Affiche les details d'un item
 $app->get('/details/:id', function ($id){
-  DI::displayDetails($id);
+  FI::displayDetails($id);
 });
 
+// si url vide
 $app->get('/', function (){
   echo '/liste -> affiche les listes';
-}); // si url vide
+});
 
-/* enter code here if you want to use slim (and uncomment next line) */
 $app->run();
-
-/* or here if you don't want to use it... */
