@@ -21,6 +21,7 @@ $app->get('/liste', function ()
           echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre1
           foreach ($lists as $key => $value)
           {
+
             echo "<h2></br>No : " . $value->no .
                 "<br/>Titre : " . $value->titre .
                 "<br/></h2>";
@@ -31,12 +32,16 @@ $app->get('/liste', function ()
             {
                 echo "<li>Item id : " . $item->id .
                     "<br/>Nom de l'objet : ". $item->nom .
-                    "<br/><a href=DetailsItem?id=". $item->id .">Details</a><br/>
+                    "<br/><a href=details/". $item->id .">Details</a><br/>
                     </li>";
             }
             echo "</ul>"; // HTML CODE fin liste
 
           }
+});
+
+$app->get('/details/:id', function ($id){
+  DI::displayDetails($id);
 });
 
 $app->get('/', function (){
