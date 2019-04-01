@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
-    
+
 use Illuminate\Database\Capsule\Manager as DB;
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
@@ -17,16 +17,19 @@ $app = new \Slim\Slim();
 $app->get('/liste', function ()
 {
           $lists=Liste::get();
-          $list=Liste::first();
-          $itemlist=$list->item;
-          echo "<h1>Liste de souhait</h1>";
+          echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre1
           foreach ($lists as $key => $value)
           {
-            echo "</br>No : " . $lists[$key]->no . "<br/>Titre : " . $lists[$key]->titre . "<br/>";
-            foreach($itemlist as $key1 => $value1)
+            echo "<h2></br>No : " . $value->no . "<br/>Titre : " . $value->titre . "<br/></h2>"; // HTML CODE titre2
+            $itemlist=$value->item;
+
+            echo "<ul>"; // HTML CODE debut liste
+            foreach($itemlist as $item)
             {
-                echo "Item id : " . $itemlist[$key1]->id . "<br/>Nom de l'objet : " . $itemlist[$key1]->nom . "<br/>";
+                echo "<li>Item id : " . $item->id . "<br/>Nom de l'objet : " . $item->nom . "<br/></li>"; // HTML CODE li
             }
+            echo "</ul>"; // HTML CODE fin liste
+
           }
 });
 
