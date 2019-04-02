@@ -58,7 +58,7 @@ class Identification {
     $user = new User();
     $user->username = $username;
     $user->password = $password;
-    $user->token = base_convert(hash('sha256', time() . mt_rand()), 16, 36);
+    $user->token = Outils::generateOutils
     $user->save();
   }
 

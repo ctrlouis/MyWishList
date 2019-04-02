@@ -5,8 +5,8 @@ namespace factcli\divers;
 
 class Outils
 {
-	
-    static function headerHTML($title)
+
+    public static function headerHTML($title)
     {
         echo
             '<!DOCTYPE html>
@@ -19,9 +19,14 @@ class Outils
             <body>';
     }
 
-    static function footerHTML()
+    public static function footerHTML()
     {
         echo '</body></html>';
     }
+
+		public function generateToken()
+		{
+			return base_convert(hash('sha256', time() . mt_rand()), 16, 36);
+		}
 
 }
