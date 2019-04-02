@@ -1,6 +1,6 @@
 <?php
 
-namespace factcli\divers;
+namespace wishlist\divers;
 
 
 class Outils
@@ -24,9 +24,9 @@ class Outils
         echo '</body></html>';
     }
 
-		public function generateToken()
-		{
+	public static function generateToken()
+	{
 			return base_convert(hash('sha256', time() . mt_rand()), 16, 36);
-		}
+	}
 
 }

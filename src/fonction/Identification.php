@@ -5,6 +5,7 @@ namespace wishlist\fonction;
 use Illuminate\Database\Capsule\Manager as DB;
 
 use wishlist\modele\User;
+use wishlist\divers\Outils;
 
 
 class Identification {
@@ -19,9 +20,7 @@ class Identification {
 
       if ($user && $_COOKIE['wishlist_password'] == $user->password)
       {
-        echo 'username = ' . $user->username . '<br/>' .
-            'password = ' . $user->password . '<br/>' .
-            'token = ' . $user->token . '<br/>';
+        echo 'Connected as ' . $user->username ;
         return true;
       }
     }
@@ -58,7 +57,7 @@ class Identification {
     $user = new User();
     $user->username = $username;
     $user->password = $password;
-    $user->token = Outils::generateOutils
+    $user->token = Outils::generateToken();
     $user->save();
   }
 
