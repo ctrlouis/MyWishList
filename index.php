@@ -20,53 +20,59 @@ $db = $cf->makeConnection();
 
 
 // connection utilisateur
-$connected = LOG::IdentificationCookie();
-if (!$connected) LOG::FormulaireConnection();
+$connected_user = LOG::Identification();
+//if (!$connected) LOG::FormulaireConnection();
 echo '<br/>';
+
+if ($connected_user)
+{
+	// si connecté...
+}
 
 $app = new \Slim\Slim();
 
-$app->post('/connection', function(){
-  if (isset($_POST['signin']))
-    LOG::Connection($_POST['username'], $_POST['password']);
-  else if (isset($_POST['signup']))
-    LOG::Inscription($_POST['username'], $_POST['password']);
-});
-
-
 $app->get('/liste', function ()
 {
-          $lists=Liste::get();
-          echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre1
-          foreach ($lists as $key => $value)
-          {
+	$lists=Liste::get();
+	echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre1
+	foreach ($lists as $key => $value)
+    {
 
-            echo "<h2></br>No : " . $value->no .
-                "<br/>Titre : " . $value->titre .
-                "<br/></h2>";
+	    echo "<h2></br>No : " . $value->no .
+	        "<br/>Titre : " . $value->titre .
+	        "<br/></h2>";
 
-            $itemlist=$value->item;
-            echo "<ul>"; // HTML CODE debut liste
-            foreach($itemlist as $item)
-            {
-                echo "<li>Item id : " . $item->id .
-                    "<br/>Nom de l'objet : ". $item->nom .
-                    "<br/><a href=details/". $item->id .">Details</a><br/>
-                    </li>";
-            }
-            echo "</ul>"; // HTML CODE fin liste
+		$itemlist=$value->item;
+	    echo "<ul>"; // HTML CODE debut liste
+	    foreach($itemlist as $item)
+	    {
+	        echo "<li>Item id : " . $item->id .
+	            "<br/>Nom de l'objet : ". $item->nom .
+	            "<br/><a href=details/". $item->id .">Details</a><br/>
+	            </li>";
+	    }
+	    echo "</ul>"; // HTML CODE fin liste
 
-          }
+	}
 });
 
 // Affiche les details d'un item
 $app->get('/details/:id', function ($id){
-  FI::displayDetails($id);
+	FI::displayDetails($id);
+});
+
+//connection
+$app->post('/connection', function(){
+	if (isset($_POST['signin']))
+		LOG::Connection($_POST['username'], $_POST['password']);
+	else if (isset($_POST['signup']))
+    	LOG::Inscription($_POST['username'], $_POST['password']);
+	header("/");
 });
 
 // si url vide
 $app->get('/', function (){
-  echo '/liste -> affiche les listes';
+	  echo '/liste -> affiche les listes';
 });
 
 $app->run();
