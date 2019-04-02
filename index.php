@@ -57,8 +57,13 @@ $app->get('/liste', function ()
 });
 
 // Affiche les details d'un item
-$app->get('/details/:id', function ($id){
-	FI::displayDetails($id);
+$app->get('/details/:id', function ($item_id){
+	FI::displayDetails($item_id);
+});
+
+// Reserver un item
+$app->get('/reserver/:id', function ($item_id){
+	FI::reserver($item_id);
 });
 
 //connection
