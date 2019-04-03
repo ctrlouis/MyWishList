@@ -13,8 +13,8 @@ class FctnItem {
 		if ($item_id)
 		{
 			$item = Item::select('id', 'nom', 'img')
-			->where('id', '=', $item_id)
-			->first();
+				->where('id', '=', $item_id)
+				->first();
 
 			if ($item->reserv == 0) $reserv = 'disponible';
 			else $reserv = 'reservé';
@@ -33,7 +33,7 @@ class FctnItem {
 
 	public static function formulaireReservation($item_id)
 	{
-		echo '<form action="reserver/' . $item_id . '" method="post">
+		echo '<form action="../reserver/' . $item_id . '" method="post">
 			<p>Name : <input type="text" name="name" /></p>
 			<p>Drop a little message : <br/><input type="text" name="message" /></p>
 			<p><input type="submit" name="Make a present"></p>
@@ -47,6 +47,18 @@ class FctnItem {
 		// - ajouter le message contenu dans la variable Post (maybe variable de session ?? voir avantages POST VS SESSION)
 		// - update la bdd !! (envoyer mais pas avec methode Item->new, maybe Item->update ?)
 		// - a voir comment faire pour gérer la personne ayant reservé dans la bdd (maybe une table faisant le lien entre item_id et nom de personne ayant reservé)
+		$item = Item::select('id', 'reserv', 'message')
+			->where('id', '=', $item_id)
+			->first();
+
+		if ($item)
+		{
+		$item->reserv = 1;
+		$item->message = $_POST['message'];
+		$item->save();
+			echo 'Item reservé !';
+		}
+		else echo 'Erreur, item introuvable';
 	}
 
 }

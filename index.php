@@ -62,7 +62,7 @@ $app->get('/details/:id', function ($item_id){
 });
 
 // Reserver un item
-$app->get('/reserver/:id', function ($item_id){
+$app->post('/reserver/:item_id', function ($item_id){
 	FI::reserver($item_id);
 });
 
