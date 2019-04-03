@@ -21,8 +21,6 @@ $db = $cf->makeConnection();
 
 // connection utilisateur
 $connected_user = LOG::Identification();
-//if (!$connected) LOG::FormulaireConnection();
-echo '<br/>';
 
 if ($connected_user)
 {
