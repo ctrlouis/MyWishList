@@ -20,7 +20,7 @@ class Identification {
 
 				if ($user && $_COOKIE['wishlist_password'] == $user->password)
 				{
-					echo 'Connected as ' . $user->username ;
+					echo 'Connected as ' . $user->username . '<br/>';
 					return $user;
 				}
 			}
