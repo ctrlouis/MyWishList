@@ -42,11 +42,6 @@ class FctnItem {
 
 	public static function reserver($item_id)
 	{
-		// reserver un item
-		// - recuperer en fonction de $item_id
-		// - ajouter le message contenu dans la variable Post (maybe variable de session ?? voir avantages POST VS SESSION)
-		// - update la bdd !! (envoyer mais pas avec methode Item->new, maybe Item->update ?)
-		// - a voir comment faire pour gérer la personne ayant reservé dans la bdd (maybe une table faisant le lien entre item_id et nom de personne ayant reservé)
 		$item = Item::select('id', 'reserv', 'message')
 			->where('id', '=', $item_id)
 			->first();
