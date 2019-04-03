@@ -26,7 +26,13 @@ class Outils
 
 	public static function generateToken()
 	{
-			return base_convert(hash('sha256', time() . mt_rand()), 16, 36);
+		return base_convert(hash('sha256', time() . mt_rand()), 16, 36);
+	}
+
+	public static function clearSession($session_name_tab)
+	{
+		foreach ($session_name_tab as $session_name)
+			$_SESSION[$session_name];
 	}
 
 }
