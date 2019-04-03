@@ -13,6 +13,8 @@ use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\Identification as LOG;
 
 
+session_start();
+
 // db connection
 $cf = new CF();
 $cf->setConfig('src/conf/conf.ini');
@@ -71,16 +73,16 @@ $app->get('/add-item-form', function (){
 	FI::itemAddForm();
 });
 $app->post('/add-item', function (){
+	echo 'YES';
 	FI::itemAdd();
 });
 
 //modifier un item
 $app->get('/edit-item-form/:token', function ($token){
-	echo 'Etape 1';
 	FI::itemEditForm($token);
 });
-$app->post('/edit-item/:token', function ($token){
-	FI::itemEdit($token);
+$app->post('/edit-item', function (){
+	FI::itemEdit();
 });
 
 //connection

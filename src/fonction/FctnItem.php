@@ -57,8 +57,9 @@ class FctnItem {
 		}
 
 		echo $item;
+		$_SESSION['item_token'] = $item->token;
 
-		echo '<form action="edit-item/' . $token . '" method="post">
+		echo '<form action="../edit-item" method="post">
 			<p>Nom : <input type="text" name="nom" /></p>
 			<p>Description : <br/><input type="text" name="descr" /></p>
 			<p>Prix : <br/><input type="number" name="tarif" /></p>
@@ -67,10 +68,13 @@ class FctnItem {
 			</form>';
 	}
 
-	public static function itemEdit ($token)
+	public static function itemEdit ()
 	{
-		echo 'Etape 3';
-		echo $token;
+		//echo 'Etape 3 ' . $_SESSION['item_token'] . '<br/>';
+		if (isset($_SESSION['item_token']))
+			echo $_SESSION['item_token'];
+		else
+			echo 'MERDE';
 	}
 
 	public static function displayDetails ($item_id)
