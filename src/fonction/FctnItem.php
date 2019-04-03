@@ -56,25 +56,61 @@ class FctnItem {
 			exit();
 		}
 
-		echo $item;
-		$_SESSION['item_token'] = $item->token;
+		echo $item . '<br/>';
+		$_SESSION['wishlist_item_token'] = $item->token_private;
 
 		echo '<form action="../edit-item" method="post">
 			<p>Nom : <input type="text" name="nom" /></p>
 			<p>Description : <br/><input type="text" name="descr" /></p>
 			<p>Prix : <br/><input type="number" name="tarif" /></p>
 			<p>URL : <br/><input type="text" name="url" /></p>
-			<p><input type="submit" name="Modifier item"></p>
+			<p><input type="submit" name="Modifier"></p>
 			</form>';
 	}
 
 	public static function itemEdit ()
 	{
-		//echo 'Etape 3 ' . $_SESSION['item_token'] . '<br/>';
-		if (isset($_SESSION['item_token']))
-			echo $_SESSION['item_token'];
-		else
-			echo 'MERDE';
+
+		// stop si pas de token renseigné
+		if (!isset($_SESSION['wishlist_item_token'])) {
+			echo 'Token erroné';
+			exit();
+		}
+
+		if (!$_POST['nom'] && !$_POST['descr'] && !$_POST['tarif'] && !$_POST['url']) {
+			echo 'Aucunes modification effectué, pas de champs renseigné.'; //alerte
+			exit();
+		}
+
+		$item = Item::select('nom', 'descr', 'tarif', 'url', 'token_private')
+			->where('token_private', 'like', $_SESSION['wishlist_item_token'])
+			->first();
+
+		// stop si aucuns item trouvé
+		if (!$item) {
+			echo 'Aucuns item trouvé';
+			exit();
+		}
+
+		echo $item;
+
+		echo $_POST['nom'] . '<br/>';
+		echo $_POST['descr'] . '<br/>';
+		echo $_POST['tarif'] . '<br/>';
+		echo $_POST['url'] . '<br/>';
+
+		//if ($_POST['nom'] != '') $item->nom = $_POST['nom'];
+		/*if ($_POST['descr'] != '')*/ $item->descr = $_POST['descr'];
+		//if ($_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
+		//if ($_POST['url'] != '') $item->url = $_POST['url'];
+		$item->descr = "test";
+		$item->save();
+		echo 'Item modifié';
+
+		$_POST['nom'] = null;
+		$_POST['descr'] = null;
+		$_POST['tarif'] = null;
+		$_POST['url'] = null;
 	}
 
 	public static function displayDetails ($item_id)
@@ -123,7 +159,7 @@ class FctnItem {
 		$item->reserv = 1;
 		$item->message = $_POST['message'];
 		$item->save();
-			echo 'Item reservé !';
+		echo 'Item reservé !';
 		}
 		else echo 'Erreur, item introuvable';
 	}
