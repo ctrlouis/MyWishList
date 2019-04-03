@@ -12,18 +12,22 @@ class FctnItem {
 	{
 		if ($item_id)
 		{
-			$item = Item::select('id', 'nom', 'img')
+			$item = Item::select('id', 'nom', 'img', 'reserv')
 				->where('id', '=', $item_id)
 				->first();
 
-			if ($item->reserv == 0) $reserv = 'disponible';
-			else $reserv = 'reservé';
+
+			if ($item->reserv == 0)
+				$reserv = 'disponible';
+			else
+				$reserv = 'reservé';
 
 			echo 'id :'. $item->id .
 				'<br/>nom : ' . $item->nom .
 				'<br/>description : ' . $item->descr .
 				'<br/>etat reservation : ' . $reserv;
-			SELF::FormulaireReservation($item_id);
+			if($item->reserv == 0) SELF::FormulaireReservation($item_id);
+
 		}
 		else {
 			echo 'L\'item n\'existe pas';
