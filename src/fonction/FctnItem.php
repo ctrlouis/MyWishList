@@ -100,10 +100,10 @@ class FctnItem {
 		echo $_POST['url'] . '<br/>';
 
 		//if ($_POST['nom'] != '') $item->nom = $_POST['nom'];
-		/*if ($_POST['descr'] != '')*/ $item->descr = $_POST['descr'];
-		//if ($_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
-		//if ($_POST['url'] != '') $item->url = $_POST['url'];
-		$item->descr = "test";
+		if ($_POST['descr'] != '') $item->descr = $_POST['descr'];
+		if ($_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
+		if ($_POST['url'] != '') $item->url = $_POST['url'];
+		echo $item;
 		$item->save();
 		echo 'Item modifié';
 
@@ -161,7 +161,8 @@ class FctnItem {
 		$item->save();
 		echo 'Item reservé !';
 		}
-		else echo 'Erreur, item introuvable';
+		else
+			echo 'Erreur, item introuvable';
 	}
 
 }
