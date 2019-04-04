@@ -10,6 +10,7 @@ use wishlist\modele\Liste;
 use wishlist\modele\User;
 
 use wishlist\fonction\FctnItem as FI;
+use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\Identification as LOG;
 
 
@@ -77,6 +78,15 @@ $app->post('/add-item', function (){
 	FI::itemAdd();
 });
 
+//Créer une liste
+$app->get('/add-liste-form', function(){
+	FL::listeAddForm();
+});
+$app->post('/add-liste', function(){
+	echo "YES";
+	FL::listeAdd();
+});
+
 //modifier un item
 $app->get('/edit-item-form/:token', function ($token){
 	FI::itemEditForm($token);
@@ -100,6 +110,9 @@ $app->get('/', function (){
 	echo '/liste -> affiche les listes<br/>';
 	echo '/add-item-form-> creer un item<br/>';
 	echo '/edit-item-form-> modifier un item<br/>';
+	echo '/add-liste-form-> creer une liste<br/>';
+	$today = getdate();
+	print_r($today);
 });
 
 $app->run();
