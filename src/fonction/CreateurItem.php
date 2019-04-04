@@ -47,7 +47,7 @@ class CreateurItem {
 		echo 'URL de modification : edit-item-form/' . $item->token_private;
 	}
 
-	public static function itemEditForm ($token)
+	/*public static function itemEditForm ($token)
 	{
 		$item = Item::where('token_private', 'like', $token)->first();
 
@@ -65,6 +65,17 @@ class CreateurItem {
 			<p>Prix : <br/><input type="number" name="tarif" /></p>
 			<p>URL : <br/><input type="text" name="url" /></p>
 			<p><input type="submit" name="Modifier"></p>
+			</form>';
+	}*/
+
+	public static function itemEditForm ()
+	{
+		echo '<form action="../edit-item" method="post">
+			<p>Nom : <input type="text" name="nom" /></p>
+			<p>Description : <br/><input type="text" name="descr" /></p>
+			<p>Prix : <br/><input type="number" name="tarif" /></p>
+			<p>URL : <br/><input type="text" name="url" /></p>
+			<p><input type="submit" name="" value="Modifier"></p>
 			</form>';
 	}
 

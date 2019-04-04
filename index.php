@@ -9,12 +9,13 @@ use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\User;
 
-use wishlist\fonction\FctnItem as FI;
-use wishlist\fonction\FctnListe as FL;
-use wishlist\fonction\CreateurItem as CI;
+// use wishlist\fonction\FctnItem as FI;
+// use wishlist\fonction\FctnListe as FL;
+// use wishlist\fonction\CreateurItem as CI;
+use wishlist\pages\pageItem as PI;
 use wishlist\fonction\GestionImage as GI;
 
-use wishlist\fonction\ParticipantItem as PI;
+// use wishlist\fonction\ParticipantItem as PI;
 
 use wishlist\fonction\Identification as LOG;
 
@@ -25,6 +26,9 @@ session_start();
 $cf = new CF();
 $cf->setConfig('src/conf/conf.ini');
 $db = $cf->makeConnection();
+
+$_SESSION['liste_token'] = 'tokenlisteprivate1'; // TEST
+$_SESSION['item_action'] = null;
 
 
 // connection utilisateur
@@ -54,7 +58,7 @@ $app->get('/liste', function ()
 	    {
 	        echo "<li>Item id : " . $item->id .
 	            "<br/>Nom de l'objet : ". $item->nom .
-	            "<br/><a href=details/". $item->id .">Details</a><br/>
+	            "<br/><a href=item/". $item->name .">Details</a><br/>
 	            </li>";
 	    }
 	    echo "</ul>"; // HTML CODE fin liste
@@ -79,17 +83,22 @@ $app->post('/edit-liste', function(){
 
 
 // affiche les details d'un item
-$app->get('/details/:id', function ($item_id){
-	PI::itemDisplay($item_id);
+$app->get('/item/:name', function ($item_name){
+	PI::displayItem($item_name);
 });
 
-// reserver un item
-$app->post('/reserver/:item_id', function ($item_id){
-	PI::itemReserve($item_id);
+/*// affiche les details d'un item
+$app->get('/details/:id', function ($item_id){
+	PI::itemDetails($item_id);
+});*/
+
+$app->post('/reserver/:name', function ($item_name){
+	$_SESSION['item_action'] = "reserver";
+	PI::displayItem($item_name);
 });
 
 // créer un item
-$app->get('/add-item-form', function (){
+/*$app->get('/add-item-form', function (){
 	CI::itemAddForm();
 });
 $app->post('/add-item', function (){
@@ -107,7 +116,7 @@ $app->post('/edit-item', function (){
 // uploader imager
 $app->post('/upload-image', function (){
 	GI::imageUpload();
-});
+});*/
 
 // connection
 $app->post('/connection', function(){
