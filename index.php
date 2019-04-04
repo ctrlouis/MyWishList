@@ -12,6 +12,7 @@ use wishlist\modele\User;
 use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\CreateurItem as CI;
+use wishlist\fonction\GestionImage as GI;
 
 use wishlist\fonction\ParticipantItem as PI;
 
@@ -95,6 +96,11 @@ $app->get('/edit-item-form/:token', function ($token){
 });
 $app->post('/edit-item', function (){
 	CI::itemEdit();
+});
+
+// uploader imager
+$app->post('/upload-image', function (){
+	GI::imageUpload();
 });
 
 // connection
