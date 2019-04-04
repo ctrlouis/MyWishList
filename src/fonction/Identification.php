@@ -24,7 +24,10 @@ class Identification {
 					return $user;
 				}
 			}
-			else SELF::FormulaireConnection();
+			else
+			{
+				SELF::FormulaireConnection();
+			}
 		}
 
 		public static function FormulaireConnection()
@@ -48,9 +51,10 @@ class Identification {
 				setcookie("wishlist_username", $user->username, time() + 60 * 60 * 2, "/cours/MyWishList.app");
 				setcookie("wishlist_password", $user->password, time() + 60 * 60 * 2, "/cours/MyWishList.app");
 				setcookie("wishlist_token", $user->token, time() + 60 * 60 * 2, "/cours/MyWishList.app");
+				echo "Connexion reussi";
 			}
 			else {
-				//do nothing
+				echo "Erreur identifiants";
 			}
 		}
 
