@@ -9,8 +9,15 @@ use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\User;
 
+<<<<<<< HEAD
 use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\FctnListe as FL;
+=======
+use wishlist\fonction\CreateurItem as CI;
+
+use wishlist\fonction\ParticipantItem as PI;
+
+>>>>>>> c907ba6512347e004c9783dfddc1b4e4ca736dd0
 use wishlist\fonction\Identification as LOG;
 
 
@@ -61,21 +68,21 @@ $app->get('/liste', function ()
 
 // Affiche les details d'un item
 $app->get('/details/:id', function ($item_id){
-	FI::displayDetails($item_id);
+	PI::itemDisplay($item_id);
 });
 
 // Reserver un item
 $app->post('/reserver/:item_id', function ($item_id){
-	FI::itemReserve($item_id);
+	PI::itemReserve($item_id);
 });
 
 // Créer un item
 $app->get('/add-item-form', function (){
-	FI::itemAddForm();
+	CI::itemAddForm();
 });
 $app->post('/add-item', function (){
 	echo 'YES';
-	FI::itemAdd();
+	CI::itemAdd();
 });
 
 //Créer une liste
@@ -89,10 +96,10 @@ $app->post('/add-liste', function(){
 
 //modifier un item
 $app->get('/edit-item-form/:token', function ($token){
-	FI::itemEditForm($token);
+	CI::itemEditForm($token);
 });
 $app->post('/edit-item', function (){
-	FI::itemEdit();
+	CI::itemEdit();
 });
 
 //connection
@@ -109,10 +116,14 @@ $app->get('/', function (){
 	echo '<br/>';
 	echo '/liste -> affiche les listes<br/>';
 	echo '/add-item-form-> creer un item<br/>';
+<<<<<<< HEAD
 	echo '/edit-item-form-> modifier un item<br/>';
 	echo '/add-liste-form-> creer une liste<br/>';
 	$today = getdate();
 	print_r($today);
+=======
+	echo '/edit-item-form/*token*-> modifier un item<br/>';
+>>>>>>> c907ba6512347e004c9783dfddc1b4e4ca736dd0
 });
 
 $app->run();
