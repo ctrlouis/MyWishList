@@ -12,28 +12,24 @@ class ParticipantItem {
 
 	public static function itemDisplay ($item_id)
 	{
-		if ($item_id)
-		{
-			$item = Item::select('id', 'nom', 'img', 'reserv')
-				->where('id', '=', $item_id)
-				->first();
+		$item = Item::select('id', 'nom', 'img', 'reserv')
+			->where('id', '=', $item_id)
+			->first();
 
-
-			if ($item->reserv == 0)
-				$reserv = 'disponible';
-			else
-				$reserv = 'reservé';
-
-			echo 'id :'. $item->id .
-				'<br/>nom : ' . $item->nom .
-				'<br/>description : ' . $item->descr .
-				'<br/>etat reservation : ' . $reserv;
-			if($item->reserv == 0) SELF::itemReserveForm($item_id);
-
-		}
-		else {
+		if (!$item_id) {
 			echo 'L\'item n\'existe pas'; // alerte
+			exit();
 		}
+
+		if ($item->reserv == 0) $reserv = 'disponible';
+		else $reserv = 'reservé';
+
+		echo 'id :'. $item->id .
+			'<br/>nom : ' . $item->nom .
+			'<br/>description : ' . $item->descr .
+			'<br/>etat reservation : ' . $reserv;
+
+		if($item->reserv == 0) SELF::itemReserveForm($item_id);
 	}
 
 	public static function itemReserveForm($item_id)
@@ -51,15 +47,16 @@ class ParticipantItem {
 			->where('id', '=', $item_id)
 			->first();
 
-		if ($item)
-		{
+		// si aucuns item trouvé
+		if (!$item) {
+			echo 'Erreur, item introuvable';
+			exit();
+		}
+
 		$item->reserv = 1;
 		$item->message = $_POST['message'];
 		$item->save();
 		echo 'Item reservé !';
-		}
-		else
-			echo 'Erreur, item introuvable';
 	}
 
 }

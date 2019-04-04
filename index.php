@@ -9,15 +9,12 @@ use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\User;
 
-<<<<<<< HEAD
 use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\FctnListe as FL;
-=======
 use wishlist\fonction\CreateurItem as CI;
 
 use wishlist\fonction\ParticipantItem as PI;
 
->>>>>>> c907ba6512347e004c9783dfddc1b4e4ca736dd0
 use wishlist\fonction\Identification as LOG;
 
 
@@ -65,27 +62,7 @@ $app->get('/liste', function ()
 });
 
 
-
-// Affiche les details d'un item
-$app->get('/details/:id', function ($item_id){
-	PI::itemDisplay($item_id);
-});
-
-// Reserver un item
-$app->post('/reserver/:item_id', function ($item_id){
-	PI::itemReserve($item_id);
-});
-
-// Créer un item
-$app->get('/add-item-form', function (){
-	CI::itemAddForm();
-});
-$app->post('/add-item', function (){
-	echo 'YES';
-	CI::itemAdd();
-});
-
-//Créer une liste
+// Créer une liste
 $app->get('/add-liste-form', function(){
 	FL::listeAddForm();
 });
@@ -94,7 +71,25 @@ $app->post('/add-liste', function(){
 	FL::listeAdd();
 });
 
-//modifier un item
+// affiche les details d'un item
+$app->get('/details/:id', function ($item_id){
+	PI::itemDisplay($item_id);
+});
+
+// reserver un item
+$app->post('/reserver/:item_id', function ($item_id){
+	PI::itemReserve($item_id);
+});
+
+// créer un item
+$app->get('/add-item-form', function (){
+	CI::itemAddForm();
+});
+$app->post('/add-item', function (){
+	CI::itemAdd();
+});
+
+// modifier un item
 $app->get('/edit-item-form/:token', function ($token){
 	CI::itemEditForm($token);
 });
@@ -102,7 +97,7 @@ $app->post('/edit-item', function (){
 	CI::itemEdit();
 });
 
-//connection
+// connection
 $app->post('/connection', function(){
 	if (isset($_POST['signin']))
 		LOG::Connection($_POST['username'], $_POST['password']);
@@ -116,14 +111,11 @@ $app->get('/', function (){
 	echo '<br/>';
 	echo '/liste -> affiche les listes<br/>';
 	echo '/add-item-form-> creer un item<br/>';
-<<<<<<< HEAD
 	echo '/edit-item-form-> modifier un item<br/>';
 	echo '/add-liste-form-> creer une liste<br/>';
 	$today = getdate();
 	print_r($today);
-=======
 	echo '/edit-item-form/*token*-> modifier un item<br/>';
->>>>>>> c907ba6512347e004c9783dfddc1b4e4ca736dd0
 });
 
 $app->run();

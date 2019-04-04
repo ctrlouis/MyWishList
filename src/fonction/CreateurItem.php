@@ -82,7 +82,7 @@ class CreateurItem {
 			exit();
 		}
 
-		$item = Item::select('nom', 'descr', 'tarif', 'url', 'token_private')
+		$item = Item::select(/*'nom', 'descr', 'tarif', 'url', 'token_private'*/)
 			->where('token_private', 'like', $_SESSION['wishlist_item_token'])
 			->first();
 
@@ -100,9 +100,9 @@ class CreateurItem {
 		echo $_POST['url'] . '<br/>';
 
 		//if ($_POST['nom'] != '') $item->nom = $_POST['nom'];
-		if ($_POST['descr'] != '') $item->descr = $_POST['descr'];
-		if ($_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
-		if ($_POST['url'] != '') $item->url = $_POST['url'];
+		if (!$_POST['descr'] && $_POST['descr'] != '') $item->descr = $_POST['descr'];
+		if (!$_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
+		if (!$_POST['url'] && $_POST['url'] != '') $item->url = $_POST['url'];
 		echo $item;
 		$item->save();
 		echo 'Item modifié';
