@@ -68,9 +68,15 @@ $app->get('/add-liste-form', function(){
 	FL::listeAddForm();
 });
 $app->post('/add-liste', function(){
-	echo "YES";
 	FL::listeAdd();
 });
+$app->post('/edit-liste-form', function(){
+	FL::listeEditForm();
+});
+$app->post('/edit-liste', function(){
+	FL::listeEdit();
+});
+
 
 // affiche les details d'un item
 $app->get('/details/:id', function ($item_id){
@@ -115,13 +121,11 @@ $app->post('/connection', function(){
 // si url vide
 $app->get('/', function (){
 	echo '<br/>';
-	echo '/liste -> affiche les listes<br/>';
-	echo '/add-item-form-> creer un item<br/>';
-	echo '/edit-item-form-> modifier un item<br/>';
-	echo '/add-liste-form-> creer une liste<br/>';
-	$today = getdate();
-	print_r($today);
-	echo '/edit-item-form/*token*-> modifier un item<br/>';
+	echo '<a href="liste">affiche les listes<br/>';
+	echo '<a href="add-item-form"> creer un item</a><br/>';
+	echo '<a href="edit-item-form">modifier un item</a><br/>';
+	echo '<a href="add-liste-form">creer une liste</a><br/>';
+	echo '<a href="edit-item-form/*token*">modifier un item(token requis)</a><br/>';
 });
 
 $app->run();
