@@ -9,7 +9,7 @@ use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\User;
 
-// use wishlist\fonction\FctnItem as FI;
+use wishlist\fonction\FctnItem as FI;
 // use wishlist\fonction\FctnListe as FL;
 // use wishlist\fonction\CreateurItem as CI;
 use wishlist\pages\pageItem as PI;
