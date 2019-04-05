@@ -10,6 +10,12 @@ use wishlist\divers\Outils;
 
 class CreateurItem {
 
+	public static function itemDetails($item)
+	{
+		echo '<br/>nom : ' . $item->nom .
+			'<br/>description : ' . $item->descr;
+	}
+
 	public static function itemAddForm ()
 	{
 		echo '<form action="add-item" method="post">
@@ -47,30 +53,9 @@ class CreateurItem {
 		echo 'URL de modification : edit-item-form/' . $item->token_private;
 	}
 
-	/*public static function itemEditForm ($token)
+	public static function itemEditForm ($item_name)
 	{
-		$item = Item::where('token_private', 'like', $token)->first();
-
-		if (!$item) {
-			echo 'Aucuns item trouvé'; // alerte
-			exit();
-		}
-
-		echo $item . '<br/>';
-		$_SESSION['wishlist_item_token'] = $item->token_private;
-
-		echo '<form action="../edit-item" method="post">
-			<p>Nom : <input type="text" name="nom" /></p>
-			<p>Description : <br/><input type="text" name="descr" /></p>
-			<p>Prix : <br/><input type="number" name="tarif" /></p>
-			<p>URL : <br/><input type="text" name="url" /></p>
-			<p><input type="submit" name="Modifier"></p>
-			</form>';
-	}*/
-
-	public static function itemEditForm ()
-	{
-		echo '<form action="../edit-item" method="post">
+		echo '<form action="../edit-item/' . $item_name . '" method="post">
 			<p>Nom : <input type="text" name="nom" /></p>
 			<p>Description : <br/><input type="text" name="descr" /></p>
 			<p>Prix : <br/><input type="number" name="tarif" /></p>
@@ -88,29 +73,28 @@ class CreateurItem {
 			exit();
 		}
 
+		// stop si pas de champs renseigné
 		if (!$_POST['nom'] && !$_POST['descr'] && !$_POST['tarif'] && !$_POST['url']) {
 			echo 'Aucunes modification effectué, pas de champs renseigné.'; //alerte
 			exit();
 		}
 
-		$item = Item::select(/*'nom', 'descr', 'tarif', 'url', 'token_private'*/)
-			->where('token_private', 'like', $_SESSION['wishlist_item_token'])
+		// test token publique
+		$list = Liste::select('no', 'token_publique')
+			->where('token_publique', 'like', $_SESSION['liste_token'])
 			->first();
 
-		// stop si aucuns item trouvé
+		$item = Item::where('liste_id', '=', $list->no)
+			->where('nom', 'like', $item_name)
+			->first();
+
+		// si aucuns item trouvé
 		if (!$item) {
-			echo 'Aucuns item trouvé';
+			echo 'Erreur, item introuvable';
 			exit();
 		}
 
-		echo $item;
-
-		echo $_POST['nom'] . '<br/>';
-		echo $_POST['descr'] . '<br/>';
-		echo $_POST['tarif'] . '<br/>';
-		echo $_POST['url'] . '<br/>';
-
-		//if ($_POST['nom'] != '') $item->nom = $_POST['nom'];
+		if (!$_POST['nom'] && $_POST['nom'] != '') $item->nom = $_POST['nom'];
 		if (!$_POST['descr'] && $_POST['descr'] != '') $item->descr = $_POST['descr'];
 		if (!$_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
 		if (!$_POST['url'] && $_POST['url'] != '') $item->url = $_POST['url'];

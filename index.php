@@ -27,7 +27,7 @@ $cf = new CF();
 $cf->setConfig('src/conf/conf.ini');
 $db = $cf->makeConnection();
 
-$_SESSION['liste_token'] = 'tokenlisteprivate1'; // TEST
+$_SESSION['liste_token'] = 'tokenlisteprivate2'; // TEST
 $_SESSION['item_action'] = null;
 
 
@@ -82,41 +82,40 @@ $app->post('/edit-liste', function(){
 });
 
 
-// affiche les details d'un item
-$app->get('/item/:name', function ($item_name){
-	PI::displayItem($item_name);
-});
-
-/*// affiche les details d'un item
-$app->get('/details/:id', function ($item_id){
-	PI::itemDetails($item_id);
-});*/
-
-$app->post('/reserver/:name', function ($item_name){
-	$_SESSION['item_action'] = "reserver";
-	PI::displayItem($item_name);
-});
-
 // créer un item
 /*$app->get('/add-item-form', function (){
 	CI::itemAddForm();
 });
 $app->post('/add-item', function (){
 	CI::itemAdd();
+});*/
+
+// affiche les details d'un item
+$app->get('/item/:name', function ($item_name){
+	PI::displayItem($item_name);
+});
+
+// reserver un item
+$app->post('/reserver/:name', function ($item_name){
+	$_SESSION['item_action'] = "reserver";
+	PI::displayItem($item_name);
+});
+
+//  modifier item
+$app->post('/edit-item/:name', function ($item_name){
+	CI::itemEdit($item_name);
 });
 
 // modifier un item
-$app->get('/edit-item-form/:token', function ($token){
+/*$app->get('/edit-item-form/:token', function ($token){
 	CI::itemEditForm($token);
-});
-$app->post('/edit-item', function (){
-	CI::itemEdit();
-});
+});*/
+
 
 // uploader imager
 $app->post('/upload-image', function (){
 	GI::imageUpload();
-});*/
+});
 
 // connection
 $app->post('/connection', function(){
