@@ -1,6 +1,8 @@
 # MyWishList.app
 Repository du projet de fin de module de Conception programmation web serveur.
 
+Gestion de projet : [Trello](https://trello.com/b/dkVNoaSX/mywishlist)
+
 ## Documents
 [Sujet](https://drive.google.com/open?id=1_C5TikA4-pmoG6bVhuTVz3OIJVCgeFdv)
 
@@ -60,5 +62,5 @@ git clone git@github.com:ctrlouis/MyWishList.app.git && cd MyWishList.app && com
 - [ ] 24. Uploader une image
 - [ ] 25. Créer un compte participant
 - [ ] 26. Afficher la liste des créateurs
-- [ ] 27. SUpprimer son compte
+- [ ] 27. Supprimer son compte
 - [ ] 28 Joindre des listes à son compte
