@@ -103,7 +103,8 @@ $app->post('/reserver/:name', function ($item_name){
 
 //  modifier item
 $app->post('/edit-item/:name', function ($item_name){
-	CI::itemEdit($item_name);
+	$_SESSION['item_action'] = "modifier";
+	PI::displayItem($item_name);
 });
 
 // modifier un item

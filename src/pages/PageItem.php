@@ -56,53 +56,26 @@ class PageItem {
 		} else {
 			SELF::publicView($item);
 		}
-
-		// AVANT AFFICHER DETAILS ITEM
-		// insert code here...
-
-		// DETAILS ITEM
-		/*TI::itemDetails($item);
-
-		// APRES AFFICHER DETAILS ITEM
-
-		// par défault
-		if (!isset($_SESSION['item_action']) || $_SESSION['item_action'] == null) {
-
-			// si créateur
-			if ($createur ) {
-				CI::itemEditForm();
-			}
-
-			// si participant
-			if (!$createur ) {
-				PI::itemReserveForm();
-			}
-
-		}
-
-		// si action demandé
-		if (isset($_SESSION['item_action']) && !$_SESSION['item_action']) {
-			$_SESSION = null;
-
-			if (!$createur && $_SESSION['item_action'] == 'reserver') {
-				// enter code here...
-			}
-
-		}*/
 	}
 
 	public static function privateView($item)
 	{
+		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
+		{
+			if ($_SESSION['item_action'] == "modifier") {
+				CI::itemEdit($item->nom);
+				$_SESSION['item_action'] = null;
+			}
+		}
+
 		CI::itemDetails($item);
 
-		if (!isset($_SESSION['item_action']) || $_SESSION['item_action'] == null) // par défault
+		if (!isset($_SESSION['item_action']) || !$_SESSION['item_action']) // par défault
 		{
 			CI::itemEditForm($item->nom);
 		}
 		else // si action
 		{
-			if ($_SESSION['item_action'] == "modifier")
-				CI::itemEdit($item->nom);
 
 			$_SESSION['item_action'] = null;
 		}

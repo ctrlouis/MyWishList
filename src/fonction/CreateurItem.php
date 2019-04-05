@@ -64,11 +64,11 @@ class CreateurItem {
 			</form>';
 	}
 
-	public static function itemEdit ()
+	public static function itemEdit ($item_name)
 	{
 
 		// stop si pas de token renseigné
-		if (!isset($_SESSION['wishlist_item_token'])) {
+		if (!isset($_SESSION['liste_token'])) {
 			echo 'Token erroné';
 			exit();
 		}
@@ -80,8 +80,8 @@ class CreateurItem {
 		}
 
 		// test token publique
-		$list = Liste::select('no', 'token_publique')
-			->where('token_publique', 'like', $_SESSION['liste_token'])
+		$list = Liste::select('no', 'token_private')
+			->where('token_private', 'like', $_SESSION['liste_token'])
 			->first();
 
 		$item = Item::where('liste_id', '=', $list->no)
@@ -94,7 +94,7 @@ class CreateurItem {
 			exit();
 		}
 
-		if (!$_POST['nom'] && $_POST['nom'] != '') $item->nom = $_POST['nom'];
+		//if (!$_POST['nom'] && $_POST['nom'] != '') $item->nom = $_POST['nom'];
 		if (!$_POST['descr'] && $_POST['descr'] != '') $item->descr = $_POST['descr'];
 		if (!$_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
 		if (!$_POST['url'] && $_POST['url'] != '') $item->url = $_POST['url'];
