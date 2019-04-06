@@ -28,7 +28,7 @@ $cf->setConfig('src/conf/conf.ini');
 $db = $cf->makeConnection();
 
 $_SESSION['liste_token'] = 'tokenlisteprivate2'; // TEST
-$_SESSION['item_action'] = null;
+$_SESSION['item_action'] = null; // TEST
 
 
 // connection utilisateur
@@ -83,12 +83,12 @@ $app->post('/edit-liste', function(){
 
 
 // créer un item
-/*$app->get('/add-item-form', function (){
+$app->get('/add-item-form', function (){
 	CI::itemAddForm();
 });
 $app->post('/add-item', function (){
 	CI::itemAdd();
-});*/
+});
 
 // affiche les details d'un item
 $app->get('/item/:name', function ($item_name){
@@ -97,21 +97,21 @@ $app->get('/item/:name', function ($item_name){
 
 // reserver un item
 $app->post('/reserver/:name', function ($item_name){
-	$_SESSION['item_action'] = "reserver";
+	$_SESSION['item_action'] = "reserve";
 	PI::displayItem($item_name);
 });
 
 //  modifier item
 $app->post('/edit-item/:name', function ($item_name){
-	$_SESSION['item_action'] = "modifier";
+	$_SESSION['item_action'] = "edit";
 	PI::displayItem($item_name);
 });
 
-// modifier un item
-/*$app->get('/edit-item-form/:token', function ($token){
-	CI::itemEditForm($token);
-});*/
-
+// supprimer un item
+$app->get('/delete-item/:name', function ($item_name){
+	$_SESSION['item_action'] = "delete";
+	PI::displayItem($item_name);
+});
 
 // uploader imager
 $app->post('/upload-image', function (){
@@ -132,7 +132,6 @@ $app->get('/', function (){
 	echo '<br/>';
 	echo '<a href="liste">affiche les listes<br/>';
 	echo '<a href="add-item-form"> creer un item</a><br/>';
-	echo '<a href="edit-item-form">modifier un item</a><br/>';
 	echo '<a href="add-liste-form">creer une liste</a><br/>';
 	echo '<a href="edit-item-form/*token*">modifier un item(token requis)</a><br/>';
 });

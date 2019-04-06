@@ -10,7 +10,7 @@ use wishlist\divers\Outils;
 
 class CreateurItem {
 
-	public static function itemDetails($item)
+	public static function itemDetails ($item)
 	{
 		echo '<br/>nom : ' . $item->nom .
 			'<br/>description : ' . $item->descr;
@@ -106,6 +106,43 @@ class CreateurItem {
 		$_POST['descr'] = null;
 		$_POST['tarif'] = null;
 		$_POST['url'] = null;
+	}
+
+	public static function itemDeleteForm ($item_name)
+	{
+		echo '<form method="POST" action="../delete-item/' . $item_name . '">
+				<input type="submit" name="" value="Delete" >
+			</form>';
+	}
+
+	public static function itemDelete ($item_name)
+	{
+
+		// stop si pas de token renseigné
+		if (!isset($_SESSION['liste_token'])) {
+			echo 'Token erroné';
+			exit();
+		}
+
+		// test token publique
+		$list = Liste::select('no', 'token_private')
+			->where('token_private', 'like', $_SESSION['liste_token'])
+			->first();
+
+		$item = Item::where('liste_id', '=', $list->no)
+			->where('nom', 'like', $item_name)
+			->first();
+
+		// si aucuns item trouvé
+		if (!$item) {
+			echo 'Erreur, item introuvable';
+			exit();
+		}
+
+
+		echo $item;
+		$item->delete();
+		echo 'Item supprimé';
 	}
 
 }

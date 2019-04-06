@@ -13,7 +13,7 @@ use wishlist\fonction\CreateurItem as CI;
 
 class PageItem {
 
-	public static function displayItem($item_name) {
+	public static function displayItem ($item_name) {
 
 		// stop si pas de token enregistré
 		if (!isset($_SESSION['liste_token']) && !$_SESSION['liste_token']) {
@@ -58,31 +58,37 @@ class PageItem {
 		}
 	}
 
-	public static function privateView($item)
+	public static function privateView ($item)
 	{
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
-			if ($_SESSION['item_action'] == "modifier") {
+			if ($_SESSION['item_action'] == "edit") {
 				CI::itemEdit($item->nom);
+				$_SESSION['item_action'] = null;
+			}
+
+			if ($_SESSION['item_action'] == "delete") {
+				CI::itemDelete($item->nom);
 				$_SESSION['item_action'] = null;
 			}
 		}
 
-		CI::itemDetails($item);
+		CI::itemDetails ($item);
 
 		if (!isset($_SESSION['item_action']) || !$_SESSION['item_action']) // par défault
 		{
 			CI::itemEditForm($item->nom);
+			CI::itemDeleteForm($item->nom);
 		}
 		else // si action
 		{
-
+			// code here
 			$_SESSION['item_action'] = null;
 		}
 
 	}
 
-	public static function publicView($item)
+	public static function publicView ($item)
 	{
 		PI::itemDetails($item);
 
@@ -93,7 +99,7 @@ class PageItem {
 		else // si action
 		{
 
-			if ($_SESSION['item_action'] == "reserver")
+			if ($_SESSION['item_action'] == "reserve")
 				PI::itemReserve($item->nom);
 
 			$_SESSION['item_action'] = null;

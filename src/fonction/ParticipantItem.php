@@ -10,7 +10,7 @@ use wishlist\divers\Outils;
 
 class ParticipantItem {
 
-	public static function itemDetails($item)
+	public static function itemDetails ($item)
 	{
 		if ($item->reserv == 0) $reserv = 'disponible';
 		else $reserv = 'reservé';
@@ -22,7 +22,7 @@ class ParticipantItem {
 		if($item->reserv == 0) SELF::itemReserveForm($item->nom);
 	}
 
-	public static function itemReserveForm($item_name)
+	public static function itemReserveForm ($item_name)
 	{
 		echo '<form action="../reserver/' . $item_name . '" method="post">
 			<p>Name : <input type="text" name="name" /></p>
@@ -31,7 +31,7 @@ class ParticipantItem {
 			</form>';
 	}
 
-	public static function itemReserve($item_name)
+	public static function itemReserve ($item_name)
 	{
 		// test token publique
 		$list = Liste::select('no', 'token_publique')
