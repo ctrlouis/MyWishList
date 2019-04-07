@@ -62,7 +62,7 @@ class PageItem {
 	{
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
-			if ($_SESSION['item_action'] == "modifier") {
+			if ($_SESSION['item_action'] == "edit") {
 				CI::itemEdit($item->nom);
 				$_SESSION['item_action'] = null;
 			}
@@ -99,8 +99,10 @@ class PageItem {
 		else // si action
 		{
 
-			if ($_SESSION['item_action'] == "reserver")
+			if ($_SESSION['item_action'] == "reserve") {
 				PI::itemReserve($item->nom);
+				
+			}
 
 			$_SESSION['item_action'] = null;
 		}

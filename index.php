@@ -109,7 +109,6 @@ $app->post('/edit-item/:name', function ($item_name){
 
 // supprimer un item
 $app->post('/delete-item/:name', function ($item_name){
-	echo 'TEST';
 	$_SESSION['item_action'] = "delete";
 	PI::displayItem($item_name);
 });

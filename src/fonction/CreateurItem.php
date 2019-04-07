@@ -66,7 +66,6 @@ class CreateurItem {
 
 	public static function itemEdit ($item_name)
 	{
-
 		// stop si pas de token renseigné
 		if (!isset($_SESSION['liste_token'])) {
 			echo 'Token erroné';
@@ -79,7 +78,7 @@ class CreateurItem {
 			exit();
 		}
 
-		// test token publique
+		// test token privé
 		$list = Liste::select('no', 'token_private')
 			->where('token_private', 'like', $_SESSION['liste_token'])
 			->first();
@@ -94,18 +93,12 @@ class CreateurItem {
 			exit();
 		}
 
-		//if (!$_POST['nom'] && $_POST['nom'] != '') $item->nom = $_POST['nom'];
-		if (!$_POST['descr'] && $_POST['descr'] != '') $item->descr = $_POST['descr'];
-		if (!$_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
-		if (!$_POST['url'] && $_POST['url'] != '') $item->url = $_POST['url'];
-		echo $item;
+		if ($_POST['nom'] && $_POST['nom'] != '') $item->nom = $_POST['nom'];
+		if ($_POST['descr'] && $_POST['descr'] != '') $item->descr = $_POST['descr'];
+		if ($_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
+		if ($_POST['url'] && $_POST['url'] != '') $item->url = $_POST['url'];
 		$item->save();
 		echo 'Item modifié';
-
-		$_POST['nom'] = null;
-		$_POST['descr'] = null;
-		$_POST['tarif'] = null;
-		$_POST['url'] = null;
 	}
 
 	public static function itemDeleteForm ($item_name)
