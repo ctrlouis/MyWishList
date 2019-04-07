@@ -69,6 +69,7 @@ class PageItem {
 			if ($_SESSION['item_action'] == "delete") {
 				CI::itemDelete($item->nom);
 				$_SESSION['item_action'] = null;
+				exit();
 			}
 		}
 
