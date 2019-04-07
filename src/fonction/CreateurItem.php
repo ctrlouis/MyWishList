@@ -110,7 +110,7 @@ class CreateurItem {
 
 	public static function itemDeleteForm ($item_name)
 	{
-		echo '<form method="POST" action="../delete-item/' . $item_name . '">
+		echo '<form action="../delete-item/' . $item_name . '" method="POST">
 				<input type="submit" name="" value="Delete" >
 			</form>';
 	}
