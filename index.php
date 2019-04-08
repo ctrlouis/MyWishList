@@ -11,7 +11,7 @@ use wishlist\modele\User;
 
 use wishlist\fonction\FctnItem as FI;
 // use wishlist\fonction\FctnListe as FL;
-// use wishlist\fonction\CreateurItem as CI;
+use wishlist\fonction\CreateurItem as CI;
 use wishlist\pages\pageItem as PI;
 use wishlist\fonction\GestionImage as GI;
 

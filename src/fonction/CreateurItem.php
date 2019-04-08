@@ -19,10 +19,10 @@ class CreateurItem {
 	public static function itemAddForm ()
 	{
 		echo '<form action="add-item" method="post">
-			<p>Nom : (obligatoire)<input type="text" name="nom" /></p>
-			<p>Description : (obligatoire)<br/><input type="text" name="descr" /></p>
-			<p>Prix : (obligatoire)<br/><input type="number" name="tarif" /></p>
-			<p>URL : <br/><input type="text" name="url" /></p>
+			<p><input type="text" name="nom" placeholder="Nom" required/></p>
+			<p><br/><input type="text" name="descr" placeholder="Description" required/></p>
+			<p><br/><input type="number" name="tarif" placeholder="Prix" required/></p>
+			<p><br/><input type="text" name="url" placeholder="url"/></p>
 			<p><input type="submit" name="Ajouter item"></p>
 			</form>';
 	}
@@ -50,49 +50,21 @@ class CreateurItem {
 		$item->tarif = htmlspecialchars($_POST['tarif']);
 		$item->token_private = Outils::generateToken();
 		$item->save();
-		echo 'URL de modification : edit-item-form/' . $item->token_private;
 	}
 
 	public static function itemEditForm ($item_name)
 	{
 		echo '<form action="../edit-item/' . $item_name . '" method="post">
-			<p>Nom : <input type="text" name="nom" /></p>
-			<p>Description : <br/><input type="text" name="descr" /></p>
-			<p>Prix : <br/><input type="number" name="tarif" /></p>
-			<p>URL : <br/><input type="text" name="url" /></p>
+			<p><input type="text" name="nom" placeholder="Nom"/></p>
+			<p><br/><input type="text" name="descr" placeholder="Description"/></p>
+			<p><br/><input type="number" name="tarif" placeholder="Prix"/></p>
+			<p><br/><input type="text" name="url" placeholder="url"/></p>
 			<p><input type="submit" name="" value="Modifier"></p>
 			</form>';
 	}
 
-	public static function itemEdit ($item_name)
+	public static function itemEdit ($item)
 	{
-		// stop si pas de token renseigné
-		if (!isset($_SESSION['liste_token'])) {
-			echo 'Token erroné';
-			exit();
-		}
-
-		// stop si pas de champs renseigné
-		if (!$_POST['nom'] && !$_POST['descr'] && !$_POST['tarif'] && !$_POST['url']) {
-			echo 'Aucunes modification effectué, pas de champs renseigné.'; //alerte
-			exit();
-		}
-
-		// test token privé
-		$list = Liste::select('no', 'token_private')
-			->where('token_private', 'like', $_SESSION['liste_token'])
-			->first();
-
-		$item = Item::where('liste_id', '=', $list->no)
-			->where('nom', 'like', $item_name)
-			->first();
-
-		// si aucuns item trouvé
-		if (!$item) {
-			echo 'Erreur, item introuvable';
-			exit();
-		}
-
 		if ($_POST['nom'] && $_POST['nom'] != '') $item->nom = $_POST['nom'];
 		if ($_POST['descr'] && $_POST['descr'] != '') $item->descr = $_POST['descr'];
 		if ($_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
@@ -108,32 +80,8 @@ class CreateurItem {
 			</form>';
 	}
 
-	public static function itemDelete ($item_name)
+	public static function itemDelete ($item)
 	{
-
-		// stop si pas de token renseigné
-		if (!isset($_SESSION['liste_token'])) {
-			echo 'Token erroné';
-			exit();
-		}
-
-		// test token publique
-		$list = Liste::select('no', 'token_private')
-			->where('token_private', 'like', $_SESSION['liste_token'])
-			->first();
-
-		$item = Item::where('liste_id', '=', $list->no)
-			->where('nom', 'like', $item_name)
-			->first();
-
-		// si aucuns item trouvé
-		if (!$item) {
-			echo 'Erreur, item introuvable';
-			exit();
-		}
-
-
-		echo $item;
 		$item->delete();
 		echo 'Item supprimé';
 	}

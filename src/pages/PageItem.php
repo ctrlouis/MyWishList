@@ -58,16 +58,17 @@ class PageItem {
 		}
 	}
 
+
 	public static function privateView($item)
 	{
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
 			if ($_SESSION['item_action'] == "edit") {
-				CI::itemEdit($item->nom);
+				CI::itemEdit($item);
 				$_SESSION['item_action'] = null;
 			}
 			if ($_SESSION['item_action'] == "delete") {
-				CI::itemDelete($item->nom);
+				CI::itemDelete($item);
 				$_SESSION['item_action'] = null;
 				exit();
 			}
@@ -88,6 +89,7 @@ class PageItem {
 
 	}
 
+
 	public static function publicView($item)
 	{
 		PI::itemDetails($item);
@@ -101,7 +103,7 @@ class PageItem {
 
 			if ($_SESSION['item_action'] == "reserve") {
 				PI::itemReserve($item->nom);
-				
+
 			}
 
 			$_SESSION['item_action'] = null;
