@@ -92,6 +92,14 @@ class PageItem {
 
 	public static function publicView($item)
 	{
+		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
+		{
+			if ($_SESSION['item_action'] == "reserve") {
+				PI::itemReserve($item);
+				$_SESSION['item_action'] = null;
+			}
+		}
+
 		PI::itemDetails($item);
 
 		if (!isset($_SESSION['item_action']) || $_SESSION['item_action'] == null) // par défault
@@ -100,11 +108,6 @@ class PageItem {
 		}
 		else // si action
 		{
-
-			if ($_SESSION['item_action'] == "reserve") {
-				PI::itemReserve($item->nom);
-
-			}
 
 			$_SESSION['item_action'] = null;
 		}

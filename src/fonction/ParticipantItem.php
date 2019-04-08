@@ -25,33 +25,17 @@ class ParticipantItem {
 	public static function itemReserveForm ($item_name)
 	{
 		echo '<form action="../reserver/' . $item_name . '" method="post">
-			<p>Name : <input type="text" name="name" /></p>
-			<p>Drop a little message : <br/><input type="text" name="message" /></p>
+			<p><input type="text" name="name" placeholder="Nom" required/></p>
+			<p><textarea type="text" name="message" placeholder="Laissez votre message..." required/></textarea></p>
 			<p><input type="submit" name="Make a present"></p>
 			</form>';
 	}
 
-	public static function itemReserve ($item_name)
+	public static function itemReserve ($item)
 	{
-		// test token publique
-		$list = Liste::select('no', 'token_publique')
-			->where('token_publique', 'like', $_SESSION['liste_token'])
-			->first();
-
-		$item = Item::where('liste_id', '=', $list->no)
-			->where('nom', 'like', $item_name)
-			->first();
-
-		// si aucuns item trouvé
-		if (!$item) {
-			echo 'Erreur, item introuvable';
-			exit();
-		}
-
 		$item->reserv = 1;
 		$item->message = $_POST['message'];
 		$item->save();
-		echo $item;
 		echo 'Item reservé !';
 	}
 
