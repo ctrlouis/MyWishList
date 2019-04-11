@@ -10,7 +10,7 @@ use wishlist\modele\Liste;
 use wishlist\modele\User;
 
 use wishlist\fonction\FctnItem as FI;
-// use wishlist\fonction\FctnListe as FL;
+use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\CreateurItem as CI;
 use wishlist\pages\pageItem as PI;
 use wishlist\fonction\GestionImage as GI;
@@ -43,27 +43,7 @@ $app = new \Slim\Slim();
 
 $app->get('/liste', function ()
 {
-	$lists=Liste::get();
-	echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre1
-	foreach ($lists as $key => $value)
-    {
-
-	    echo "<h2></br>No : " . $value->no .
-	        "<br/>Titre : " . $value->titre .
-	        "<br/></h2>";
-
-		$itemlist=$value->item;
-	    echo "<ul>"; // HTML CODE debut liste
-	    foreach($itemlist as $item)
-	    {
-	        echo "<li>Item id : " . $item->id .
-	            "<br/>Nom de l'objet : ". $item->nom .
-	            "<br/><a href=item/". $item->name .">Details</a><br/>
-	            </li>";
-	    }
-	    echo "</ul>"; // HTML CODE fin liste
-
-	}
+    FL::liste();
 });
 
 
