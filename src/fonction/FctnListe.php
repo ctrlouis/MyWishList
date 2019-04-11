@@ -12,13 +12,11 @@ class FctnListe {
 
 	public static function listeAddForm ()
 	{
-		$today = getDate();
-		$date = $today["year"] . "-" . $today["mon"] . "-" . $today["mday"];
 		echo '<form action="add-liste" method="post">
 			<p>Titre : (obligatoire)<br/><input type="text" name="titre" /></p>
 			<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
 			<p>Description : <br/><input type="text" name="description" /></p>
-			<p>Date dexpiration : <br/><input type="date" min=' . $date . ' name="expiration" /></p>
+			<p>Date dexpiration : <br/><input type="date" min=' . date('Y-m-d') . ' name="expiration" /></p>
 			<p><input type="submit" name="Ajouter liste"></p>
 			</form>';
 	}
@@ -92,4 +90,29 @@ class FctnListe {
 			exit();
 		}
 
+    }
+    
+    public static function liste()
+    {
+        $lists=Liste::get();
+        echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre1
+        foreach ($lists as $key => $value)
+        {
+            
+            echo "<h2></br>No : " . $value->no .
+            "<br/>Titre : " . $value->titre .
+            "<br/></h2>";
+            
+            $itemlist=$value->item;
+            echo "<ul>"; // HTML CODE debut liste
+            foreach($itemlist as $item)
+            {
+                echo "<li>Item id : " . $item->id .
+                "<br/>Nom de l'objet : ". $item->nom .
+                "<br/><a href=item/". $item->name .">Details</a><br/>
+                </li>";
+            }
+            echo "</ul>"; // HTML CODE fin liste
+        }
+    }
 }
