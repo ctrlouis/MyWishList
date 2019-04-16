@@ -54,11 +54,11 @@ $app->get('/add-liste-form', function(){
 $app->post('/add-liste', function(){
 	FL::listeAdd();
 });
-$app->post('/edit-liste-form', function(){
-	FL::listeEditForm();
+$app->get('/edit-liste-form/:one', function($token){
+	FL::listeEditForm($token);
 });
-$app->post('/edit-liste', function(){
-	FL::listeEdit();
+$app->post('/edit-liste/:one', function($token){
+	FL::listeEdit($token);
 });
 
 
