@@ -4,7 +4,7 @@ namespace wishlist\fonction;
 
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
-
+use wishlist\fonction\CreateurItem as CI;
 use wishlist\divers\Outils;
 
 
@@ -46,7 +46,7 @@ class FctnListe {
 		$liste->token_private = Outils::generateToken();
 		$liste->save();
 		$_SESSION['wishlist_liste_token'] = $liste->token_private;
-		echo '<a href ="edit-liste-form/' . $liste->token_private . '">URL de modification : </a>';
+		echo '<a href ="liste/' . $liste->token_private . '">URL de modification : </a>';
 	}
 
 
@@ -120,8 +120,7 @@ class FctnListe {
 				}
 
 				$itemlist=$liste->item;
-				echo "<h1>" . $liste->titre . "</h1>"; // HTML CODE titre1
-				echo "<h2></br>No : " . $liste->no . "<br/></h2>";
+				echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
 				echo "<ul>"; // HTML CODE debut liste
 				foreach($itemlist as $item)
 						{
@@ -135,12 +134,15 @@ class FctnListe {
 				{
 					if($liste->token_private == $_SESSION['wishlist_liste_token'])
 					{
-						echo '<form action="../edit-liste/'. $token .'" method="post">
+						echo 'Modification de la liste</br>
+							<form action="../edit-liste/'. $token .'" method="post">
 							<p>Titre : <input type="text" name="titre" /></p>
 							<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
 							<p>Description : <br/><input type="text" name="description" /></p>
 							<p><input type="submit" name="Modifier"></p>
-							</form>';
+							</form></br>
+							Ajouter d un item dans votre liste';
+						CI::itemAddForm ();
 					}
 				}
 			}
