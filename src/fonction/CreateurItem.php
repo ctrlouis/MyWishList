@@ -29,13 +29,14 @@ class CreateurItem {
 
 	public static function itemAdd ()
 	{
+
 		// stop si un champ requis vide
 		if (!$_POST['nom'] || !$_POST['descr'] || !$_POST['tarif']) {
 			echo 'Création impossible, des champs requis sont vides.'; //alerte
 			exit();
 		}
 
-		$list = Liste::where('token_private', 'like', $_SESSION['liste_token'])
+		$list = Liste::where('token_private', 'like', $_SESSION['wishlist_liste_token'])
 			->first();
 
 		// stop si token invalide
@@ -46,7 +47,7 @@ class CreateurItem {
 
 		// stop si un item avec le même nom existe deja
 		$test = Item::where('nom', 'like', $_POST['nom'])
-			->where('liste_id', "==", $list->id)
+			->where('liste_id', "==", $list->no)
 			->first();
     	if ($test) {
         	echo 'Un item avec le même nom existe déjà'; // alerte
@@ -55,7 +56,7 @@ class CreateurItem {
 
 		// creation de l'item
 		$item = new Item();
-		$item->liste_id = $list->id;
+		$item->liste_id = $list->no;
 		$item->nom = htmlspecialchars($_POST['nom']);
 		$item->descr = htmlspecialchars($_POST['descr']);
 		$item->tarif = htmlspecialchars($_POST['tarif']);
