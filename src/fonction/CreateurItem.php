@@ -18,7 +18,7 @@ class CreateurItem {
 
 	public static function itemAddForm ()
 	{
-		echo '<form action="add-item" method="post">
+		echo '<form action="../add-item" method="post">
 			<p><input type="text" name="nom" placeholder="Nom" required/></p>
 			<p><br/><input type="text" name="descr" placeholder="Description" required/></p>
 			<p><br/><input type="number" name="tarif" placeholder="Prix" required/></p>
@@ -35,8 +35,19 @@ class CreateurItem {
 			exit();
 		}
 
+		$list = Liste::where('token_private', 'like', $_SESSION['liste_token'])
+			->first();
+
+		// stop si token invalide
+		if (!$list) {
+			echo "Aucuns token de liste correspondant"; // alerte
+			exit();
+		}
+
 		// stop si un item avec le même nom existe deja
-		$test = Item::where('nom', 'like', $_POST['nom'])->first();
+		$test = Item::where('nom', 'like', $_POST['nom'])
+			->where('liste_id', "==", $list->id)
+			->first();
     	if ($test) {
         	echo 'Un item avec le même nom existe déjà'; // alerte
 			exit();
