@@ -41,9 +41,13 @@ if ($connected_user)
 
 $app = new \Slim\Slim();
 
+//Affiche l'ensemble des listes
 $app->get('/liste', function ()
 {
-    FL::liste();
+    FL::allListe();
+});
+$app->get('/liste/:one', function($token){
+	FL::listeUnit($token);
 });
 
 

@@ -103,7 +103,7 @@ class FctnListe {
 			$liste->save();
     }
 
-    public static function liste()
+    public static function allListe()
     {
         $lists=Liste::get();
         echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre1
@@ -127,5 +127,20 @@ class FctnListe {
         }
     }
 
-
-}
+		public static function listeUnit($token)
+		{
+			  $liste = Liste::where('token_private', 'like', $token)->first();
+				$itemlist=$liste->item;
+				echo "<h1>" . $liste->titre . "</h1>"; // HTML CODE titre1
+				echo "<h2></br>No : " . $liste->no . "<br/></h2>";
+				echo "<ul>"; // HTML CODE debut liste
+				foreach($itemlist as $item)
+						{
+						echo "<li>Item id : " . $item->id .
+						"<br/>Nom de l'objet : ". $item->nom .
+						"<br/><a href=item/". $item->name .">Details</a><br/>
+						</li>";
+				}
+				echo "</ul>"; // HTML CODE fin liste
+			}
+	}
