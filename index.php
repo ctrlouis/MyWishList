@@ -47,7 +47,7 @@ $app->get('/liste', function ()
     FL::allListe();
 });
 $app->get('/liste/:one', function($token){
-	FL::listeUnit($token);
+	FL::liste($token);
 });
 
 
@@ -57,9 +57,6 @@ $app->get('/add-liste-form', function(){
 });
 $app->post('/add-liste', function(){
 	FL::listeAdd();
-});
-$app->get('/edit-liste-form/:one', function($token){
-	FL::listeEditForm($token);
 });
 $app->post('/edit-liste/:one', function($token){
 	FL::listeEdit($token);
@@ -117,7 +114,7 @@ $app->get('/', function (){
 	echo '<a href="liste">affiche les listes<br/>';
 	echo '<a href="add-item-form"> creer un item</a><br/>';
 	echo '<a href="add-liste-form">creer une liste</a><br/>';
-	echo '<a href="edit-item-form/*token*">modifier un item(token requis)</a><br/>';
+	echo '<a href="liste/*token*">affiche un item(token requis, si variable de session correspondante modification effectuable)</a><br/>';
 });
 
 $app->run();

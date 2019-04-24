@@ -45,33 +45,11 @@ class FctnListe {
 		$liste->expiration = htmlspecialchars($_POST['expiration']);
 		$liste->token_private = Outils::generateToken();
 		$liste->save();
+		$_SESSION['wishlist_liste_token'] = $liste->token_private;
 		echo '<a href ="edit-liste-form/' . $liste->token_private . '">URL de modification : </a>';
 	}
 
-	public static function listeEditForm ($token)
-	{
-		$liste = Liste::where('token_private', 'like', $token)->first();
 
-		if (!$liste) {
-			echo 'Aucune liste trouvée'; // alerte
-			exit();
-		}
-
-		//Affiche la liste séléctionner à l'aide du token
-		echo "<h2></br>No : " . $liste->no .
-						"<br/>Titre : " . $liste->titre .
-						"<br/>
-					</h2>";
-
-		$_SESSION['wishlist_liste_token'] = $liste->token_private;
-
-		echo '<form action="../edit-liste/'. $token .'" method="post">
-			<p>Titre : <input type="text" name="titre" /></p>
-			<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
-			<p>Description : <br/><input type="text" name="description" /></p>
-			<p><input type="submit" name="Modifier"></p>
-			</form>';
-	}
 
 	public static function listeEdit ($token)
 	{
@@ -103,6 +81,7 @@ class FctnListe {
 			$liste->save();
     }
 
+		//Affiche chaque liste existante avec leur items correspondants
     public static function allListe()
     {
         $lists=Liste::get();
@@ -127,20 +106,42 @@ class FctnListe {
         }
     }
 
-		public static function listeUnit($token)
+		//Affiche une liste particulière, gére la modification de la liste si..
+		//..token_private dans la variable de session
+		public static function liste($token)
 		{
 			  $liste = Liste::where('token_private', 'like', $token)->first();
+
+				//Si la liste n'existe pas
+				if (!$liste)
+				{
+					echo 'Aucune liste trouvée'; // alerte
+					exit();
+				}
+
 				$itemlist=$liste->item;
 				echo "<h1>" . $liste->titre . "</h1>"; // HTML CODE titre1
 				echo "<h2></br>No : " . $liste->no . "<br/></h2>";
 				echo "<ul>"; // HTML CODE debut liste
 				foreach($itemlist as $item)
 						{
-						echo "<li>Item id : " . $item->id .
-						"<br/>Nom de l'objet : ". $item->nom .
-						"<br/><a href=item/". $item->name .">Details</a><br/>
-						</li>";
-				}
+							echo "<li>Item id : " . $item->id .
+							"<br/>Nom de l'objet : ". $item->nom .
+							"<br/><a href=item/". $item->name .">Details</a><br/>
+							</li>";
+						}
 				echo "</ul>"; // HTML CODE fin liste
+				if (isset($_SESSION['wishlist_liste_token']))
+				{
+					if($liste->token_private == $_SESSION['wishlist_liste_token'])
+					{
+						echo '<form action="../edit-liste/'. $token .'" method="post">
+							<p>Titre : <input type="text" name="titre" /></p>
+							<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
+							<p>Description : <br/><input type="text" name="description" /></p>
+							<p><input type="submit" name="Modifier"></p>
+							</form>';
+					}
+				}
 			}
 	}
