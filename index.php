@@ -58,9 +58,6 @@ $app->get('/add-liste-form', function(){
 $app->post('/add-liste', function(){
 	FL::listeAdd();
 });
-$app->post('/edit-liste/:one', function($token){
-	FL::listeEdit($token);
-});
 
 
 // créer un item

@@ -44,6 +44,7 @@ class FctnListe {
 		$liste->user_id = htmlspecialchars($_POST['user_id']);
 		$liste->expiration = htmlspecialchars($_POST['expiration']);
 		$liste->token_private = Outils::generateToken();
+		$liste->token_publique = Outils::generateToken();
 		$liste->save();
 		$_SESSION['wishlist_liste_token'] = $liste->token_private;
 		echo '<a href ="liste/' . $liste->token_private . '">URL de modification : </a>';
@@ -115,8 +116,20 @@ class FctnListe {
 				//Si la liste n'existe pas
 				if (!$liste)
 				{
-					echo 'Aucune liste trouvée'; // alerte
-					exit();
+					$liste = Liste::where('token_publique', 'like', $token)->first();
+					if (!$liste)
+					{
+						echo 'Aucune liste trouvée'; // alerte
+						exit();
+					}
+					else
+					{
+						$_SESSION['wishlist_liste_token'] = $liste->token_publique;
+					}
+				}
+				else
+				{
+					$_SESSION['wishlist_liste_token'] = $liste->token_private;
 				}
 
 				$itemlist=$liste->item;
@@ -130,20 +143,17 @@ class FctnListe {
 							</li>";
 						}
 				echo "</ul>"; // HTML CODE fin liste
-				if (isset($_SESSION['wishlist_liste_token']))
+				if($liste->token_private == $_SESSION['wishlist_liste_token'])
 				{
-					if($liste->token_private == $_SESSION['wishlist_liste_token'])
-					{
-						echo 'Modification de la liste</br>
-							<form action="../edit-liste/'. $token .'" method="post">
-							<p>Titre : <input type="text" name="titre" /></p>
-							<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
-							<p>Description : <br/><input type="text" name="description" /></p>
-							<p><input type="submit" name="Modifier"></p>
-							</form></br>
-							Ajouter d un item dans votre liste';
+					echo 'Modification de la liste</br>
+						<form action="../edit-liste/'. $token .'" method="post">
+						<p>Titre : <input type="text" name="titre" /></p>
+						<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
+						<p>Description : <br/><input type="text" name="description" /></p>
+						<p><input type="submit" name="Modifier"></p>
+						</form></br>
+						Ajouter d un item dans votre liste';
 						CI::itemAddForm ();
 					}
 				}
 			}
-	}
