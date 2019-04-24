@@ -55,7 +55,7 @@ class CreateurItem {
 
 		// creation de l'item
 		$item = new Item();
-		$item->liste_id = 1;
+		$item->liste_id = $list->id;
 		$item->nom = htmlspecialchars($_POST['nom']);
 		$item->descr = htmlspecialchars($_POST['descr']);
 		$item->tarif = htmlspecialchars($_POST['tarif']);
