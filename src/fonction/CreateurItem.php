@@ -12,6 +12,7 @@ class CreateurItem {
 
 	public static function itemDetails ($item)
 	{
+		if ($item->img) echo '<img class="icone" src="../' . $item->img . '" alt="Image of ' . $item->name . '" />';
 		echo '<br/>nom : ' . $item->nom .
 			'<br/>description : ' . $item->descr;
 	}
@@ -87,7 +88,7 @@ class CreateurItem {
 
 	public static function itemDeleteForm ($item_name)
 	{
-		echo '<form action="../delete-item/' . $item_name . '" method="POST">
+		echo '<form action="../delete-image/' . $item_name . '" method="POST">
 				<input type="submit" name="" value="Delete" >
 			</form>';
 	}

@@ -15,6 +15,7 @@ class ParticipantItem {
 		if ($item->reserv == 0) $reserv = 'disponible';
 		else $reserv = 'reservé';
 
+		if ($item->img) echo '<img class="icone" src="../' . $item->img . '" alt="Image of ' . $item->name . '" />';
 		echo '<br/>nom : ' . $item->nom .
 			'<br/>description : ' . $item->descr .
 			'<br/>etat reservation : ' . $reserv;

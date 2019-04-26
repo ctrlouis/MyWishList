@@ -9,6 +9,7 @@ use wishlist\modele\User;
 use wishlist\fonction\TousItem as TI;
 use wishlist\fonction\ParticipantItem as PI;
 use wishlist\fonction\CreateurItem as CI;
+use wishlist\fonction\GestionImage as GI;
 
 
 class PageItem {
@@ -59,6 +60,7 @@ class PageItem {
 	}
 
 
+	// PRIVATE VIEW
 	public static function privateView($item)
 	{
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
@@ -72,12 +74,24 @@ class PageItem {
 				$_SESSION['item_action'] = null;
 				exit();
 			}
+			if ($_SESSION['item_action'] == "uploadImage") {
+				GI::imageUpload($item);
+				$_SESSION['item_action'] = null;
+				exit();
+			}
+			if ($_SESSION['item_action'] == "deleteImage") {
+				GI::imageDelete($item);
+				$_SESSION['item_action'] = null;
+				exit();
+			}
 		}
 
 		CI::itemDetails($item);
 
 		if (!isset($_SESSION['item_action']) || !$_SESSION['item_action']) // par défault
 		{
+			GI::imageUploadForm($item->nom);
+			GI::imageDeleteForm($item->nom);
 			CI::itemEditForm($item->nom);
 			CI::itemDeleteForm($item->nom);
 		}
@@ -90,6 +104,7 @@ class PageItem {
 	}
 
 
+	// PUBLIC VIEW
 	public static function publicView($item)
 	{
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault

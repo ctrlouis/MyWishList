@@ -92,8 +92,15 @@ $app->post('/delete-item/:name', function ($item_name){
 });
 
 // uploader imager
-$app->post('/upload-image', function (){
-	GI::imageUpload();
+$app->post('/upload-image/:name', function ($item_name){
+	$_SESSION['item_action'] = "uploadImage";
+	PI::displayItem($item_name);
+});
+
+// supprimer un item
+$app->post('/delete-image/:name', function ($item_name){
+	$_SESSION['item_action'] = "deleteImage";
+	PI::displayItem($item_name);
 });
 
 // connection
