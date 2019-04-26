@@ -35,19 +35,19 @@ git clone git@github.com:ctrlouis/MyWishList.app.git && cd MyWishList.app && com
 
 ## Taches
 ### Principales
-- [ ] 1. Afficher une liste de souhaits
-- [ ] 2. Afficher un item d'une liste
-- [ ] 3. Réserver un item
+- [X] 1. Afficher une liste de souhaits
+- [X] 2. Afficher un item d'une liste
+- [X] 3. Réserver un item
 - [ ] 4. Ajouter un message avec sa réservation
 - [ ] 5. Ajouter un message sur une liste
-- [ ] 6. Créer une liste
+- [X] 6. Créer une liste
 - [ ] 7. Modifier les informations générales d'une de ses listes
-- [ ] 8. Ajouter des items
-- [ ] 9. Modifier un item
-- [ ] 10. Supprimer un item
-- [ ] 11. Rajouter une image à un item
-- [ ] 12. Modifier une image d'un item
-- [ ] 13 Supprimer une image d'un item
+- [X] 8. Ajouter des items
+- [X] 9. Modifier un item
+- [X] 10. Supprimer un item
+- [X] 11. Rajouter une image à un item
+- [X] 12. Modifier une image d'un item
+- [X] 13 Supprimer une image d'un item
 - [ ] 14. Partager une liste
 - [ ] 15. Consulter les réservation d'une de ses listes avant échéance
 - [ ] 16. Consulter les réservations et messages d'une de ses listes après échéance
