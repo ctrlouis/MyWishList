@@ -137,10 +137,10 @@ class FctnListe {
 				echo "<ul>"; // HTML CODE debut liste
 				foreach($itemlist as $item)
 						{
-							echo "<li>Item id : " . $item->id .
-							"<br/>Nom de l'objet : ". $item->nom .
-							"<br/><a href=item/". $item->name .">Details</a><br/>
-							</li>";
+							echo '<li>Item id : ' . $item->id .
+							'<br/>Nom de l\'objet : '. $item->nom .
+							'<br/><a href="../item/'. $item->nom .'">Details</a><br/>
+							</li>';
 						}
 				echo "</ul>"; // HTML CODE fin liste
 				if($liste->token_private == $_SESSION['wishlist_liste_token'])
