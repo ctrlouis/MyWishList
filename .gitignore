@@ -2,3 +2,5 @@ conf.ini
 vendor/
 composer.lock
 composer.phar
+
+*.png
