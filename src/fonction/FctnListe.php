@@ -47,7 +47,7 @@ class FctnListe {
 		$liste->token_publique = Outils::generateToken();
 		$liste->save();
 		$_SESSION['wishlist_liste_token'] = $liste->token_private;
-		echo '<a href ="liste/' . $liste->token_private . '">URL de modification : </a>';
+		echo '<a href ="liste/' . $liste->token_private . '">URL de la liste : </a>';
 	}
 
 
@@ -153,7 +153,31 @@ class FctnListe {
 						<p><input type="submit" name="Modifier"></p>
 						</form></br>
 						Ajouter d un item dans votre liste';
-						CI::itemAddForm ();
+					CI::itemAddForm ();
+					//echo '<script type="text/javascript" src="FonctionListe.js"></script>';  //Importation de fichier JS cause des erreurs
+					echo '<script>
+					function copyListePublicLink()
+					{
+					  var copyText = document.getElementById("publicListe");
+					  copyText.select();
+					  document.execCommand("copy");
+						let button = document.getElementById("button")
+						let balise = document.createElement("p");
+						let copied = document.createTextNode("Token Publique Copié");
+						button.appendChild(balise);
+						p.appendChild(copied);
 					}
+
+					window.onload = () =>
+					{
+					  let copy = document.getElementById("bouttonCopie");
+					  copy.addEventListener("click", copyListePublicLink);
+					}
+					</script>
+					';
+					echo '<input type="text" value="'. $liste->token_publique .'" id="publicListe">';
+					echo '<button id="bouttonCopie">Copie le lien vers la liste pulbique</button>';
+					echo "</br><a href=" . $liste->token_publique . ">Lien publique de la liste</a>";
 				}
 			}
+		}
