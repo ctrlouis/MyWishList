@@ -98,7 +98,11 @@ class FctnListe {
     public static function allListe()
     {
         $lists=Liste::whereNotNull('token_publique')->get();
-        echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre1
+        echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre
+				if (sizeof($lists) == 0)
+				{
+					echo 'Aucune liste publique existante';
+				}
         foreach ($lists as $key => $value)
         {
             echo "<h2></br>No : " . $value->no .
