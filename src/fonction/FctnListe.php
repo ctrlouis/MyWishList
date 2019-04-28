@@ -44,13 +44,25 @@ class FctnListe {
 		$liste->user_id = htmlspecialchars($_POST['user_id']);
 		$liste->expiration = htmlspecialchars($_POST['expiration']);
 		$liste->token_private = Outils::generateToken();
-		$liste->token_publique = Outils::generateToken();
 		$liste->save();
 		$_SESSION['wishlist_liste_token'] = $liste->token_private;
 		echo '<a href ="liste/' . $liste->token_private . '">URL de la liste : </a>';
 	}
 
-
+	public static function rendPublic($token)
+	{
+		$liste = Liste::where('token_private', 'like', $token)
+						 ->first();
+		if (isset($liste->token_publique))
+			echo 'Liste déjà public';
+		else
+		{
+			$liste->token_publique = Outils::generateToken();
+			$liste->save();
+		}
+		echo 'La liste à était rendu publique</br>
+					<a href="../liste">Aller vers les listes publiques</a>';
+	}
 
 	public static function listeEdit ($token)
 	{
@@ -82,14 +94,13 @@ class FctnListe {
 			$liste->save();
     }
 
-		//Affiche chaque liste existante avec leur items correspondants
+		//Affiche chaque liste publiques existante avec leur items correspondants
     public static function allListe()
     {
-        $lists=Liste::get();
+        $lists=Liste::whereNotNull('token_publique')->get();
         echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre1
         foreach ($lists as $key => $value)
         {
-
             echo "<h2></br>No : " . $value->no .
             "<br/>Titre : " . $value->titre .
             "<br/></h2>";
@@ -143,7 +154,7 @@ class FctnListe {
 							</li>';
 						}
 				echo "</ul>"; // HTML CODE fin liste
-				if($liste->token_private == $_SESSION['wishlist_liste_token'])
+				if($liste->token_private == $_SESSION['wishlist_liste_token'])//Si le tokenprivé est renseigner, on peut modifier la liste et ajouter des items
 				{
 					echo 'Modification de la liste</br>
 						<form action="../edit-liste/'. $token .'" method="post">
@@ -154,30 +165,17 @@ class FctnListe {
 						</form></br>
 						Ajouter d un item dans votre liste';
 					CI::itemAddForm ();
-					//echo '<script type="text/javascript" src="FonctionListe.js"></script>';  //Importation de fichier JS cause des erreurs
-					echo '<script>
-					function copyListePublicLink()
-					{
-					  var copyText = document.getElementById("publicListe");
-					  copyText.select();
-					  document.execCommand("copy");
-						let button = document.getElementById("button")
-						let balise = document.createElement("p");
-						let copied = document.createTextNode("Token Publique Copié");
-						button.appendChild(balise);
-						p.appendChild(copied);
-					}
 
-					window.onload = () =>
-					{
-					  let copy = document.getElementById("bouttonCopie");
-					  copy.addEventListener("click", copyListePublicLink);
-					}
-					</script>
-					';
+					//javascript bouton qui copie le lien publique de la liste
+					/*echo '<script type="text/javascript" src="FonctionListe.js"></script>';  //Importation de fichier JS cause des erreurs
 					echo '<input type="text" value="'. $liste->token_publique .'" id="publicListe">';
-					echo '<button id="bouttonCopie">Copie le lien vers la liste pulbique</button>';
+					echo '<button id="bouttonCopie">Copie le lien vers la liste pulbique</button>';*/
+
 					echo "</br><a href=" . $liste->token_publique . ">Lien publique de la liste</a>";
+
+					echo '<form action="../liste-public/'. $token .'" method="post">
+									<button type="submit">Rend la liste publique</button>
+								</form>';
 				}
 			}
 		}

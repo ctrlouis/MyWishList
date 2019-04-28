@@ -59,6 +59,10 @@ $app->post('/add-liste', function(){
 	FL::listeAdd();
 });
 
+$app->post('/liste-public/:id', function($token){
+  FL::rendPublic($token);
+});
+
 
 // créer un item
 $app->get('/add-item-form', function (){
