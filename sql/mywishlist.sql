@@ -87,9 +87,10 @@ INSERT INTO `user` (`username`, `password`, `token`) VALUES
 ('vanille',	'chocolat',	'63yeltu5z24go8wsw84c0cg040oswsk084wg8kk4s4gggwg8s8');
 
 
-DROP TABLE IF EXISTS 'message'
+DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `no_liste` int(11) NOT NULL,
-  `msg` text
+  `msg` text,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
