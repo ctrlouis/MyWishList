@@ -14,7 +14,6 @@ class ParticipantItem {
 	public static function itemDetails ($item)
 	{
 		$reserv = $item->reservation[0];
-		//$reserv = $reserv[0];
 		if ($reserv->reservation == 0) $reservation_state = 'disponible';
 		else $reservation_state = 'reservé';
 

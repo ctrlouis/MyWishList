@@ -4,6 +4,7 @@ namespace wishlist\fonction;
 
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
+use wishlist\modele\Reservation;
 
 use wishlist\divers\Outils;
 
@@ -15,6 +16,20 @@ class CreateurItem {
 		if ($item->img) echo '<img class="icone" src="../' . $item->img . '" alt="Image of ' . $item->name . '" />';
 		echo '<br/>nom : ' . $item->nom .
 			'<br/>description : ' . $item->descr;
+
+		if (Outils::listeExpiration($item->liste->expiration))
+		{
+			echo '<br/><h2>Reservation</h2>';
+
+			if ( $item->reservation[0]->reservation == 0) {
+				echo 'Item non reservé';
+			} else {
+				echo 'Item reservé par ' . $item->reservation[0]->participant_name .
+					'<br/>Son message : ' . $item->reservation[0]->message;
+			}
+		} else {
+			echo "Veuillez attendre l'expiration de la liste";
+		}
 	}
 
 	public static function itemAddForm ()
