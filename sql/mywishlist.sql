@@ -72,3 +72,11 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`username`, `password`, `token`) VALUES
 ('root',	'',	'2jhxjzbddcw088cs00480ko8wocoscocog4kkc4w8448w44kw8'),
 ('vanille',	'chocolat',	'63yeltu5z24go8wsw84c0cg040oswsk084wg8kk4s4gggwg8s8');
+
+
+DROP TABLE IF EXISTS 'message'
+CREATE TABLE `message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_liste` int(11) NOT NULL,
+  `msg` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

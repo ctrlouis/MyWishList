@@ -4,6 +4,7 @@ namespace wishlist\fonction;
 
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
+use wishlist\modele\Message;
 use wishlist\fonction\CreateurItem as CI;
 use wishlist\divers\Outils;
 
@@ -110,17 +111,33 @@ class FctnListe {
             "<br/></h2>";
 
             $itemlist=$value->item;
+						$messlist=$value->message;
             echo "<ul>"; // HTML CODE debut liste
             foreach($itemlist as $item)
             {
                 echo "<li>Item id : " . $item->id .
-                "<br/>Nom de l'objet : ". $item->nom .
-                "<br/><a href=item/". $item->name .">Details</a><br/>
-                </li>";
+                				"<br/>Nom de l'objet : ". $item->nom .
+                				"<br/><a href=item/". $item->url .">Details</a><br/>
+                			</li>";
             }
+						echo "Message : <br/>";
+						foreach ($messlist as $message)
+						{
+								echo  '- ' . $message->msg . '<br/>';
+						}
             echo "</ul>"; // HTML CODE fin liste
         }
     }
+
+		public static function addMessage($token)
+		{
+			$liste = Liste::where('token_private', 'like', $token)->orWhere('token_publique', 'like', $token)->first();
+			$message = new Message;
+			$message->no_liste=htmlspecialchars($liste->no);
+			$message->msg=htmlspecialchars($_POST['message']);
+			$message->save();
+			echo 'Message ajouté à la liste';
+		}
 
 		//Affiche une liste particulière, gére la modification de la liste si..
 		//..token_private dans la variable de session
@@ -148,26 +165,45 @@ class FctnListe {
 				}
 
 				$itemlist=$liste->item;
+				$messlist=$liste->message;
 				echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
 				echo "<ul>"; // HTML CODE debut liste
 				foreach($itemlist as $item)
 						{
 							echo '<li>Item id : ' . $item->id .
-							'<br/>Nom de l\'objet : '. $item->nom .
-							'<br/><a href="../item/'. $item->nom .'">Details</a><br/>
-							</li>';
+											'<br/>Nom de l\'objet : '. $item->nom .
+											'<br/><a href="../item/'. $item->nom .'">Details</a><br/>
+										</li>';
 						}
+				echo "Message : <br/>";
+
+				foreach ($messlist as $message)
+				{
+					echo '- ' . $message->msg . '<br/>';
+				}
+
 				echo "</ul>"; // HTML CODE fin liste
-				if($liste->token_private == $_SESSION['wishlist_liste_token'])//Si le tokenprivé est renseigner, on peut modifier la liste et ajouter des items
+
+
+
+				//Ajout d'un message dans la liste
+				echo 'Ajouter un message à la liste</br>
+					<form action="../add-mess/'. $token .'" method="post">
+						<p>Message : <input type="text" name="message" /></p>
+						<p><input type="submit" name="Poster"></p>
+					</form></br>';
+
+				//Si le tokenprivé est renseigner, on peut modifier la liste et ajouter des items
+				if($liste->token_private == $_SESSION['wishlist_liste_token'])
 				{
 					echo 'Modification de la liste</br>
 						<form action="../edit-liste/'. $token .'" method="post">
-						<p>Titre : <input type="text" name="titre" /></p>
-						<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
-						<p>Description : <br/><input type="text" name="description" /></p>
-						<p><input type="submit" name="Modifier"></p>
+							<p>Titre : <input type="text" name="titre" /></p>
+							<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
+							<p>Description : <br/><input type="text" name="description" /></p>
+							<p><input type="submit" name="Modifier"></p>
 						</form></br>
-						Ajouter d un item dans votre liste';
+					Ajouter d un item dans votre liste';
 					CI::itemAddForm ();
 
 					//javascript bouton qui copie le lien publique de la liste
