@@ -63,6 +63,10 @@ class CreateurItem {
 		$item->tarif = htmlspecialchars($_POST['tarif']);
 		$item->token_private = Outils::generateToken();
 		$item->save();
+
+		$reservation = new Reservation();
+		$reservation->item_id = $item->id;
+		$reservation->save();
 	}
 
 	public static function itemEditForm ($item_name)
