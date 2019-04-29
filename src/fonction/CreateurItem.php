@@ -13,7 +13,9 @@ class CreateurItem {
 
 	public static function itemDetails ($item)
 	{
-		if ($item->img) echo '<img class="icone" src="../' . $item->img . '" alt="Image of ' . $item->name . '" />';
+		if ($item->img)
+			echo '<img class="icone" src="../' . $item->img . '" alt="Image of ' . $item->name . '" />';
+
 		echo '<br/>nom : ' . $item->nom .
 			'<br/>description : ' . $item->descr;
 
