@@ -55,7 +55,10 @@ $app->get('/add-liste-form', function(){
 $app->post('/add-liste', function(){
 	FL::listeAdd();
 });
-
+//Ajout un message à une liste
+$app->post('/add-mess/:token', function($token){
+  FL::addMessage($token);
+});
 $app->post('/liste-public/:id', function($token){
   FL::rendPublic($token);
 });

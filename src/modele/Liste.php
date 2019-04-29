@@ -11,4 +11,8 @@ class Liste extends \Illuminate\Database\Eloquent\Model
     public function item() {
         return $this->hasMany('wishlist\modele\Item', 'liste_id');
     }
+
+    public function message() {
+        return $this->hasMany('wishlist\modele\Message', 'no_liste');
+    }
 }
