@@ -4,6 +4,7 @@ namespace wishlist\fonction;
 
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
+use wishlist\modele\Reservation;
 
 use wishlist\divers\Outils;
 
@@ -12,15 +13,17 @@ class ParticipantItem {
 
 	public static function itemDetails ($item)
 	{
-		if ($item->reserv == 0) $reserv = 'disponible';
-		else $reserv = 'reservé';
+		$reserv = $item->reservation[0];
+		//$reserv = $reserv[0];
+		if ($reserv->reservation == 0) $reservation_state = 'disponible';
+		else $reservation_state = 'reservé';
 
 		if ($item->img) echo '<img class="icone" src="../' . $item->img . '" alt="Image of ' . $item->name . '" />';
 		echo '<br/>nom : ' . $item->nom .
 			'<br/>description : ' . $item->descr .
-			'<br/>etat reservation : ' . $reserv;
+			'<br/>etat reservation : ' . $reservation_state;
 
-		if($item->reserv == 0) SELF::itemReserveForm($item->nom);
+		if($reserv->reservation == 0) SELF::itemReserveForm($item->nom);
 	}
 
 	public static function itemReserveForm ($item_name)
@@ -34,9 +37,13 @@ class ParticipantItem {
 
 	public static function itemReserve ($item)
 	{
-		$item->reserv = 1;
-		$item->message = $_POST['message'];
-		$item->save();
+		$reservation = Reservation::where('item_id', '=', $item->id)
+			->first();
+		$reservation->reservation = 1;
+		$reservation->participant_name = htmlspecialchars($_POST['name']);
+		$reservation->message = htmlspecialchars($_POST['message']);
+		$reservation->save();
+
 		echo 'Item reservé !';
 	}
 

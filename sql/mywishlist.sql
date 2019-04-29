@@ -13,8 +13,6 @@ CREATE TABLE `item` (
   `img` text DEFAULT NULL,
   `url` text DEFAULT NULL,
   `tarif` decimal(5,2) DEFAULT NULL,
-  `reserv` boolean DEFAULT 0,
-  `message` text DEFAULT NULL,
   `token_private` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -54,9 +52,24 @@ CREATE TABLE `liste` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `token_private`) VALUES
-(1,	1,	'Pour fêter le bac !',	'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	'2018-06-27',	'tokenlisteprivate1'),
-(2,	2,	'Liste de mariage d\'Alice et Bob',	'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	'2018-06-30',	'tokenlisteprivate2'),
-(3,	3,	'C\'est l\'anniversaire de Charlie',	'Pour lui préparer une fête dont il se souviendra :)',	'2017-12-12',	'tokenlisteprivate3');
+(1,	1,	'Pour fêter le bac !',	'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	'2018-06-27',	'tokenprivate1'),
+(3,	3,	'C\'est l\'anniversaire de Charlie',	'Pour lui préparer une fête dont il se souviendra :)',	'2017-12-12',	'tokenprivate3');
+INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `token_private`, `token_publique`) VALUES
+(2,	2,	'Liste de mariage d\'Alice et Bob',	'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	'2018-06-30',	'tokenprivate2', 'tokenpublic2');
+
+
+
+DROP TABLE IF EXISTS `reservation`;
+CREATE TABLE `reservation` (
+  `item_id` int(11),
+  `reservation` boolean DEFAULT 0,
+  `participant_name` varchar(255) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  PRIMARY KEY (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `reservation` (`item_id`) VALUES
+(1), (2), (4), (5), (6), (7), (8), (9), (10), (11), (12), (19), (22), (23), (24), (25), (26), (27);
 
 
 DROP TABLE IF EXISTS `user`;

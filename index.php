@@ -27,9 +27,6 @@ $cf = new CF();
 $cf->setConfig('src/conf/conf.ini');
 $db = $cf->makeConnection();
 
-$_SESSION['liste_token'] = 'tokenlisteprivate2'; // TEST
-$_SESSION['item_action'] = null; // TEST
-
 
 // connection utilisateur
 $connected_user = LOG::Identification();

@@ -17,24 +17,25 @@ class PageItem {
 	public static function displayItem($item_name) {
 
 		// stop si pas de token enregistré
-		if (!isset($_SESSION['liste_token']) && !$_SESSION['liste_token']) {
+		if (!isset($_SESSION['wishlist_liste_token']) && !$_SESSION['wishlist_liste_token']) {
 			echo "Aucunes liste trouvé"; // alerte
 			exit();
 		}
 
 		// test token publique
-		$list = Liste::where('token_publique', 'like', $_SESSION['liste_token'])
+		$list = Liste::where('token_publique', 'like', $_SESSION['wishlist_liste_token'])
 			->first();
 
 		$createur = false; // défini en accès publique par défault
 
 		// test token privée
 		if(!$list) {
-			$list = Liste::where('token_private', 'like', $_SESSION['liste_token'])
+			$list = Liste::where('token_private', 'like', $_SESSION['wishlist_liste_token'])
 				->first();
 
 			if ($list) {
 				$createur = true; // défini en accès privée si token privée
+				echo "createur = true";
 			} else { // stop si token invalid
 				echo "Aucuns token de liste correspondant"; // alerte
 				exit();
