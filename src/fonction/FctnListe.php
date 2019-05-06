@@ -10,7 +10,7 @@ use wishlist\divers\Outils;
 
 
 class FctnListe {
-
+	//Formulaire pour ajouter une liste
 	public static function listeAddForm ()
 	{
 		echo '<form action="add-liste" method="post">
@@ -23,6 +23,7 @@ class FctnListe {
 			</form>';
 	}
 
+	//Rediriger vers cette fonction par listeAddForm, crée la liste dans la base de donnée
 	public static function listeAdd ()
 	{
 		// stop si un champ requis vide
@@ -30,7 +31,6 @@ class FctnListe {
 			echo 'Création impossible, le champ requis est vide.'; //alerte
 			exit();
 		}
-
 		// stop si une liste avec le même nom existe deja
 		$test = Liste::where('titre', 'like', $_POST['titre'])->first();
     	if ($test) {
@@ -45,89 +45,87 @@ class FctnListe {
 		$liste->user_id = htmlspecialchars($_POST['user_id']);
 		$liste->expiration = htmlspecialchars($_POST['expiration']);
 		$liste->token_private = Outils::generateToken();
+		$liste->token_publique = Outils::generateToken();
 		$liste->save();
 		$_SESSION['wishlist_liste_token'] = $liste->token_private;
 		echo '<a href ="liste/' . $liste->token_private . '">URL de la liste : </a>';
 	}
 
+	//Rediriger par un bouton lorsqu'on édite une liste, rend la liste public ou privée selon son état actuel
 	public static function rendPublic($token)
 	{
 		$liste = Liste::where('token_private', 'like', $token)
 						 ->first();
-		if (isset($liste->token_publique))
-			echo 'Liste déjà public';
+		if ($liste->published == true)//Si la liste est publique elle deviendra privée
+		{
+			$liste->published = false;
+			$liste->save();
+			echo 'La liste a été rendu privée</br>
+						<a href="../liste/'. $token .'">Retourner sur la liste</a>';
+		}
 		else
 		{
-			$liste->token_publique = Outils::generateToken();
+			$liste->published = true;
 			$liste->save();
+			echo 'La liste a été rendu publique</br>';
 		}
-		echo 'La liste à était rendu publique</br>
-					<a href="../liste">Aller vers les listes publiques</a>';
+
 	}
+
 
 	public static function listeEdit ($token)
 	{
-
 		// stop si pas de token renseigné
-		if (!isset($_SESSION['wishlist_liste_token'])) {
+		if (!isset($_SESSION['wishlist_liste_token']))
+		{
 			echo 'Token erroné';
-
 		}
-
-		if (!$_POST['titre'] && !$_POST['description'] && !$_POST['user_id'] && !$_POST['url']) {
+		if (!$_POST['titre'] && !$_POST['description'] && !$_POST['user_id'] && !$_POST['url'])
+		{
 			echo 'Aucunes modification effectué, pas de champs renseigné.'; //alerte
-
 		}
-
 		$liste = Liste::where('token_private', 'like', $_SESSION['wishlist_liste_token'])
 						 ->first();
-
 		// stop si aucuns item trouvé
-		if (!$liste) {
+		if (!$liste)
+		{
 			echo 'Aucune liste trouvé';
 			exit();
 		}
+		echo "Modifications effectuées sur la liste " . $liste->titre;
+		$liste->titre = htmlspecialchars($_POST['titre']);
+		$liste->description = htmlspecialchars($_POST['description']);
+		$liste->user_id = htmlspecialchars($_POST['user_id']);
+		$liste->save();
+  }
 
-			echo "Modifications effectuées sur la liste " . $liste->titre;
-			$liste->titre = htmlspecialchars($_POST['titre']);
-			$liste->description = htmlspecialchars($_POST['description']);
-			$liste->user_id = htmlspecialchars($_POST['user_id']);
-			$liste->save();
-    }
 
 		//Affiche chaque liste publiques existante avec leur items correspondants
     public static function allListe()
     {
-        $lists=Liste::whereNotNull('token_publique')->get();
+        $lists=Liste::where('published', 'like', '1')->get();
         echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre
 				if (sizeof($lists) == 0)
 				{
 					echo 'Aucune liste publique existante';
 				}
         foreach ($lists as $key => $value)
-        {
-            echo "<h2></br>No : " . $value->no .
-            "<br/>Titre : " . $value->titre .
-            "<br/></h2>";
-
-            $itemlist=$value->item;
-						$messlist=$value->message;
-            echo "<ul>"; // HTML CODE debut liste
-            foreach($itemlist as $item)
-            {
-                echo "<li>Item id : " . $item->id .
-                				"<br/>Nom de l'objet : ". $item->nom .
-                				"<br/><a href=item/". $item->url .">Details</a><br/>
-                			</li>";
-            }
-						echo "Message : <br/>";
-						foreach ($messlist as $message)
-						{
-								echo  '- ' . $message->msg . '<br/>';
-						}
-            echo "</ul>"; // HTML CODE fin liste
+        {//Si le token privée d'une liste est dans la variable de session, le lien menera vers la liste en mode édition
+					if($_SESSION['wishlist_liste_token'] == $value->token_publique)
+					{
+						echo '</br>No : ' . $value->no .
+            '<br/><a href="liste/' . $value->token_publique . '">Titre : ' . $value->titre .
+            '</a></br>';
+					}
+					else
+					{
+						echo '</br>No : ' . $value->no .
+            '<br/><a href="liste/' . $value->token_private . '">Titre : ' . $value->titre .
+            '</a></br>';
+					}
         }
     }
+
 
 		public static function addMessage($token)
 		{
@@ -138,6 +136,7 @@ class FctnListe {
 			$message->save();
 			echo 'Message ajouté à la liste';
 		}
+
 
 		//Affiche une liste particulière, gére la modification de la liste si..
 		//..token_private dans la variable de session
@@ -164,6 +163,20 @@ class FctnListe {
 					$_SESSION['wishlist_liste_token'] = $liste->token_private;
 				}
 
+				//Bouton permettant de basculer entre privée et publique
+				if($liste->published == true)
+				{
+					echo '<form action="../liste-public/'. $token .'" method="post">
+									<button type="submit">Rend la liste privée</button>
+								</form>';
+				}
+				else {
+					echo '<form action="../liste-public/'. $token .'" method="post">
+									<button type="submit">Rend la liste publique</button>
+								</form>';
+				}
+
+				//Affiche l'ensemble des items pour chaque liste
 				$itemlist=$liste->item;
 				$messlist=$liste->message;
 				echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
@@ -177,14 +190,13 @@ class FctnListe {
 						}
 				echo "Message : <br/>";
 
+				//Affiche chaque message lié à la liste
 				foreach ($messlist as $message)
 				{
 					echo '- ' . $message->msg . '<br/>';
 				}
 
 				echo "</ul>"; // HTML CODE fin liste
-
-
 
 				//Ajout d'un message dans la liste
 				echo 'Ajouter un message à la liste</br>
@@ -211,11 +223,8 @@ class FctnListe {
 					echo '<input type="text" value="'. $liste->token_publique .'" id="publicListe">';
 					echo '<button id="bouttonCopie">Copie le lien vers la liste pulbique</button>';*/
 
-					echo "</br><a href=" . $liste->token_publique . ">Lien publique de la liste</a>";
 
-					echo '<form action="../liste-public/'. $token .'" method="post">
-									<button type="submit">Rend la liste publique</button>
-								</form>';
+
 				}
 			}
 		}
