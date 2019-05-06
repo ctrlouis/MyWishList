@@ -52,7 +52,7 @@ class FctnListe {
 	}
 
 	//Rediriger par un bouton lorsqu'on édite une liste, rend la liste public ou privée selon son état actuel
-	public static function rendPublic($token)
+	public static function publication($token)
 	{
 		$liste = Liste::where('token_private', 'like', $token)
 						 ->first();
@@ -166,12 +166,12 @@ class FctnListe {
 				//Bouton permettant de basculer entre privée et publique
 				if($liste->published == true)
 				{
-					echo '<form action="../liste-public/'. $token .'" method="post">
+					echo '<form action="../liste-published/'. $token .'" method="post">
 									<button type="submit">Rend la liste privée</button>
 								</form>';
 				}
 				else {
-					echo '<form action="../liste-public/'. $token .'" method="post">
+					echo '<form action="../liste-published/'. $token .'" method="post">
 									<button type="submit">Rend la liste publique</button>
 								</form>';
 				}

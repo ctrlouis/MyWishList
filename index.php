@@ -46,6 +46,7 @@ $app->get('/liste', function ()
 {
     FL::allListe();
 });
+//Affiche une liste particulière lorsque le token est renseigné dans l'URL
 $app->get('/liste/:one', function($token){
 	FL::liste($token);
 });
@@ -58,12 +59,14 @@ $app->get('/add-liste-form', function(){
 $app->post('/add-liste', function(){
 	FL::listeAdd();
 });
+
 //Ajout un message à une liste
 $app->post('/add-mess/:token', function($token){
   FL::addMessage($token);
 });
-$app->post('/liste-public/:id', function($token){
-  FL::rendPublic($token);
+//Rend la liste visible par tous
+$app->post('/liste-published/:id', function($token){
+  FL::publication($token);
 });
 
 
