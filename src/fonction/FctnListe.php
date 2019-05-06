@@ -100,10 +100,13 @@ class FctnListe {
   }
 
 
+
+
 		//Affiche chaque liste publiques existante avec leur items correspondants
     public static function allListe()
     {
-        $lists=Liste::where('published', 'like', '1')->get();
+
+        $lists=Liste::where('published', 'like', '1')->orderBy('expiration', 'asc')->get();
         echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre
 				if (sizeof($lists) == 0)
 				{
@@ -114,13 +117,13 @@ class FctnListe {
 					if($_SESSION['wishlist_liste_token'] == $value->token_publique)
 					{
 						echo '</br>No : ' . $value->no .
-            '<br/><a href="liste/' . $value->token_publique . '">Titre : ' . $value->titre .
+            '<br/><a href="liste/' . $value->token_publique . '">' . $value->titre .
             '</a></br>';
 					}
 					else
 					{
 						echo '</br>No : ' . $value->no .
-            '<br/><a href="liste/' . $value->token_private . '">Titre : ' . $value->titre .
+            '<br/><a href="liste/' . $value->token_private . '">' . $value->titre .
             '</a></br>';
 					}
         }
