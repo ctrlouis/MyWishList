@@ -106,7 +106,7 @@ class FctnListe {
     public static function allListe()
     {
 
-        $lists=Liste::where('published', 'like', '1')->orderBy('expiration', 'asc')->get();
+        $lists=Liste::where('published', 'like', '1')->orderBy('expiration', 'asc')->whereDate('expiration', '>', date('Y-m-d'))->get();
         echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre
 				if (sizeof($lists) == 0)
 				{
