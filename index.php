@@ -38,6 +38,9 @@ if ($connected_user)
 
 $app = new \Slim\Slim();
 
+echo '<a href="../liste">Accueil</a></br>';
+
+
 //Affiche l'ensemble des listes
 $app->get('/liste', function ()
 {
