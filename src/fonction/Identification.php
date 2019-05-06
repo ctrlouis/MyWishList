@@ -3,6 +3,7 @@
 namespace wishlist\fonction;
 
 use Illuminate\Database\Capsule\Manager as DB;
+use Cartalyst\Sentinel\Native\Facades\Sentinel;
 
 use wishlist\modele\User;
 use wishlist\divers\Outils;
