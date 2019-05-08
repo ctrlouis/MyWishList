@@ -80,6 +80,36 @@ class FctnListe {
 
 	}
 
+	public static function addUser()
+	{
+		if($_SESSION["wishlist_userid"] != null)
+		{
+			if($_POST['token'] != null){
+				$liste = Liste::where('token_private', 'like', $_POST['token'])->first();
+				if($liste)
+				{
+					if ($liste->user_id == $_SESSION["wishlist_userid"]) {
+						echo "Cette liste vous appartient déjà.";
+					}
+					else if($liste->user_id == null)
+					{
+						$liste->user_id = htmlspecialchars($_SESSION["wishlist_userid"]);
+						$liste->save();
+						echo 'La liste a bien été ajouter à votre compte';
+					}
+					else{
+						echo "Cette liste appartient déjà à un autre utilisateur.";
+					}
+				}
+				else {
+					echo "Aucune liste correspond au token indiquer";
+				}
+			}
+			else {
+				echo "Aucun token introduit";
+			}
+		}
+	}
 
 	public static function listeEdit ($token)
 	{
@@ -103,7 +133,6 @@ class FctnListe {
 		echo "Modifications effectuées sur la liste " . $liste->titre;
 		$liste->titre = htmlspecialchars($_POST['titre']);
 		$liste->description = htmlspecialchars($_POST['description']);
-		$liste->user_id = htmlspecialchars($_POST['user_id']);
 		$liste->save();
   }
 
@@ -222,7 +251,6 @@ class FctnListe {
 					echo 'Modification de la liste</br>
 						<form action="../edit-liste/'. $token .'" method="post">
 							<p>Titre : <input type="text" name="titre" /></p>
-							<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
 							<p>Description : <br/><input type="text" name="description" /></p>
 							<p><input type="submit" name="Modifier"></p>
 						</form></br>

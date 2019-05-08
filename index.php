@@ -40,6 +40,10 @@ echo '<h1>Application MyWishList</h1>
 if ($connected_user)
 {
 	AUTH::FormulaireDeconnection();
+	echo '<form action="add-user" method="post">
+		<p>Token privé de la liste : <br/><input type="text" name="token" /></p>
+		<p><input type="submit" name="Ajouter liste"></p>
+		</form>';
 } else {
 	AUTH::FormulaireConnection();
 }
@@ -62,6 +66,9 @@ $app->get('/add-liste-form', function(){
 });
 $app->post('/add-liste', function(){
 	FL::listeAdd();
+});
+$app->post('/add-user', function(){
+	FL::addUser();
 });
 
 //Ajout un message à une liste
@@ -134,6 +141,7 @@ $app->post('/deconnection', function(){
 
 // si url vide
 $app->get('/', function (){
+	echo 'Bienvenu sur l`utilitaire de liste de souhait.';
 });
 
 $app->run();
