@@ -115,7 +115,7 @@ $app->post('/delete-image/:name', function ($item_name){
 	PI::displayItem($item_name);
 });
 
-// connection
+// connection & inscription
 $app->post('/connection', function(){
 	if (isset($_POST['signin']))
 		AUTH::Connection($_POST['username'], $_POST['password']);
@@ -124,7 +124,7 @@ $app->post('/connection', function(){
 	header("/");
 });
 
-// connection
+// deconnection
 $app->post('/deconnection', function(){
 	AUTH::Deconnection();
 	header("/");
