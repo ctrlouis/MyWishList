@@ -12,8 +12,9 @@ use wishlist\modele\User;
 use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\CreateurItem as CI;
-use wishlist\pages\pageItem as PI;
+use wishlist\pages\PageItem as PI;
 use wishlist\fonction\GestionImage as GI;
+use wishlist\pages\PageCompte as PC;
 
 // use wishlist\fonction\ParticipantItem as PI;
 
@@ -129,6 +130,18 @@ $app->post('/deconnection', function(){
 	AUTH::Deconnection();
 	header("/");
 });
+
+// affiche details d'un compte
+$app->get('/compte', function() {
+	PC::displayCompte();
+});
+
+//  modifier un compte
+$app->post('/edit-compte', function (){
+	$_SESSION['compte_action'] = "edit";
+	PC::displayCompte();
+});
+
 
 // si url vide
 $app->get('/', function (){
