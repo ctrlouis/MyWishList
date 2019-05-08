@@ -65,8 +65,8 @@ class CreateurItem {
 
 		// stop si un item avec le même nom existe deja
 		$test = Item::where('nom', 'like', $_POST['nom'])
-			->where('liste_id', "==", $list->no)
-			->first();
+									->where('liste_id', "=", $list->no)
+									->first();
     	if ($test) {
         	echo 'Un item avec le même nom existe déjà'; // alerte
 			exit();
@@ -84,6 +84,9 @@ class CreateurItem {
 		$reservation = new Reservation();
 		$reservation->item_id = $item->id;
 		$reservation->save();
+
+		echo $_POST['nom'] . ' est réservé.<br/>' .
+				 '<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';
 	}
 
 	public static function itemEditForm ($item_name)
