@@ -17,13 +17,10 @@ class Authentification {
 			{
 				$user = Sentinel::findById($_SESSION['wishlist_userid']);
 
-				echo 'Connected as ' . $user->email . '<br/>';
-				return $user;
+				if ($user) echo 'Connected as ' . $user->email . '<br/>';
 			}
-			else
-			{
-				
-			}
+			
+			return $user;
 		}
 
 		public static function FormulaireConnection()
