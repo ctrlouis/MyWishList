@@ -17,7 +17,7 @@ use wishlist\fonction\GestionImage as GI;
 
 // use wishlist\fonction\ParticipantItem as PI;
 
-use wishlist\fonction\Identification as LOG;
+use wishlist\fonction\Authentification as AUTH;
 
 
 session_start();
@@ -29,11 +29,13 @@ $db = $cf->makeConnection();
 
 
 // connection utilisateur
-$connected_user = LOG::Identification();
+$connected_user = AUTH::Identification();
 
 if ($connected_user)
 {
 	// si connecté...
+} else {
+	AUTH::FormulaireConnection();
 }
 
 $app = new \Slim\Slim();
@@ -116,9 +118,15 @@ $app->post('/delete-image/:name', function ($item_name){
 // connection
 $app->post('/connection', function(){
 	if (isset($_POST['signin']))
-		LOG::Connection($_POST['username'], $_POST['password']);
+		AUTH::Connection($_POST['username'], $_POST['password']);
 	else if (isset($_POST['signup']))
-    	LOG::Inscription($_POST['username'], $_POST['password']);
+    	AUTH::Inscription($_POST['username'], $_POST['password']);
+	header("/");
+});
+
+// connection
+$app->post('/deconnection', function(){
+	AUTH::Deconnection();
 	header("/");
 });
 
