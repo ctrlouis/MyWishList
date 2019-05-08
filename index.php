@@ -31,16 +31,18 @@ $db = $cf->makeConnection();
 // connection utilisateur
 $connected_user = AUTH::Identification();
 
+
+$app = new \Slim\Slim();
+echo '<h1>Application MyWishList</h1>
+			<a href="/MyWishList/liste">Affichage des listes publiques</a></br>
+			<a href="/MyWishList/add-liste-form">Crée une liste</a><br/>';
+
 if ($connected_user)
 {
 	AUTH::FormulaireDeconnection();
 } else {
 	AUTH::FormulaireConnection();
 }
-
-$app = new \Slim\Slim();
-
-echo '<a href="/MyWishList/liste">Accueil</a></br>';
 
 
 //Affiche l'ensemble des listes
@@ -132,11 +134,6 @@ $app->post('/deconnection', function(){
 
 // si url vide
 $app->get('/', function (){
-	echo '<br/>';
-	echo '<a href="liste">affiche les listes<br/>';
-	echo '<a href="add-item-form"> creer un item</a><br/>';
-	echo '<a href="add-liste-form">creer une liste</a><br/>';
-	echo '<a href="liste/*token*">affiche un item(token requis, si variable de session correspondante modification effectuable)</a><br/>';
 });
 
 $app->run();
