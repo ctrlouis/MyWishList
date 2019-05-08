@@ -17,10 +17,12 @@ class Authentification {
 			{
 				$user = Sentinel::findById($_SESSION['wishlist_userid']);
 
-				if ($user) echo 'Connected as ' . $user->email . '<br/>';
+				if ($user) {
+					echo 'Connected as ' . $user->email . '<br/>';
+					return $user;
+				}
 			}
-			
-			return $user;
+			return null;
 		}
 
 		public static function FormulaireConnection()
@@ -54,8 +56,8 @@ class Authentification {
 
 		public static function FormulaireDeconnection()
 		{
-			echo '<form action="connection" method="post">
-				<input type="submit" name="signout" value="Sign up"></p>
+			echo '<form action="deconnection" method="post">
+				<input type="submit" name="signout" value="Sign out"></p>
 				</form>';
 		}
 
