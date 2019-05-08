@@ -16,6 +16,10 @@ class PageCompte {
 					Compte::compteEdit();
 					$_SESSION['compte_action'] = null;
 				}
+				if ($_SESSION['compte_action'] == "change-password") {
+					Compte::compteChangePassword();
+					$_SESSION['compte_action'] = null;
+				}
 			}
 
 			Compte::compteDetails();
@@ -23,10 +27,10 @@ class PageCompte {
 			if (!isset($_SESSION['compte_action']) || !$_SESSION['compte_action']) // par défault
 			{
 				Compte::compteEditForm();
+				Compte::compteChangePasswordForm();
 			}
 			else // si action
 			{
-
 				$_SESSION['compte_action'] = null;
 			}
 

@@ -151,6 +151,12 @@ $app->post('/edit-compte', function (){
 	PC::displayCompte();
 });
 
+//  changer mot de passe
+$app->post('/change-password-compte', function (){
+	$_SESSION['compte_action'] = "change_password";
+	PC::displayCompte();
+});
+
 
 // si url vide
 $app->get('/', function (){
