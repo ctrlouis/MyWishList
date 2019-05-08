@@ -33,7 +33,7 @@ $connected_user = AUTH::Identification();
 
 if ($connected_user)
 {
-	// si connecté...
+	AUTH::FormulaireDeconnection();
 } else {
 	AUTH::FormulaireConnection();
 }
