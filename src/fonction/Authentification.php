@@ -72,6 +72,7 @@ class Authentification {
     			'email'    => $username,
     			'password' => $password,
 			]);
+			echo "Compte crée !";
 		}
 
 }

@@ -15,7 +15,6 @@ class FctnListe {
 	{
 		echo '<form action="add-liste" method="post">
 			<p>Titre : (obligatoire)<br/><input type="text" name="titre" /></p>
-			<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
 			<p>Description : <br/><input type="text" name="description" /></p>
 			Format de la date dexpiration (YYYY-MM-DD)
 			<p>Date dexpiration : <br/><input type="date" min=' . date('Y-m-d') . ' name="expiration" /></p>
@@ -34,21 +33,30 @@ class FctnListe {
 		// stop si une liste avec le même nom existe deja
 		$test = Liste::where('titre', 'like', $_POST['titre'])->first();
     	if ($test) {
-        	echo 'Une liste avec le même nom existe déjà'; // alerte
+        	echo 'Une liste avec le même nom existe déjà </br>
+								<a href="add-liste-form">Retour vers la creation de liste</a>'; // alerte
 			exit();
     	}
 
-		// creation d'une liste
-		$liste = new Liste();
-		$liste->titre = htmlspecialchars($_POST['titre']);
-		$liste->description = htmlspecialchars($_POST['description']);
-		$liste->user_id = htmlspecialchars($_POST['user_id']);
-		$liste->expiration = htmlspecialchars($_POST['expiration']);
-		$liste->token_private = Outils::generateToken();
-		$liste->token_publique = Outils::generateToken();
-		$liste->save();
-		$_SESSION['wishlist_liste_token'] = $liste->token_private;
-		echo '<a href ="liste/' . $liste->token_private . '">URL de la liste : </a>';
+		if($_POST['expiration'] < date('Y-m-d'))
+		{
+			echo 'Date invalide ! </br>
+						<a href="add-liste-form">Retour vers la creation de liste</a>';
+		}
+		else {
+			// creation d'une liste
+			$liste = new Liste();
+			$liste->titre = htmlspecialchars($_POST['titre']);
+			$liste->description = htmlspecialchars($_POST['description']);
+			if(isset($_SESSION['wishlist_userid']))
+				$liste->user_id = htmlspecialchars($_SESSION['wishlist_userid']);
+			$liste->expiration = htmlspecialchars($_POST['expiration']);
+			$liste->token_private = Outils::generateToken();
+			$liste->token_publique = Outils::generateToken();
+			$liste->save();
+			$_SESSION['wishlist_liste_token'] = $liste->token_private;
+			echo '<a href ="liste/' . $liste->token_private . '">URL de la liste : </a>';
+		}
 	}
 
 	//Rediriger par un bouton lorsqu'on édite une liste, rend la liste public ou privée selon son état actuel
@@ -72,6 +80,36 @@ class FctnListe {
 
 	}
 
+	public static function addUser()
+	{
+		if($_SESSION["wishlist_userid"] != null)
+		{
+			if($_POST['token'] != null){
+				$liste = Liste::where('token_private', 'like', $_POST['token'])->first();
+				if($liste)
+				{
+					if ($liste->user_id == $_SESSION["wishlist_userid"]) {
+						echo "Cette liste vous appartient déjà.";
+					}
+					else if($liste->user_id == null)
+					{
+						$liste->user_id = htmlspecialchars($_SESSION["wishlist_userid"]);
+						$liste->save();
+						echo 'La liste a bien été ajouter à votre compte';
+					}
+					else{
+						echo "Cette liste appartient déjà à un autre utilisateur.";
+					}
+				}
+				else {
+					echo "Aucune liste correspond au token indiquer";
+				}
+			}
+			else {
+				echo "Aucun token introduit";
+			}
+		}
+	}
 
 	public static function listeEdit ($token)
 	{
@@ -95,7 +133,6 @@ class FctnListe {
 		echo "Modifications effectuées sur la liste " . $liste->titre;
 		$liste->titre = htmlspecialchars($_POST['titre']);
 		$liste->description = htmlspecialchars($_POST['description']);
-		$liste->user_id = htmlspecialchars($_POST['user_id']);
 		$liste->save();
   }
 
@@ -214,7 +251,6 @@ class FctnListe {
 					echo 'Modification de la liste</br>
 						<form action="../edit-liste/'. $token .'" method="post">
 							<p>Titre : <input type="text" name="titre" /></p>
-							<p>Utilisateur : <br/><input type="number" name="user_id" /></p>
 							<p>Description : <br/><input type="text" name="description" /></p>
 							<p><input type="submit" name="Modifier"></p>
 						</form></br>

@@ -32,16 +32,22 @@ $db = $cf->makeConnection();
 // connection utilisateur
 $connected_user = AUTH::Identification();
 
+
+$app = new \Slim\Slim();
+echo '<h1>Application MyWishList</h1>
+			<a href="/MyWishList/liste">Affichage des listes publiques</a></br>
+			<a href="/MyWishList/add-liste-form">Crée une liste</a><br/>';
+
 if ($connected_user)
 {
 	AUTH::FormulaireDeconnection();
+	echo '<form action="add-user" method="post">
+		<p>Token privé de la liste : <br/><input type="text" name="token" /></p>
+		<p><input type="submit" name="Ajouter liste"></p>
+		</form>';
 } else {
 	AUTH::FormulaireConnection();
 }
-
-$app = new \Slim\Slim();
-
-echo '<a href="../liste">Accueil</a></br>';
 
 
 //Affiche l'ensemble des listes
@@ -61,6 +67,9 @@ $app->get('/add-liste-form', function(){
 });
 $app->post('/add-liste', function(){
 	FL::listeAdd();
+});
+$app->post('/add-user', function(){
+	FL::addUser();
 });
 
 //Ajout un message à une liste
@@ -145,11 +154,7 @@ $app->post('/edit-compte', function (){
 
 // si url vide
 $app->get('/', function (){
-	echo '<br/>';
-	echo '<a href="liste">affiche les listes<br/>';
-	echo '<a href="add-item-form"> creer un item</a><br/>';
-	echo '<a href="add-liste-form">creer une liste</a><br/>';
-	echo '<a href="liste/*token*">affiche un item(token requis, si variable de session correspondante modification effectuable)</a><br/>';
+	echo 'Bienvenu sur l`utilitaire de liste de souhait.';
 });
 
 $app->run();
