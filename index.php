@@ -55,6 +55,11 @@ if ($connected_user)
 //Affiche l'ensemble des listes
 $app->get('/liste', function ()
 {
+	echo 'Accéder à une liste
+				<form action"/liste/" method="get">
+					<p>Token : <br/><input type="text" name="token" /></p>
+					<p><input type="submit" value="Accès à la liste"></p>
+				</form>';
     FL::allListe();
 });
 //Affiche une liste particulière lorsque le token est renseigné dans l'URL

@@ -138,11 +138,49 @@ class FctnListe {
   }
 
 
+			public static function addMessage($token)
+			{
+				$liste = Liste::where('token_private', 'like', $token)->orWhere('token_publique', 'like', $token)->first();
+				$message = new Message;
+				$message->no_liste=htmlspecialchars($liste->no);
+				$message->msg=htmlspecialchars($_POST['message']);
+				$message->save();
+				echo 'Message ajouté à la liste';
+			}
 
+
+
+//PARTIE PAGE DE LISTE
 
 		//Affiche chaque liste publiques existante avec leur items correspondants
     public static function allListe()
     {
+			if(isset($_GET["token"]))
+			{
+				//Affiche l'ensemble des items pour chaque liste
+				$liste = Liste::where('token_publique', 'like', $_GET["token"])->first();
+				$_SESSION['wishlist_liste_token'] = $liste->token_publique;
+				$itemlist=$liste->item;
+				$messlist=$liste->message;
+				echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
+				echo "<ul>";
+				foreach($itemlist as $item)
+						{
+							echo '<li>Item id : ' . $item->id . '
+											<a href="item/'. $item->nom .'"> Details</a>
+											<br/>Nom de l\'objet : '. $item->nom . '<br/>
+										</li>';
+						}
+				echo "Message : <br/>";
+
+				//Affiche chaque message lié à la liste
+				foreach ($messlist as $message)
+				{
+					echo '- ' . $message->msg . '<br/>';
+				}
+				echo "</ul>";
+			}
+			else {
 				$_SESSION['wishlist_liste_token'] = null;
         $lists=Liste::where('published', 'like', '1')->orderBy('expiration', 'asc')->whereDate('expiration', '>', date('Y-m-d'))->get();
         echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre
@@ -164,19 +202,11 @@ class FctnListe {
 	            '<br/><a href="liste/' . $value->token_private . '">' . $value->titre .
 	            '</a></br>';
 						}
-        }
-    }
+				 }
+       }
+		 }
 
 
-		public static function addMessage($token)
-		{
-			$liste = Liste::where('token_private', 'like', $token)->orWhere('token_publique', 'like', $token)->first();
-			$message = new Message;
-			$message->no_liste=htmlspecialchars($liste->no);
-			$message->msg=htmlspecialchars($_POST['message']);
-			$message->save();
-			echo 'Message ajouté à la liste';
-		}
 
 		public static function delItem($id){
 			$item = Item::where('id', '=', $id)->first();
