@@ -41,7 +41,7 @@ class CreateurItem {
 			<p><br/><input type="text" name="descr" placeholder="Description" required/></p>
 			<p><br/><input type="number" name="tarif" placeholder="Prix" required/></p>
 			<p><br/><input type="text" name="url" placeholder="url"/></p>
-			<p><input type="submit" name="Ajouter item"></p>
+			<p><input type="submit" name="Ajouter item" value="Ajouter item"></p>
 			</form>';
 	}
 
@@ -50,7 +50,8 @@ class CreateurItem {
 
 		// stop si un champ requis vide
 		if (!$_POST['nom'] || !$_POST['descr'] || !$_POST['tarif']) {
-			echo 'Création impossible, des champs requis sont vides.'; //alerte
+			echo 'Création impossible, des champs requis sont vides. <br/>
+			 			<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';
 			exit();
 		}
 
@@ -59,7 +60,8 @@ class CreateurItem {
 
 		// stop si token invalide
 		if (!$list) {
-			echo "Aucuns token de liste correspondant"; // alerte
+			echo 'Aucuns token de liste correspondant <br/>
+			 			<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';
 			exit();
 		}
 
@@ -68,7 +70,8 @@ class CreateurItem {
 									->where('liste_id', "=", $list->no)
 									->first();
     	if ($test) {
-        	echo 'Un item avec le même nom existe déjà'; // alerte
+        	echo 'Un item avec le même nom existe déjà <br/>
+								<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';
 			exit();
     	}
 
