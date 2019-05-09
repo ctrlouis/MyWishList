@@ -279,9 +279,24 @@ class FctnListe {
 					Ajouter d un item dans votre liste';
 					CI::itemAddForm ();
 
+					//Partage de la liste via le token
+					echo '<h3>Token de partage<h3>
+								<input type="text" value="'. $liste->token_publique .'" id="publicListe">
+								<button id="bouttonCopie">Copier le lien de la liste</button>
+								<script>
+									function copyListeLink()
+									{
+										var copyText = document.getElementById("publicListe");
+										copyText.select();
+										document.execCommand("copy");
+									}
+									let copy = document.getElementById("bouttonCopie");
+					  			copy.addEventListener("click", copyListeLink);
+								</script>';
+
 					//javascript bouton qui copie le lien publique de la liste
 					/*echo '<script type="text/javascript" src="FonctionListe.js"></script>';  //Importation de fichier JS cause des erreurs
-					echo '<input type="text" value="'. $liste->token_publique .'" id="publicListe">';
+
 					echo '<button id="bouttonCopie">Copie le lien vers la liste pulbique</button>';*/
 
 
