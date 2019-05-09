@@ -28,23 +28,25 @@ $cf = new CF();
 $cf->setConfig('src/conf/conf.ini');
 $db = $cf->makeConnection();
 
+echo '<h1>Application MyWishList</h1>
+			<a href="/MyWishList/liste">Affichage des listes publiques</a></br>
+			<a href="/MyWishList/add-liste-form">Crée une liste</a><br/>';
 
 // connection utilisateur
 $connected_user = AUTH::Identification();
 
 
 $app = new \Slim\Slim();
-echo '<h1>Application MyWishList</h1>
-			<a href="/MyWishList/liste">Affichage des listes publiques</a></br>
-			<a href="/MyWishList/add-liste-form">Crée une liste</a><br/>';
+
 
 if ($connected_user)
 {
 	AUTH::FormulaireDeconnection();
-	echo '<form action="add-user" method="post">
-		<p>Token privé de la liste : <br/><input type="text" name="token" /></p>
-		<p><input type="submit" name="Ajouter liste"></p>
-		</form>';
+	echo '<h2>Ajouter une liste a votre compte utilisateur</h2>
+				<form action="add-user" method="post">
+					<p>Token privé de la liste : <br/><input type="text" name="token" /></p>
+					<p><input type="submit" name="Ajouter liste" value="Ajouter au compte"></p>
+				</form>';
 } else {
 	AUTH::FormulaireConnection();
 }
@@ -58,6 +60,11 @@ $app->get('/liste', function ()
 //Affiche une liste particulière lorsque le token est renseigné dans l'URL
 $app->get('/liste/:one', function($token){
 	FL::liste($token);
+});
+
+//Supprime un item de la liste (l'item ou juste effacer de la liste ?)
+$app->get('/liste-remove/:item', function($item){
+	FL::delItem($item);
 });
 
 

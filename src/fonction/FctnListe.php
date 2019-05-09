@@ -6,6 +6,7 @@ use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\Message;
 use wishlist\fonction\CreateurItem as CI;
+use wishlist\modele\Reservation;
 use wishlist\divers\Outils;
 
 
@@ -177,6 +178,24 @@ class FctnListe {
 			echo 'Message ajouté à la liste';
 		}
 
+		public static function delItem($id){
+			$item = Item::where('id', '=', $id)->first();
+			if($item)
+			{
+				$reservation = Reservation::where('item_id', '=', $item->id)->first();
+				if($reservation->reservation == 1){
+					echo "L'item ne peut être supprimé car il est déjà réservé";
+				}
+				else{
+					$item->delete();
+					echo 'Item supprimer';
+				}
+			}
+			else {
+				echo "Erreur item introuvable";
+			}
+			echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
+		}
 
 		//Affiche une liste particulière, gére la modification de la liste si..
 		//..token_private dans la variable de session
@@ -223,10 +242,13 @@ class FctnListe {
 				echo "<ul>"; // HTML CODE debut liste
 				foreach($itemlist as $item)
 						{
-							echo '<li>Item id : ' . $item->id .
-											'<br/>Nom de l\'objet : '. $item->nom .
-											'<br/><a href="../item/'. $item->nom .'">Details</a><br/>
-										</li>';
+							echo '<li>Item id : ' . $item->id . '
+										  <a href="../item/'. $item->nom .'"> Details</a>
+											<br/>Nom de l\'objet : '. $item->nom . '<br/>
+										</li>
+										<form action="../liste-remove/'. $item->id .'" method="get">
+											<button type="submit">Supprimer l`item</button>
+										</form>';
 						}
 				echo "Message : <br/>";
 
@@ -242,7 +264,7 @@ class FctnListe {
 				echo 'Ajouter un message à la liste</br>
 					<form action="../add-mess/'. $token .'" method="post">
 						<p>Message : <input type="text" name="message" /></p>
-						<p><input type="submit" name="Poster"></p>
+						<p><input type="submit" name="Poster" value="Poster"></p>
 					</form></br>';
 
 				//Si le tokenprivé est renseigner, on peut modifier la liste et ajouter des items
@@ -252,7 +274,7 @@ class FctnListe {
 						<form action="../edit-liste/'. $token .'" method="post">
 							<p>Titre : <input type="text" name="titre" /></p>
 							<p>Description : <br/><input type="text" name="description" /></p>
-							<p><input type="submit" name="Modifier"></p>
+							<p><input type="submit" name="Modifier" value="Modifier"></p>
 						</form></br>
 					Ajouter d un item dans votre liste';
 					CI::itemAddForm ();
