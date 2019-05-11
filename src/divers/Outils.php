@@ -16,6 +16,7 @@ class Outils
                 <meta charset=\"UTF-8\">
                 <title>'.$title.'</title>
                 <link href="/MyWishList.app/foundation.css" rel="stylesheet" type="text/css">
+				<link href="/MyWishList.app/foundation-icons.css" rel="stylesheet"/>
 				<link href="style.css" rel="stylesheet" type="text/css">
             </head>
             <body>';
@@ -30,11 +31,12 @@ class Outils
   			<div class="title-bar" data-sticky data-options="marginTop:0;" style="width:100%">
 
 	    		<div class="title-bar-left">
+					<div>MyWishList.app</div>
 					<a href="/MyWishList.app/">Accueil</a>
 				</div>
 
 	    		<div class="title-bar-right"> ' .
-				AUTH::menuDisplay() . '
+					AUTH::menuDisplay() . '
 				</div>
 
   			</div>
@@ -44,6 +46,10 @@ class Outils
     public static function footerHTML()
     {
         echo '
+			<script src="jquery.js"></script>
+	    	<script src="what-input.js"></script>
+	    	<script src="foundation.js"></script>
+	    	<script src="app.js"></script>
 		</body></html>';
     }
 

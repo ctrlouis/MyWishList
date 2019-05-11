@@ -67,13 +67,6 @@ class Authentification {
 			}
 		}
 
-		public static function FormulaireDeconnection()
-		{
-			echo '<form action="deconnection" method="post">
-				<input type="submit" name="signout" value="Sign out"></p>
-				</form>';
-		}
-
 		public static function Deconnection()
 		{
 			$_SESSION["wishlist_userid"] = null;
@@ -105,7 +98,7 @@ class Authentification {
 			else
 				return '
 				<a href="/MyWishList.app/compte">Mon Compte</a>
-				<a href="/MyWishList.app/deconnection">Deconnexion</a>';
+				<a href="/MyWishList.app/deconnection">Deconnexion <i class="step fi-power size-24"></i></a>';
 		}
 
 }
