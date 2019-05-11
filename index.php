@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-//use Illuminate\Database\Capsule\Manager as DB;
 use wishlist\conf\ConnectionFactory as CF;
 
 use wishlist\modele\Item;
@@ -12,11 +11,10 @@ use wishlist\modele\User;
 use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\CreateurItem as CI;
-use wishlist\pages\PageItem as PI;
 use wishlist\fonction\GestionImage as GI;
-use wishlist\pages\PageCompte as PC;
 
-// use wishlist\fonction\ParticipantItem as PI;
+use wishlist\pages\PageItem as PI;
+use wishlist\pages\PageCompte as PC;
 
 use wishlist\fonction\Authentification as AUTH;
 
