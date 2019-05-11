@@ -46,7 +46,6 @@ $app = new \Slim\Slim();
 
 if ($connected_user)
 {
-	AUTH::FormulaireDeconnection();
 	echo '<h2>Ajouter une liste a votre compte utilisateur</h2>
 				<form action="add-user" method="post">
 					<p>Token privé de la liste : <br/><input type="text" name="token" /></p>
