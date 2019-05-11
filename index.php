@@ -20,8 +20,13 @@ use wishlist\pages\PageCompte as PC;
 
 use wishlist\fonction\Authentification as AUTH;
 
+use wishlist\divers\Outils;
+
 
 session_start();
+
+Outils::headerHTML("MyWishList");
+Outils::menuHTML();
 
 // db connection
 $cf = new CF();
@@ -29,8 +34,10 @@ $cf->setConfig('src/conf/conf.ini');
 $db = $cf->makeConnection();
 
 echo '<h1>Application MyWishList</h1>
-			<a href="/MyWishList/liste">Affichage des listes publiques</a></br>
-			<a href="/MyWishList/add-liste-form">Crée une liste</a><br/>';
+	<div class="small button-group">
+	  <a href="/MyWishList/liste" class="button">Listes publiques</a>
+	  <a href="/MyWishList/add-liste-form" class="button">Créer une liste</a>
+	</div>';
 
 // connection utilisateur
 $connected_user = AUTH::Identification();
@@ -48,7 +55,7 @@ if ($connected_user)
 					<p><input type="submit" name="Ajouter liste" value="Ajouter au compte"></p>
 				</form>';
 } else {
-	AUTH::FormulaireConnection();
+	//AUTH::FormulaireConnection();
 }
 
 
@@ -147,9 +154,8 @@ $app->post('/connection', function(){
 });
 
 // deconnection
-$app->post('/deconnection', function(){
+$app->get('/deconnection', function(){
 	AUTH::Deconnection();
-	header("/");
 });
 
 // affiche details d'un compte
@@ -176,3 +182,5 @@ $app->get('/', function (){
 });
 
 $app->run();
+
+Outils::footerHTML();

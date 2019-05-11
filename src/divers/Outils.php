@@ -2,6 +2,7 @@
 
 namespace wishlist\divers;
 
+use wishlist\fonction\Authentification as AUTH;
 
 class Outils
 {
@@ -14,14 +15,36 @@ class Outils
             <head>
                 <meta charset=\"UTF-8\">
                 <title>'.$title.'</title>
-                <link href="src/divers/style.css" rel="stylesheet" type="text/css">
+                <link href="/MyWishList.app/foundation.css" rel="stylesheet" type="text/css">
+				<link href="style.css" rel="stylesheet" type="text/css">
             </head>
             <body>';
     }
 
+	public static function menuHTML()
+    {
+		if (AUTH::isConnect()) $connect = "Connexion";
+		else $connect = "Mon compte";
+        echo
+		'<div data-sticky-container>
+  			<div class="title-bar" data-sticky data-options="marginTop:0;" style="width:100%">
+
+	    		<div class="title-bar-left">
+					<a href="/MyWishList.app/">Accueil</a>
+				</div>
+
+	    		<div class="title-bar-right"> ' .
+				AUTH::menuDisplay() . '
+				</div>
+
+  			</div>
+		</div>';
+    }
+
     public static function footerHTML()
     {
-        echo '</body></html>';
+        echo '
+		</body></html>';
     }
 
 	public static function generateToken()

@@ -4,11 +4,15 @@ namespace wishlist\pages;
 
 use wishlist\fonction\Compte;
 
+use wishlist\fonction\Authentification as AUTH;
+
 class PageCompte {
 
 	public static function displayCompte() {
 
-		if (isset($_SESSION['wishlist_userid'])) {
+		if (!AUTH::isConnect()) {
+			AUTH::FormulaireConnection();
+		} else if (AUTH::isConnect()) {
 
 			if (isset($_SESSION['compte_action']) && $_SESSION['compte_action']) // par défault
 			{
