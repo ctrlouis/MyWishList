@@ -15,8 +15,8 @@ class Outils
             <head>
                 <meta charset=\"UTF-8\">
                 <title>'.$title.'</title>
-                <link href="/MyWishList.app/src/divers/foundation.css" rel="stylesheet" type="text/css">
-				<link href="/MyWishList.app/src/divers/style.css" rel="stylesheet" type="text/css">
+                <link href="/MyWishList.app/foundation.css" rel="stylesheet" type="text/css">
+				<link href="style.css" rel="stylesheet" type="text/css">
             </head>
             <body>';
     }
