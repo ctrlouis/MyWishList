@@ -31,15 +31,13 @@ class PageCompte {
 			if (!isset($_SESSION['compte_action']) || !$_SESSION['compte_action']) // par défault
 			{
 				Compte::compteEditForm();
-				Compte::compteChangePasswordForm();
+				//Compte::compteChangePasswordForm();
 			}
 			else // si action
 			{
 				$_SESSION['compte_action'] = null;
 			}
 
-		} else {
-			echo "Veuillez vous authentifier.";
 		}
 	}
 

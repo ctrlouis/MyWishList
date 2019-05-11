@@ -15,20 +15,19 @@ class Compte {
 
 		echo '<br>Username : ' . $user->email;
 
-		$last_name = $user->last_name;
-		if ($last_name != NULL) $last_name = 'Non renseigné';
-		echo '<br>Last name : ' . $user->last_name;
+		if ($user->last_name) echo 'Nom : ' . $user->last_name;
+		else echo 'Nom : non renseigné';
 
-		$first_name = $user->first_name;
-		if (!$first_name) $first_name = 'Non renseigné';
-		echo '<br>First name : ' . $first_name;
+		if ($user->first_name) echo 'Prenom : ' . $user->first_name;
+		else echo 'Prenom : non renseigné';
 	}
 
 	public static function compteEditForm() {
-		echo '<form action="edit-compte" method="post">
-			<p><input type="text" name="last_name" placeholder="Last name"/></p>
-			<p><br/><input type="text" name="first_name" placeholder="First name"/></p>
-			<p><input type="submit" name="" value="Modifier"></p>
+		echo '
+			<form action="edit-compte" method="post">
+				<p><input type="text" name="last_name" placeholder="Last name"/></p>
+				<p><input type="text" name="first_name" placeholder="First name"/></p>
+				<p><input type="submit" name="" value="Modifier"></p>
 			</form>';
 	}
 
@@ -37,7 +36,7 @@ class Compte {
 			->first();
 
 		if ($_POST['last_name'] && $_POST['last_name'] != '') $user->last_name = $_POST['last_name'];
-		if ($_POST['first_name'] && $_POST['first_name'] != '') $item->first_name = $_POST['first_name'];
+		if ($_POST['first_name'] && $_POST['first_name'] != '') $user->first_name = $_POST['first_name'];
 		$user->save();
 		echo 'Compte modifié';
 	}
