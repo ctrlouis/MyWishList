@@ -4,3 +4,4 @@ composer.lock
 composer.phar
 
 *.png
+*.DS_store
