@@ -31,7 +31,7 @@ class Outils
   			<div class="title-bar" data-sticky data-options="marginTop:0;" style="width:100%">
 
 	    		<div class="title-bar-left">
-					<div>MyWishList.app</div>
+					<span class="title-bar-title">MyWishList.app</span>
 					<a href="/MyWishList.app/">Accueil</a>
 				</div>
 

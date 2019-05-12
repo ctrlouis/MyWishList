@@ -13,12 +13,12 @@ class Authentification {
 
 		public static function Identification()
 		{
-			if (isset($_SESSION['wishlist_userid']))
+			if (SELF::isConnect())
 			{
 				$user = Sentinel::findById($_SESSION['wishlist_userid']);
 
 				if ($user) {
-					echo 'Connected as ' . $user->email . '<br/>';
+					echo 'Connecté en tant que ' . $user->email;
 					return $user;
 				}
 			}
@@ -60,6 +60,7 @@ class Authentification {
 			if ($user)
 			{
 				$_SESSION["wishlist_userid"] = $user->id;
+				$_SESSION["wishlist_username"] = $user->email;
 				echo "Connexion reussi";
 			}
 			else {
@@ -95,10 +96,18 @@ class Authentification {
 			if (!SELF::isConnect()) {
 				return '<a href="/MyWishList.app/compte">Connexion</a>';
 			}
-			else
+			else {
 				return '
-				<a href="/MyWishList.app/compte">Mon Compte</a>
-				<a href="/MyWishList.app/deconnection">Deconnexion <i class="step fi-power size-24"></i></a>';
+					<ul class="dropdown menu align-right" data-dropdown-menu>
+						<li>
+							<a href="">Connecté en tant que <strong><i>' . $_SESSION['wishlist_username'] . '</i></strong></a>
+							<ul class="menu">
+								<li><a href="/MyWishList.app/compte">Mon Compte</a></li>
+								<li><a href="/MyWishList.app/deconnection">Deconnexion <i class="step fi-power size-24"></i></a></li>
+							</ul>
+						</li>
+					</ul>';
+			}
 		}
 
 }
