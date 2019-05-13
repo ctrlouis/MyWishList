@@ -94,7 +94,7 @@ class Authentification {
 		public static function menuDisplay()
 		{
 			if (!SELF::isConnect()) {
-				return '<a href="/MyWishList.app/compte">Connexion</a>';
+				return '<a href="/MyWishList/compte">Connexion</a>';
 			}
 			else {
 				return '
@@ -102,8 +102,8 @@ class Authentification {
 						<li>
 							<a href="">Connecté en tant que <strong><i>' . $_SESSION['wishlist_username'] . '</i></strong></a>
 							<ul class="menu">
-								<li><a href="/MyWishList.app/compte">Mon Compte</a></li>
-								<li><a href="/MyWishList.app/deconnection">Deconnexion <i class="step fi-power size-24"></i></a></li>
+								<li><a href="/MyWishList/compte">Mon Compte</a></li>
+								<li><a href="/MyWishList/deconnection">Deconnexion <i class="step fi-power size-24"></i></a></li>
 							</ul>
 						</li>
 					</ul>';
