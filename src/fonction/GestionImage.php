@@ -46,19 +46,25 @@ class GestionImage {
 
 	public static function imageVerify($file)
 	{
-		/*echo $file['icone']['name'] . '<br/>' .		//Le nom original du fichier, comme sur le disque du visiteur (exemple : mon_icone.png).
+		echo $file['icone']['name'] . '<br/>' .		//Le nom original du fichier, comme sur le disque du visiteur (exemple : mon_icone.png).
 			$file['icone']['type'] . '<br/>' .		//Le type du fichier. Par exemple, cela peut être « image/png ».
 			$file['icone']['size'] . '<br/>' .		//La taille du fichier en octets.
 			$file['icone']['tmp_name'] . '<br/>' .	//L'adresse vers le fichier uploadé dans le répertoire temporaire.
-			$file['icone']['error'];					//Le code d'erreur, qui permet de savoir si le fichier a bien été uploadé.*/
+			$file['icone']['error'];					//Le code d'erreur, qui permet de savoir si le fichier a bien été uploadé.
 
-		if ($_FILES['icone']['error'] > 0) $erreur = "Erreur lors du transfert";
+		if ($_FILES['icone']['error'] > 0) {
+			$_SESSION['item_action'] = null;
+			$erreur = "Erreur lors du transfert";
+		}
 
 		//if ($_FILES['icone']['size'] > $maxsize) $erreur = "Le fichier est trop gros";
 
 		$extensions_valides = array( 'jpg' , 'jpeg' , 'gif' , 'png' );
 		$extension_upload = strtolower(  substr(  strrchr($_FILES['icone']['name'], '.')  ,1)  );
-		if ( !in_array($extension_upload, $extensions_valides) ) return "Extension invalide";
+		if ( !in_array($extension_upload, $extensions_valides) ) {
+			$_SESSION['item_action'] = null;
+			return "Extension invalide";
+		}
 
 		/*$image_sizes = getimagesize($_FILES['icone']['tmp_name']);
 		if ($image_sizes[0] > $maxwidth OR $image_sizes[1] > $maxheight) return "Image trop grande";*/
