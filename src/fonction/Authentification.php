@@ -18,7 +18,6 @@ class Authentification {
 				$user = Sentinel::findById($_SESSION['wishlist_userid']);
 
 				if ($user) {
-					echo 'Connecté en tant que ' . $user->email;
 					return $user;
 				}
 			}
