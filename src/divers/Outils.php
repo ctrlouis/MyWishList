@@ -15,8 +15,8 @@ class Outils
             <head>
                 <meta charset=\"UTF-8\">
                 <title>'.$title.'</title>
-                <link href="/MyWishList.app/foundation.css" rel="stylesheet" type="text/css">
-				<link href="/MyWishList.app/foundation-icons.css" rel="stylesheet"/>
+                <link href="/MyWishList/src/css/foundation.css" rel="stylesheet" type="text/css">
+				<link href="/MyWishList/src/css/foundation-icons.css" rel="stylesheet"/>
 				<link href="style.css" rel="stylesheet" type="text/css">
             </head>
             <body>';
@@ -32,7 +32,7 @@ class Outils
 
 	    		<div class="title-bar-left">
 					<span class="title-bar-title">MyWishList.app</span>
-					<a href="/MyWishList.app/">Accueil</a>
+					<a href="/MyWishList/">Accueil</a>
 				</div>
 
 	    		<div class="title-bar-right"> ' .
