@@ -14,13 +14,31 @@ class ParticipantItem {
 	public static function itemDetails ($item)
 	{
 		$reserv = $item->reservation[0];
-		if ($reserv->reservation == 0) $reservation_state = 'disponible';
-		else $reservation_state = 'reservé';
+		if ($reserv->reservation == 0) $reservation_state = 'non';
+		else $reservation_state = 'oui';
 
-		if ($item->img) echo '<img class="icone" src="../' . $item->img . '" alt="Image of ' . $item->name . '" />';
-		echo '<br/>nom : ' . $item->nom .
-			'<br/>description : ' . $item->descr .
-			'<br/>etat reservation : ' . $reservation_state;
+		echo '
+		<div class= "row column align-center medium-6 large-4">
+			<div class="card-flex-article card">';
+
+		if ($item->img) {
+			echo'
+				<div class="card-image">
+					<img src="../' . $item->img .'">
+				</div>';
+		}
+
+		echo '
+				<div class="card-section">
+					<h3 class="article-title">' . $item->nom . '</h3>
+					<p class="article-summary">' . $item->descr . '</p>
+				</div>
+
+				<div class="card-divider align-middle">
+					<br/>Reservé : ' . $reservation_state . '
+				</div>
+			</div>
+		</div>';
 
 		if($reserv->reservation == 0) SELF::itemReserveForm($item->nom);
 	}

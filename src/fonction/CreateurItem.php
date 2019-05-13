@@ -16,13 +16,13 @@ class CreateurItem {
 		if (Outils::listeExpiration($item->liste->expiration))
 		{
 			echo '
-			<div class="card-flex-article card">';
+			<div class= "row column align-center medium-6 large-4">
+				<div class="card-flex-article card">';
 
 			if ($item->img) {
 				echo'
 					<div class="card-image">
 						<img src="../' . $item->img .'">
-						<span class="label alert card-tag">#Birdie</span>
 					</div>';
 			}
 
@@ -34,23 +34,24 @@ class CreateurItem {
 
 				<div class="card-divider align-middle">';
 
-				if (Outils::listeExpiration($item->liste->expiration))
-				{
-					echo '<h4>Reservation</h4>';
+			if (Outils::listeExpiration($item->liste->expiration))
+			{
+				echo '<h4>Reservation</h4>';
 
-					if ( $item->reservation[0]->reservation == 0) {
-						echo '<p>Item non reservé</p>';
-					} else {
-						echo '<p>Item reservé par ' . $item->reservation[0]->participant_name . '</p>' .
-							'<p>Son message : ' . $item->reservation[0]->message . '<p>';
-					}
+				if ( $item->reservation[0]->reservation == 0) {
+					echo '<p>Item non reservé</p>';
 				} else {
-					echo '<p>Veuillez attendre l\'expiration de la liste</p>';
+					echo '<p>Item reservé par ' . $item->reservation[0]->participant_name . '</p>' .
+						'<p>Son message : ' . $item->reservation[0]->message . '<p>';
 				}
-				echo '
-					</div>
-				</div>';
+			} else {
+				echo '<p>Veuillez attendre l\'expiration de la liste</p>';
 			}
+			echo '
+					</div>
+				</div>
+			</div>';
+		}
 
 	}
 
