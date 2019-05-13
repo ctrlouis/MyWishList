@@ -115,12 +115,25 @@ class CreateurItem {
 
 	public static function itemEditForm ($item_name)
 	{
-		echo '<form action="../edit-item/' . $item_name . '" method="post">
-			<p><input type="text" name="nom" placeholder="Nom"/></p>
-			<p><br/><input type="text" name="descr" placeholder="Description"/></p>
-			<p><br/><input type="number" name="tarif" placeholder="Prix"/></p>
-			<p><br/><input type="text" name="url" placeholder="url"/></p>
-			<p><input type="submit" class="button" name="" value="Modifier"></p>
+		echo '
+			<form action="../edit-item/' . $item_name . '" method="post">
+			
+				<div class= "row align-center medium-5 large-3">
+					<input type="text" name="nom" placeholder="Nom"/>
+				</div>
+				<div class="row align-center medium-5 large-3">
+					<input type="text" name="descr" placeholder="Description"/>
+				</div>
+				<div class= "row align-center medium-5 large-3">
+					<input type="number" name="tarif" placeholder="Prix en €"/>
+				</div>
+				<div class="row align-center medium-5 large-3">
+					<input type="text" name="url" placeholder="url"/>
+				</div>
+				<div class="row align-center medium-5 large-3">
+					<button type="submit" class="button" name="">Modifier</button>
+				</div>
+
 			</form>';
 	}
 
