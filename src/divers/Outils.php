@@ -17,7 +17,7 @@ class Outils
                 <title>'.$title.'</title>
                 <link href="/MyWishList/src/css/foundation.css" rel="stylesheet" type="text/css">
 				        <link href="/MyWishList/src/css/foundation-icons.css" rel="stylesheet"/>
-				        <link href="style.css" rel="stylesheet" type="text/css">
+				        <link href="/MyWishList/src/css/style.css" rel="stylesheet" type="text/css">
             </head>
             <body>';
     }
