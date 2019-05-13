@@ -67,22 +67,22 @@ class PageItem {
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
 			if ($_SESSION['item_action'] == "edit") {
-				CI::itemEdit($item);
 				$_SESSION['item_action'] = null;
+				CI::itemEdit($item);
 			}
 			if ($_SESSION['item_action'] == "delete") {
-				CI::itemDelete($item);
 				$_SESSION['item_action'] = null;
+				CI::itemDelete($item);
 				exit();
 			}
 			if ($_SESSION['item_action'] == "uploadImage") {
-				GI::imageUpload($item);
 				$_SESSION['item_action'] = null;
+				GI::imageUpload($item);
 				exit();
 			}
 			if ($_SESSION['item_action'] == "deleteImage") {
-				GI::imageDelete($item);
 				$_SESSION['item_action'] = null;
+				GI::imageDelete($item);
 				exit();
 			}
 		}
