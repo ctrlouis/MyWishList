@@ -30,7 +30,7 @@ composer install
 git update-index --assume-unchanged src/conf/conf.ini
 ```
 
-**OU** en oneshot :
+**OU** 1 à 4 en oneshot :
 ```
 git clone git@github.com:ctrlouis/MyWishList.git && cd MyWishList && composer install && git update-index --assume-unchanged src/conf/conf.ini
 ```
