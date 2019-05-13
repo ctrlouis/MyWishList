@@ -6,13 +6,13 @@ RewriteEngine On
 
 
 #
-# Pour interdire l'accès aux répertoires contenant du code
+# Pour interdire l'accÃ©s aux rÃ©pertoires contenant du code
 RewriteRule ^sql(/.*|)$ - [NC,F]
-RewriteRule ^src(/.*|)$ - [NC,F]
+#RewriteRule ^src(/.*|)$ - [NC,F]
 RewriteRule ^vendor(/.*|)$ - [NC,F]
 
 #
-# réécriture pour slim
+# rÃ©Ã©criture pour slim
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
