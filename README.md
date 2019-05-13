@@ -19,7 +19,7 @@ Gestion de projet : [Trello](https://trello.com/b/dkVNoaSX/mywishlist)
 ## Installation
 1. Clonez le repository dans votre répertoire de serveur `www/` en utilisant la commande suivante :
 ```
-git clone git@github.com:ctrlouis/MyWishList.app.git
+git clone git@github.com:ctrlouis/MyWishList.git
 ```
 2. Placez vous à la racine du repository avec `cd MyWishList.app` et installez les dépendances avec en vous placant a la racine du repository en executant la commande suivante :
 ```
@@ -28,10 +28,10 @@ composer install
 
 **OU** etape 1 et 2 en oneshot :
 ```
-git clone git@github.com:ctrlouis/MyWishList.app.git && cd MyWishList.app && composer install
+git clone git@github.com:ctrlouis/MyWishList.git && cd MyWishList.app && composer install
 ```
-3. Créez la base de données avec le fichier `../MyWishList.app/sql/wishlist.sql`
-4. Modifier le nom de la base de données et les identifiants (= lignes commentées) de connexion dans le fichier `../MyWishList.app/src/conf/conf.ini` et décommentez les lignes.
+3. Créez la base de données avec le fichier `../MyWishList/sql/wishlist.sql`
+4. Modifier le nom de la base de données et les identifiants (= lignes commentées) de connexion dans le fichier `../MyWishList/src/conf/conf.ini` et décommentez les lignes.
 
 ## Taches
 ### Principales
