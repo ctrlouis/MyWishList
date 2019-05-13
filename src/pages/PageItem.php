@@ -54,7 +54,7 @@ class PageItem {
 
 		// choix vue privée ou publique
 		if ($createur) {
-			SELF:: privateView($item);
+			SELF::privateView($item);
 		} else {
 			SELF::publicView($item);
 		}
