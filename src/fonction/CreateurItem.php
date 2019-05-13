@@ -124,7 +124,11 @@ class CreateurItem {
 		$item->token_private = Outils::generateToken();
 		$item->save();
 
-		echo $_POST['nom'] . ' est ajouté à la liste.<br/>' .
+		$reservation = new Reservation();
+		$reservation->item_id = $item->id;
+		$reservation->save();
+
+		echo $_POST['nom'] . ' est réservé.<br/>' .
 				 '<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';
 	}
 
