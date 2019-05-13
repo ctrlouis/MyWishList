@@ -120,12 +120,12 @@ class PageItem {
 
 		if (!isset($_SESSION['item_action']) || $_SESSION['item_action'] == null) // par défault
 		{
-			// enter code here..
+			
 		}
 		else // si action
 		{
 			$_SESSION['item_action'] = null;
-			
+
 		}
 
 	}
