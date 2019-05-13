@@ -15,14 +15,9 @@ class Outils
             <head>
                 <meta charset=\"UTF-8\">
                 <title>'.$title.'</title>
-<<<<<<< HEAD
-                <link href="/MyWishList/foundation.css" rel="stylesheet" type="text/css">
-				<link href="/MyWishList/foundation-icons.css" rel="stylesheet"/>
-=======
                 <link href="/MyWishList/src/css/foundation.css" rel="stylesheet" type="text/css">
-				<link href="/MyWishList/src/css/foundation-icons.css" rel="stylesheet"/>
->>>>>>> 3b3309bf26b1ae5ca4a8cc06a4b08678a2ea82f7
-				<link href="style.css" rel="stylesheet" type="text/css">
+				        <link href="/MyWishList/src/css/foundation-icons.css" rel="stylesheet"/>
+				        <link href="style.css" rel="stylesheet" type="text/css">
             </head>
             <body>';
     }
