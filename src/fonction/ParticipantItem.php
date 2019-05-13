@@ -45,10 +45,17 @@ class ParticipantItem {
 
 	public static function itemReserveForm ($item_name)
 	{
-		echo '<form action="../reserver/' . $item_name . '" method="post">
-			<p><input type="text" name="name" placeholder="Nom" required/></p>
-			<p><textarea type="text" name="message" placeholder="Laissez votre message..." required/></textarea></p>
-			<p><input type="submit" name="Make a present"></p>
+		echo '
+			<form action="../reserver/' . $item_name . '" method="post">
+				<div class= "row align-center medium-5 large-3">
+					<input type="text" name="name" placeholder="Nom" required/>
+				</div>
+				<div class="row align-center medium-5 large-3">
+					<input type="text" name="message" placeholder="Laissez votre message..." required/>
+				</div>
+				<div class="row align-center medium-5 large-3">
+					<button type="submit" class="button" name="submit">Réserver</button>
+				</div>
 			</form>';
 	}
 
