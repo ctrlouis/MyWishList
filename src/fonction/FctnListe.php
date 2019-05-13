@@ -155,30 +155,36 @@ class FctnListe {
 		//Affiche chaque liste publiques existante avec leur items correspondants
     public static function allListe()
     {
+			//Lorsqu'on utilise la recherche de liste
 			if(isset($_GET["token"]))
 			{
 				//Affiche l'ensemble des items pour chaque liste
 				$liste = Liste::where('token_publique', 'like', $_GET["token"])->first();
-				$_SESSION['wishlist_liste_token'] = $liste->token_publique;
-				$itemlist=$liste->item;
-				$messlist=$liste->message;
-				echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
-				echo "<ul>";
-				foreach($itemlist as $item)
-						{
-							echo '<li>Item id : ' . $item->id . '
-											<a href="item/'. $item->nom .'"> Details</a>
-											<br/>Nom de l\'objet : '. $item->nom . '<br/>
-										</li>';
-						}
-				echo "Message : <br/>";
+				if($liste){
+					$_SESSION['wishlist_liste_token'] = $liste->token_publique;
+					$itemlist=$liste->item;
+					$messlist=$liste->message;
+					echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
+					echo "<ul>";
+					foreach($itemlist as $item)
+							{
+								echo '<li>Item id : ' . $item->id . '
+												<a href="item/'. $item->nom .'"> Details</a>
+												<br/>Nom de l\'objet : '. $item->nom . '<br/>
+											</li>';
+							}
+					echo "Message : <br/>";
 
-				//Affiche chaque message lié à la liste
-				foreach ($messlist as $message)
-				{
-					echo '- ' . $message->msg . '<br/>';
+					//Affiche chaque message lié à la liste
+					foreach ($messlist as $message)
+					{
+						echo '- ' . $message->msg . '<br/>';
+					}
+					echo "</ul>";
 				}
-				echo "</ul>";
+				else{
+					echo "Erreur liste introuvable !";
+				}
 			}
 			else {
 				$_SESSION['wishlist_liste_token'] = null;
