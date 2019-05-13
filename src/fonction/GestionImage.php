@@ -53,7 +53,6 @@ class GestionImage {
 			$file['icone']['error'];					//Le code d'erreur, qui permet de savoir si le fichier a bien été uploadé.
 
 		if ($_FILES['icone']['error'] > 0) {
-			$_SESSION['item_action'] = null;
 			$erreur = "Erreur lors du transfert";
 		}
 
@@ -62,7 +61,6 @@ class GestionImage {
 		$extensions_valides = array( 'jpg' , 'jpeg' , 'gif' , 'png' );
 		$extension_upload = strtolower(  substr(  strrchr($_FILES['icone']['name'], '.')  ,1)  );
 		if ( !in_array($extension_upload, $extensions_valides) ) {
-			$_SESSION['item_action'] = null;
 			return "Extension invalide";
 		}
 
