@@ -111,8 +111,8 @@ class PageItem {
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
 			if ($_SESSION['item_action'] == "reserve") {
-				PI::itemReserve($item);
 				$_SESSION['item_action'] = null;
+				PI::itemReserve($item);
 			}
 		}
 
@@ -124,8 +124,8 @@ class PageItem {
 		}
 		else // si action
 		{
-
 			$_SESSION['item_action'] = null;
+			
 		}
 
 	}
