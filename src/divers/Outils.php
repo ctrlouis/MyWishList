@@ -16,8 +16,8 @@ class Outils
                 <meta charset=\"UTF-8\">
                 <title>'.$title.'</title>
                 <link href="/MyWishList/src/css/foundation.css" rel="stylesheet" type="text/css">
-				        <link href="/MyWishList/src/css/foundation-icons.css" rel="stylesheet"/>
-				        <link href="/MyWishList/src/css/style.css" rel="stylesheet" type="text/css">
+				<link href="/MyWishList/src/css/foundation-icons.css" rel="stylesheet"/>
+				<link href="/MyWishList/src/css/style.css" rel="stylesheet" type="text/css">
             </head>
             <body>';
     }
@@ -46,10 +46,10 @@ class Outils
     public static function footerHTML()
     {
         echo '
-			<script src="src/js/jquery.js"></script>
-	    	<script src="src/js/what-input.js"></script>
-	    	<script src="src/js/foundation.js"></script>
-	    	<script src="src/js/app.js"></script>
+			<script src="/MyWishList/src/js/jquery.js"></script>
+	    	<script src="/MyWishList/src/js/what-input.js"></script>
+	    	<script src="/MyWishList/src/js/foundation.js"></script>
+	    	<script src="/MyWishList/src/js/app.js"></script>
 		</body></html>';
     }
 
