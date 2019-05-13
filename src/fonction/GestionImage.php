@@ -25,6 +25,10 @@ class GestionImage {
 			exit;
 		}
 
+		if(!is_dir('img/')){
+   			mkdir('img/');
+		}
+
 		$nom = "img/$item->id-icone.png";
 		$resultat = move_uploaded_file($_FILES['icone']['tmp_name'],$nom);
 		if ($resultat) echo "Transfert réussi";
