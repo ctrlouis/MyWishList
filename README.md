@@ -1,7 +1,7 @@
 # MyWishList.app
 Repository du projet de fin de module de Conception programmation web serveur.
 
-Gestion de projet : [Trello](https://trello.com/b/dkVNoaSX/mywishlist)
+Gestion de projet : [Trello](https://trello.com/login?returnUrl=%2Fb%2FdkVNoaSX%2Fmywishlist)
 
 ## Documents
 [Sujet](https://drive.google.com/open?id=1_C5TikA4-pmoG6bVhuTVz3OIJVCgeFdv)
