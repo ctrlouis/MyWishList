@@ -16,8 +16,8 @@ class Outils
                 <meta charset=\"UTF-8\">
                 <title>'.$title.'</title>
                 <link href="/MyWishList/src/css/foundation.css" rel="stylesheet" type="text/css">
-				        <link href="/MyWishList/src/css/foundation-icons.css" rel="stylesheet"/>
-				        <link href="/MyWishList/src/css/style.css" rel="stylesheet" type="text/css">
+				<link href="/MyWishList/src/css/foundation-icons.css" rel="stylesheet"/>
+				<link href="/MyWishList/src/css/style.css" rel="stylesheet" type="text/css">
             </head>
             <body>';
     }
@@ -29,17 +29,15 @@ class Outils
         echo
 		'<div data-sticky-container>
   			<div class="title-bar" data-sticky data-options="marginTop:0;" style="width:100%">
-
-	    	<div class="title-bar-left">
+		    	<div class="title-bar-left">
 					<a class="item" href="/MyWishList/"><i class="fi-home"></i> Accueil</a>
 				</div>
-        <div class="title-bar-center">
-          <span class="title-bar-title">MyWishList</span>
-        </div>
-	    	<div class="title-bar-right"> ' .
+		        <div class="title-bar-center">
+		          <span class="title-bar-title">MyWishList</span>
+		        </div>
+		    	<div class="title-bar-right"> ' .
 					AUTH::menuDisplay() . '
 				</div>
-
   			</div>
 		</div>';
     }
@@ -47,10 +45,10 @@ class Outils
     public static function footerHTML()
     {
         echo '
-			<script src="src/js/jquery.js"></script>
-	    	<script src="src/js/what-input.js"></script>
-	    	<script src="src/js/foundation.js"></script>
-	    	<script src="src/js/app.js"></script>
+			<script src="/MyWishList/src/js/jquery.js"></script>
+	    	<script src="/MyWishList/src/js/what-input.js"></script>
+	    	<script src="/MyWishList/src/js/foundation.js"></script>
+	    	<script src="/MyWishList/src/js/app.js"></script>
 		</body></html>';
     }
 

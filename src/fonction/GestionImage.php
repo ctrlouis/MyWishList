@@ -9,11 +9,18 @@ class GestionImage {
 
 	public static function imageUploadForm($item_name)
 	{
-		echo '<form method="post" action="../upload-image/' . $item_name . '" enctype="multipart/form-data">
-     			<label for="icone">Icône du fichier (JPG, PNG ou GIF | max. 15 Ko) :</label><br />
-     			<input type="file" name="icone" id="icone" /><br />
-     			<input class="button" type="submit" name="submit" value="Envoyer" />
-			</form>';
+			echo '
+				<form method="post" action="../upload-image/' . $item_name . '" enctype="multipart/form-data">
+					<div class= "row align-center medium-6 large-4">
+						<div class="columns small-12 medium-expand">
+							<button type="submit" class="button" name="submit">Modifier image</button>
+						</div>
+						<div class="columns small-12 medium-expand">
+							<label for="icone" class="button">Selectionner un fichier...</label>
+							<input type="file" class="show-for-sr" name="icone" id="icone" />
+						</div>
+					</div>
+				</form>';
 	}
 
 	public static function imageUpload($item)
@@ -37,16 +44,6 @@ class GestionImage {
 		$item->save();
 		echo 'Item modifié';
 	}
-
-	/*public static function picUpdate()
-	{
-		echo '<form action="connection" method="post">
-			<p>Username : <input type="text" name="username" /></p>
-			<p>Password : <input type="text" name="password" /></p>
-			<p><input type="submit" name="signin" value="Sign in">
-			<input type="submit" name="signup" value="Sign up"></p>
-			</form>';
-	}*/
 
 	public static function imageVerify($file)
 	{
@@ -77,8 +74,14 @@ class GestionImage {
 
 	public static function imageDeleteForm($item_name)
 	{
-		echo '<form action="../delete-image/' . $item_name . '" method="POST">
-				<input class="button" type="submit" name="" value="Delete image" >
+		echo '
+			<form action="../delete-image/' . $item_name . '" method="POST">
+				<div class= "row align-center medium-6 large-4">
+					<div class="columns small-12 medium-expand">
+						<button type="submit" class="alert button">Delete image</button>
+					</div>
+				</div>
+
 			</form>';
 	}
 

@@ -53,7 +53,6 @@ if ($connected_user)
 					<p><input class="button" type="submit" name="Ajouter liste" value="Ajouter au compte"></p>
 				</form>';
 } else {
-	//AUTH::FormulaireConnection();
 }
 
 
