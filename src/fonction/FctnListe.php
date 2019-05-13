@@ -250,20 +250,21 @@ class FctnListe {
 				else
 				{
 					$_SESSION['wishlist_liste_token'] = $liste->token_private;
+					//Bouton permettant de basculer entre privée et publique
+					if($liste->published == true)
+					{
+						echo '<form action="../liste-published/'. $token .'" method="post">
+										<button type="submit">Rend la liste privée</button>
+									</form>';
+					}
+					else {
+						echo '<form action="../liste-published/'. $token .'" method="post">
+										<button type="submit">Rend la liste publique</button>
+									</form>';
+					}
 				}
 
-				//Bouton permettant de basculer entre privée et publique
-				if($liste->published == true)
-				{
-					echo '<form action="../liste-published/'. $token .'" method="post">
-									<button type="submit">Rend la liste privée</button>
-								</form>';
-				}
-				else {
-					echo '<form action="../liste-published/'. $token .'" method="post">
-									<button type="submit">Rend la liste publique</button>
-								</form>';
-				}
+
 
 				//Affiche l'ensemble des items pour chaque liste
 				$itemlist=$liste->item;
@@ -306,7 +307,7 @@ class FctnListe {
 							<p>Description : <br/><input type="text" name="description" /></p>
 							<p><input type="submit" name="Modifier" value="Modifier"></p>
 						</form></br>
-					Ajouter d un item dans votre liste';
+					Ajout d un item dans votre liste';
 					CI::itemAddForm ();
 
 					//Partage de la liste via le token
