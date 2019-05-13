@@ -9,7 +9,11 @@ class Reservation extends \Illuminate\Database\Eloquent\Model
     public $timestamps = false;
 
     public function item() {
-        return $this->hasMany('wishlist\modele\Item' , 'id');
+        return $this->belongsTo('wishlist\modele\Item' , 'id');
+    }
+
+    public function cagnotte() {
+        return $this->hasMany('wishlist\modele\Cagnotte' , 'item_id');
     }
 
 }

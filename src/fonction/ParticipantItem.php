@@ -6,6 +6,8 @@ use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\Reservation;
 
+use wishlist\fonction\FctnCagnotte as CG;
+
 use wishlist\divers\Outils;
 
 
@@ -21,8 +23,11 @@ class ParticipantItem {
 		echo '<br/>nom : ' . $item->nom .
 			'<br/>description : ' . $item->descr .
 			'<br/>etat reservation : ' . $reservation_state;
-
-		if($reserv->reservation == 0) SELF::itemReserveForm($item->nom);
+		if($reserv->reservation == 0 && $reserv->cagnotte == 0 ) SELF::itemReserveForm($item->nom);
+		else if ($reserv->reservation == 0 && $reserv->cagnotte == 1) {
+			echo '<br/>Mode cagnotte';
+			CG::addCagnotteForm($item->nom);
+		}
 	}
 
 	public static function itemReserveForm ($item_name)
@@ -43,7 +48,8 @@ class ParticipantItem {
 		$reservation->message = htmlspecialchars($_POST['message']);
 		$reservation->save();
 
-		echo 'Item reservé !';
+		echo 'Item reservé ! </br>
+					<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste</a>';
 	}
 
 }

@@ -146,6 +146,7 @@ class FctnListe {
 				$message->msg=htmlspecialchars($_POST['message']);
 				$message->save();
 				echo 'Message ajouté à la liste';
+				echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
 			}
 
 

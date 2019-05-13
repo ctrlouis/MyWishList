@@ -4,11 +4,13 @@ namespace wishlist\pages;
 
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
+use wishlist\modele\Reservation;
 use wishlist\modele\User;
 
 use wishlist\fonction\TousItem as TI;
 use wishlist\fonction\ParticipantItem as PI;
 use wishlist\fonction\CreateurItem as CI;
+use wishlist\fonction\FctnCagnotte as CG;
 use wishlist\fonction\GestionImage as GI;
 
 
@@ -64,6 +66,9 @@ class PageItem {
 	// PRIVATE VIEW
 	public static function privateView($item)
 	{
+		if ($item->reservation[0]->reservation == 0 && $item->reservation[0]->cagnotte == 0){
+			echo '</br><a class="button" href="/MyWishList/set-cagnotte/' . $item->nom .'">Crée une cagnotte</a>';
+		}
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
 			if ($_SESSION['item_action'] == "edit") {
@@ -125,7 +130,7 @@ class PageItem {
 		else // si action
 		{
 			$_SESSION['item_action'] = null;
-			
+
 		}
 
 	}

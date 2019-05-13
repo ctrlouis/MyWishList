@@ -10,6 +10,7 @@ use wishlist\modele\User;
 
 use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\FctnListe as FL;
+use wishlist\fonction\FctnCagnotte as CG;
 use wishlist\fonction\CreateurItem as CI;
 use wishlist\fonction\GestionImage as GI;
 
@@ -109,6 +110,14 @@ $app->post('/add-item', function (){
 // affiche les details d'un item
 $app->get('/item/:name', function ($item_name){
 	PI::displayItem($item_name);
+});
+//Ajout d'une cagnotte pour un item
+$app->post('/add-cagnotte/:name', function ($item_name){
+	CG::addCagnotte($item_name);
+});
+//Défini une cagnotte pour un objet
+$app->get('/set-cagnotte/:name', function ($item_name){
+	CG::setCagnotte($item_name);
 });
 
 // reserver un item
