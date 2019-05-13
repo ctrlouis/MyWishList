@@ -49,7 +49,7 @@ if ($connected_user)
 	echo '<h2>Ajouter une liste a votre compte utilisateur</h2>
 				<form action="add-user" method="post">
 					<p>Token privé de la liste : <br/><input type="text" name="token" /></p>
-					<p><input type="submit" name="Ajouter liste" value="Ajouter au compte"></p>
+					<p><input class="button" type="submit" name="Ajouter liste" value="Ajouter au compte"></p>
 				</form>';
 } else {
 	//AUTH::FormulaireConnection();
@@ -62,7 +62,7 @@ $app->get('/liste', function ()
 	echo 'Accéder à une liste
 				<form action"/liste/" method="get">
 					<p>Token : <br/><input type="text" name="token" /></p>
-					<p><input type="submit" value="Accès à la liste"></p>
+					<p><input class="button" type="submit" value="Accès à la liste"></p>
 				</form>';
     FL::allListe();
 });
