@@ -46,10 +46,10 @@ class Outils
     public static function footerHTML()
     {
         echo '
-			<script src="jquery.js"></script>
-	    	<script src="what-input.js"></script>
-	    	<script src="foundation.js"></script>
-	    	<script src="app.js"></script>
+			<script src="src/js/jquery.js"></script>
+	    	<script src="src/js/what-input.js"></script>
+	    	<script src="src/js/foundation.js"></script>
+	    	<script src="src/js/app.js"></script>
 		</body></html>';
     }
 
