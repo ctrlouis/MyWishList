@@ -13,26 +13,6 @@ class CreateurItem {
 
 	public static function itemDetails ($item)
 	{
-		/*if ($item->img);
-			echo '<img class="icone" src="../' . $item->img . '" alt="Image of ' . $item->name . '" />';
-
-		echo '<br/>nom : ' . $item->nom .
-			'<br/>description : ' . $item->descr;
-
-		if (Outils::listeExpiration($item->liste->expiration))
-		{
-			echo '<br/><h2>Reservation</h2>';
-
-			if ( $item->reservation[0]->reservation == 0) {
-				echo 'Item non reservé';
-			} else {
-				echo 'Item reservé par ' . $item->reservation[0]->participant_name .
-					'<br/>Son message : ' . $item->reservation[0]->message;
-			}
-		} else {
-			echo "Veuillez attendre l'expiration de la liste";
-		}*/
-
 		if (Outils::listeExpiration($item->liste->expiration))
 		{
 			echo '
@@ -65,7 +45,7 @@ class CreateurItem {
 							'<p>Son message : ' . $item->reservation[0]->message . '<p>';
 					}
 				} else {
-					echo "Veuillez attendre l'expiration de la liste";
+					echo '<p>Veuillez attendre l\'expiration de la liste</p>';
 				}
 				echo '
 					</div>
