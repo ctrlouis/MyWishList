@@ -3,3 +3,31 @@
   	padding: 1rem;
   	border-radius: 0;
 }
+
+/* affichage comptes */
+.compte-box {
+  background-color: #fefefe;
+  border: solid 1px #cacaca;
+  width: 100%;
+  text-align: center;
+  list-style-type: none;
+}
+
+.compte-box li {
+  border-bottom: dotted 1px #cacaca;
+  padding: 0.875rem 1.125rem;
+}
+
+.compte-box li:last-child {
+  border-bottom: 0;
+}
+
+.compte-box .username {
+  background-color: #0a0a0a;
+  color: #fefefe;
+  border-bottom: 0;
+}
+
+.compte-box :last-child {
+  margin-bottom: 0;
+}
