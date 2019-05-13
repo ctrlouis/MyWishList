@@ -25,17 +25,17 @@ git clone git@github.com:ctrlouis/MyWishList.git
 ```
 composer install
 ```
-3. Empechez le suivie du fichier conf.ini par git :
+4. Empechez le suivie du fichier conf.ini par git :
 ```
 git update-index --assume-unchanged src/conf/conf.ini
 ```
 
-**OU** en oneshot :
+**OU** 1 à 4 en oneshot :
 ```
 git clone git@github.com:ctrlouis/MyWishList.git && cd MyWishList && composer install && git update-index --assume-unchanged src/conf/conf.ini
 ```
-3. Créez la base de données avec le fichier `../MyWishList/sql/wishlist.sql`
-4. Modifier le nom de la base de données et les identifiants (= lignes commentées) de connexion dans le fichier `../MyWishList/src/conf/conf.ini` et décommentez les lignes.
+5. Créez la base de données avec le fichier `../MyWishList/sql/wishlist.sql`
+6. Modifier le nom de la base de données et les identifiants (= lignes commentées) de connexion dans le fichier `../MyWishList/src/conf/conf.ini` et décommentez les lignes.
 
 ## Taches
 ### Principales
