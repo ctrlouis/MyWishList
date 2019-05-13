@@ -74,6 +74,7 @@ class GestionImage {
 
 	public static function imageDeleteForm($item_name)
 	{
+<<<<<<< HEAD
 		echo '
 			<form action="../delete-image/' . $item_name . '" method="POST">
 				<div class= "row align-center medium-6 large-4">
@@ -81,6 +82,10 @@ class GestionImage {
 						<button type="submit" class="alert button">Delete image</button>
 					</div>
 				</div>
+=======
+		echo '<form action="../delete-image/' . $item_name . '" method="POST">
+				<input class="button" type="submit" name="" value="Delete image" >
+>>>>>>> bbbe018a427c2c78194c519dcbaccd3d06abf7a2
 			</form>';
 	}
 

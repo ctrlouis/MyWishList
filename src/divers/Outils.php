@@ -30,12 +30,13 @@ class Outils
 		'<div data-sticky-container>
   			<div class="title-bar" data-sticky data-options="marginTop:0;" style="width:100%">
 
-	    		<div class="title-bar-left">
-					<span class="title-bar-title">MyWishList</span>
-					<a href="/MyWishList/">Accueil</a>
+	    	<div class="title-bar-left">
+					<a class="item" href="/MyWishList/"><i class="fi-home"></i> Accueil</a>
 				</div>
-
-	    		<div class="title-bar-right"> ' .
+        <div class="title-bar-center">
+          <span class="title-bar-title">MyWishList</span>
+        </div>
+	    	<div class="title-bar-right"> ' .
 					AUTH::menuDisplay() . '
 				</div>
 
