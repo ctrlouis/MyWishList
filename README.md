@@ -32,7 +32,7 @@ git update-index --assume-unchanged src/conf/conf.ini
 
 **OU** en oneshot :
 ```
-git clone git@github.com:ctrlouis/MyWishList.git && cd MyWishList.app && composer install && git update-index --assume-unchanged src/conf/conf.ini
+git clone git@github.com:ctrlouis/MyWishList.git && cd MyWishList && composer install && git update-index --assume-unchanged src/conf/conf.ini
 ```
 3. Créez la base de données avec le fichier `../MyWishList/sql/wishlist.sql`
 4. Modifier le nom de la base de données et les identifiants (= lignes commentées) de connexion dans le fichier `../MyWishList/src/conf/conf.ini` et décommentez les lignes.
