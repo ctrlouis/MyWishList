@@ -61,7 +61,7 @@ class CreateurItem {
 			<p><br/><input type="text" name="descr" placeholder="Description" required/></p>
 			<p><br/><input type="number" name="tarif" placeholder="Prix" required/></p>
 			<p><br/><input type="text" name="url" placeholder="url"/></p>
-			<p><input type="submit" name="Ajouter item" value="Ajouter item"></p>
+			<p><input type="submit" class="button" name="Ajouter item" value="Ajouter item"></p>
 			</form>';
 	}
 
@@ -119,7 +119,7 @@ class CreateurItem {
 			<p><br/><input type="text" name="descr" placeholder="Description"/></p>
 			<p><br/><input type="number" name="tarif" placeholder="Prix"/></p>
 			<p><br/><input type="text" name="url" placeholder="url"/></p>
-			<p><input type="submit" name="" value="Modifier"></p>
+			<p><input type="submit" class="button" name="" value="Modifier"></p>
 			</form>';
 	}
 
@@ -136,7 +136,7 @@ class CreateurItem {
 	public static function itemDeleteForm ($item_name)
 	{
 		echo '<form action="../delete-image/' . $item_name . '" method="POST">
-				<input type="submit" name="" value="Delete" >
+				<input type="submit" class="button" name="" value="Delete" >
 			</form>';
 	}
 

@@ -12,7 +12,7 @@ class GestionImage {
 		echo '<form method="post" action="../upload-image/' . $item_name . '" enctype="multipart/form-data">
      			<label for="icone">Icône du fichier (JPG, PNG ou GIF | max. 15 Ko) :</label><br />
      			<input type="file" name="icone" id="icone" /><br />
-     			<input type="submit" name="submit" value="Envoyer" />
+     			<input class="button" type="submit" name="submit" value="Envoyer" />
 			</form>';
 	}
 
@@ -78,7 +78,7 @@ class GestionImage {
 	public static function imageDeleteForm($item_name)
 	{
 		echo '<form action="../delete-image/' . $item_name . '" method="POST">
-				<input type="submit" name="" value="Delete image" >
+				<input class="button" type="submit" name="" value="Delete image" >
 			</form>';
 	}
 

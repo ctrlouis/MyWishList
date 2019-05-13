@@ -19,7 +19,7 @@ class FctnListe {
 			<p>Description : <br/><input type="text" name="description" /></p>
 			Format de la date dexpiration (YYYY-MM-DD)
 			<p>Date dexpiration : <br/><input type="date" min=' . date('Y-m-d') . ' name="expiration" /></p>
-			<p><input type="submit" name="Ajouter liste"></p>
+			<p><input class="button" type="submit" name="Ajouter liste"></p>
 			</form>';
 	}
 
@@ -260,12 +260,12 @@ class FctnListe {
 					if($liste->published == true)
 					{
 						echo '<form action="../liste-published/'. $token .'" method="post">
-										<button type="submit">Rend la liste privée</button>
+										<button class="button" type="submit">Rend la liste privée</button>
 									</form>';
 					}
 					else {
 						echo '<form action="../liste-published/'. $token .'" method="post">
-										<button type="submit">Rend la liste publique</button>
+										<button class="button" type="submit">Rend la liste publique</button>
 									</form>';
 					}
 				}
@@ -284,7 +284,7 @@ class FctnListe {
 											<br/>Nom de l\'objet : '. $item->nom . '<br/>
 										</li>
 										<form action="../liste-remove/'. $item->id .'" method="get">
-											<button type="submit">Supprimer l`item</button>
+											<button class="button tiny" type="submit">Supprimer l`item</button>
 										</form>';
 						}
 				echo "Message : <br/>";
@@ -301,7 +301,7 @@ class FctnListe {
 				echo 'Ajouter un message à la liste</br>
 					<form action="../add-mess/'. $token .'" method="post">
 						<p>Message : <input type="text" name="message" /></p>
-						<p><input type="submit" name="Poster" value="Poster"></p>
+						<p><input class="button" type="submit" name="Poster" value="Poster"></p>
 					</form></br>';
 
 				//Si le tokenprivé est renseigner, on peut modifier la liste et ajouter des items
@@ -311,7 +311,7 @@ class FctnListe {
 						<form action="../edit-liste/'. $token .'" method="post">
 							<p>Titre : <input type="text" name="titre" /></p>
 							<p>Description : <br/><input type="text" name="description" /></p>
-							<p><input type="submit" name="Modifier" value="Modifier"></p>
+							<p><input class="button" type="submit" name="Modifier" value="Modifier"></p>
 						</form></br>
 					Ajout d un item dans votre liste';
 					CI::itemAddForm ();
@@ -319,7 +319,7 @@ class FctnListe {
 					//Partage de la liste via le token
 					echo '<h3>Token de partage<h3>
 								<input type="text" value="'. $liste->token_publique .'" id="publicListe">
-								<button id="bouttonCopie">Copier le lien de la liste</button>
+								<button class="button" id="bouttonCopie">Copier le lien de la liste</button>
 								<script>
 									function copyListeLink()
 									{
