@@ -70,7 +70,7 @@ CREATE TABLE `reservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `reservation` (`item_id`) VALUES
-(1), (2), (4), (5), (6), (7), (8), (9), (10), (11), (12), (19), (22), (23), (24), (25), (26), (27);
+(1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (19), (22), (23), (24), (25), (26), (27);
 
 
 DROP TABLE IF EXISTS `user`;
