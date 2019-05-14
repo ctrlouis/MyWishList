@@ -6,6 +6,7 @@ use wishlist\conf\ConnectionFactory as CF;
 use wishlist\divers\Outils;
 
 use wishlist\fonction\Authentification as AUTH;
+use wishlist\fonction\Alerte;
 use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\FctnCagnotte as CG;
@@ -33,6 +34,7 @@ $app = new \Slim\Slim();
 // # ACCUEIL #
 // ###########
 $app->get('/', function () {
+	Alerte::clear();
 	echo '<h4>Bienvenu sur l`utilitaire de liste de souhait.</h4>';
 	echo '
 		<div class="small button-group">
