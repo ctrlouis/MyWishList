@@ -66,9 +66,6 @@ class PageItem {
 	// PRIVATE VIEW
 	public static function privateView($item)
 	{
-		if ($item->reservation[0]->reservation == 0 && $item->reservation[0]->cagnotte == 0){
-			echo '</br><a class="button" href="/MyWishList/set-cagnotte/' . $item->nom .'">Crée une cagnotte</a>';
-		}
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
 			if ($_SESSION['item_action'] == "edit") {
@@ -99,6 +96,12 @@ class PageItem {
 			GI::imageUploadForm($item->nom);
 			GI::imageDeleteForm($item->nom);
 			CI::itemEditForm($item->nom);
+			if ($item->reservation[0]->reservation == 0 && $item->reservation[0]->cagnotte == 0){
+				echo '
+					<div class= "row column align-center medium-6 large-4">
+						<a class="button" href="/MyWishList/set-cagnotte/' . $item->nom .'">Crée une cagnotte</a>
+					</div>';
+			}
 			CI::itemDeleteForm($item->nom);
 		}
 		else // si action
@@ -125,7 +128,7 @@ class PageItem {
 
 		if (!isset($_SESSION['item_action']) || $_SESSION['item_action'] == null) // par défault
 		{
-			
+
 		}
 		else // si action
 		{
