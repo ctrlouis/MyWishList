@@ -23,6 +23,14 @@ class FctnListe {
 			</form>';
 	}
 
+	public static function listeAddTokenForm() {
+		echo '<h2>Ajouter une liste a votre compte utilisateur</h2>
+				<form action="add-user" method="post">
+					<p>Token privé de la liste : <br/><input type="text" name="token" /></p>
+					<p><input class="button" type="submit" name="Ajouter liste" value="Ajouter au compte"></p>
+				</form>';
+	}
+
 	//Rediriger vers cette fonction par listeAddForm, crée la liste dans la base de donnée
 	public static function listeAdd ()
 	{
