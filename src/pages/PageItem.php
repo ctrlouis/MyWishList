@@ -65,48 +65,44 @@ class PageItem {
 	// PRIVATE VIEW
 	public static function privateView($item)
 	{
-		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
-		{
-			if ($_SESSION['item_action'] == "edit") {
-				$_SESSION['item_action'] = null;
-				CI::itemEdit($item);
+		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) {
+			switch ($_SESSION['item_action']) {
+			    case "edit":
+					$_SESSION['item_action'] = null;
+					CI::itemEdit($item);
+					break;
+			    case "delete":
+					$_SESSION['item_action'] = null;
+					CI::itemDelete($item);
+					exit();
+			        break;
+			    case "uploadImage":
+					$_SESSION['item_action'] = null;
+					GI::imageUpload($item);
+			        break;
+				case "deleteImage":
+					$_SESSION['item_action'] = null;
+					GI::imageDelete($item);
+					break;
 			}
-			if ($_SESSION['item_action'] == "delete") {
-				$_SESSION['item_action'] = null;
-				CI::itemDelete($item);
-				exit();
-			}
-			if ($_SESSION['item_action'] == "uploadImage") {
-				$_SESSION['item_action'] = null;
-				GI::imageUpload($item);
-				exit();
-			}
-			if ($_SESSION['item_action'] == "deleteImage") {
-				$_SESSION['item_action'] = null;
-				GI::imageDelete($item);
-				exit();
-			}
+
 		}
 
 		CI::itemDetails($item);
 
-		if (!isset($_SESSION['item_action']) || !$_SESSION['item_action']) // par défault
-		{
+		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) {
+			// enter code here
+		} else {
 			GI::imageUploadForm($item->nom);
 			GI::imageDeleteForm($item->nom);
 			CI::itemEditForm($item->nom);
-			if ($item->reservation[0]->reservation == 0 && $item->reservation[0]->cagnotte == 0){
+			if ($item->reservation[0]->reservation == 0 && $item->reservation[0]->cagnotte == 0) {
 				echo '
 					<div class= "row column align-center medium-6 large-4">
 						<a class="button" href="/MyWishList/set-cagnotte/' . $item->nom .'">Crée une cagnotte</a>
 					</div>';
 			}
 			CI::itemDeleteForm($item->nom);
-		}
-		else // si action
-		{
-
-			$_SESSION['item_action'] = null;
 		}
 
 	}
@@ -117,24 +113,15 @@ class PageItem {
 	{
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
-			if ($_SESSION['item_action'] == "reserve") {
-				$_SESSION['item_action'] = null;
-				PI::itemReserve($item);
+			switch ($_SESSION['item_action']) {
+			    case "reserve":
+					$_SESSION['item_action'] = null;
+					PI::itemReserve($item);
+					break;
 			}
 		}
 
 		PI::itemDetails($item);
-
-		if (!isset($_SESSION['item_action']) || $_SESSION['item_action'] == null) // par défault
-		{
-
-		}
-		else // si action
-		{
-			$_SESSION['item_action'] = null;
-
-		}
-
 	}
 
 }
