@@ -193,21 +193,23 @@ class FctnListe {
 				{
 					echo 'Aucune liste publique existante';
 				}
+
         foreach ($lists as $key => $value)
         {//Si le token privée d'une liste est dans la variable de session, le lien menera vers la liste en mode édition
+						echo "<li>";
 						if($_SESSION['wishlist_liste_token'] == $value->token_publique)
 						{
-							echo '</br>No : ' . $value->no .
-	            '<br/><a href="liste/' . $value->token_publique . '">' . $value->titre .
-	            '</a></br>';
+							echo '<a href="liste/' . $value->token_publique . '">' . $value->titre .
+	            			'</a></br>';
 						}
 						else
 						{
-							echo '</br>No : ' . $value->no .
-	            '<br/><a href="liste/' . $value->token_private . '">' . $value->titre .
-	            '</a></br>';
+							echo '<a href="liste/' . $value->token_private . '">' . $value->titre .
+	            			'</a></br>';
 						}
+						echo "</li>";
 				 }
+
        }
 		 }
 
