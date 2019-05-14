@@ -54,6 +54,14 @@ class Outils
 		</body></html>';
     }
 
+	public static function goTo($link, $message) {
+		echo '
+		<div class= "row column align-center medium-6 large-6">
+			<h4>' . $message . '</h4>
+		</div>';
+		header('Refresh: 0; url='. $link);
+	}
+
 	public static function generateToken()
 	{
 		return base_convert(hash('sha256', time() . mt_rand()), 16, 36);
