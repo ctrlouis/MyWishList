@@ -33,15 +33,15 @@ class Authentification {
 
 			echo '
 					<label>Username
-						<input type="text" name="username" placeholder="MyPseudo">
+						<input type="text" name="username" placeholder="MyPseudo" required/>
 					</label>
 
 					<label>Password
-						<input type="password" name="password" placeholder="Password">
+						<input type="password" name="password" placeholder="Password" required/>
 					</label>
 
-					<p><input type="submit" class="button expanded" name="signin" value="Connection"></input></p>
-					<p><input type="submit" class="button expanded" name="signup" value="Inscription"></input></p>
+					<input type="submit" class="button expanded" name="signin" value="Connection"/>
+					<input type="submit" class="button expanded" name="signup" value="Inscription"/>
 
 				</form>
 			</div>';
