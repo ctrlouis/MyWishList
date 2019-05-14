@@ -152,7 +152,6 @@ $app->post('/connection', function(){
 		AUTH::Connection($_POST['username'], $_POST['password']);
 	else if (isset($_POST['signup']))
     	AUTH::Inscription($_POST['username'], $_POST['password']);
-	header("/");
 });
 
 // deconnection
