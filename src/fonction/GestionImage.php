@@ -42,7 +42,6 @@ class GestionImage {
 
 		$item->img = $nom;
 		$item->save();
-		echo 'Item modifié';
 	}
 
 	public static function imageVerify($file)
@@ -89,7 +88,6 @@ class GestionImage {
 	{
 		$item->img = NULL;
 		$item->save();
-		echo "Image supprimé";
 	}
 
 }
