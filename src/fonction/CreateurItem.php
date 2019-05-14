@@ -132,7 +132,12 @@ class CreateurItem {
 					<input type="text" name="url" placeholder="url"/>
 				</div>
 				<div class="row align-center medium-5 large-3">
-					<button type="submit" class="button" name="">Modifier</button>
+					<button type="submit" class="button">
+						<div class ="row">
+							<div class="columns small-2 fi-pencil"></div>
+							<div class="columns">Modifier</div>
+						</div>
+					</button>
 				</div>
 
 			</form>';
@@ -152,9 +157,17 @@ class CreateurItem {
 		echo '
 			<form action="../delete-image/' . $item_name . '" method="POST">
 			<div class= "row column align-center medium-6 large-4">
-				<input type="submit" class="alert button" name="" value="Supprimer item" >
+				<button type="submit" class="alert button">
+					<div class ="row">
+						<div class="columns small-2 fi-trash"></div>
+						<div class="columns">Supprimer item</div>
+					</div>
+				</button>
+
 			</div>
 		</form>';
+
+		// <input type="submit" class="alert button" name="" value="Supprimer item" >
 	}
 
 	public static function itemDelete ($item)
