@@ -20,81 +20,76 @@ class Authentification {
 		}
 
 		public static function FormulaireConnection() {
-				echo '
-				<div class= "row column align-center medium-6 large-4">
-					<form action="connection" method="post" class="log-in-form">
+			echo '
+			<div class= "row column align-center medium-6 large-4">
+				<form action="connection" method="post" class="log-in-form">
 
-						<h4 class="text-center">Connection / Inscription</h4>
+					<h4 class="text-center">Connection / Inscription</h4>';
 
-						<label>Username
-							<input type="text" name="username" placeholder="MyPseudo">
-						</label>
+			Alerte::getWarningAlert("username_already_existe", "L'identifiant est déjà utilisé");
+			Alerte::getErrorAlert("username_invalid", "L'identifiant doit contenir de 3 à 20 caractères, et aucuns caractère spécial");
+			Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
+			Alerte::getErrorAlert("authentification_fail", "Identifiant ou mot de passe erroné");
 
-						<label>Password
-							<input type="password" name="password" placeholder="Password">
-						</label>
+			echo '
+					<label>Username
+						<input type="text" name="username" placeholder="MyPseudo">
+					</label>
 
-						<p><input type="submit" class="button expanded" name="signin" value="Connection"></input></p>
-						<p><input type="submit" class="button expanded" name="signup" value="Inscription"></input></p>
+					<label>Password
+						<input type="password" name="password" placeholder="Password">
+					</label>
 
-					</form>
-				</div>';
+					<p><input type="submit" class="button expanded" name="signin" value="Connection"></input></p>
+					<p><input type="submit" class="button expanded" name="signup" value="Inscription"></input></p>
+
+				</form>
+			</div>';
 		}
 
 		public static function Connection($username, $password) {
+			$username = htmlspecialchars($username);
+			$password = htmlspecialchars($password);
 			$credentials = [
     			'email'    => $username,
     			'password' => $password,
 			];
 			$user = Sentinel::forceAuthenticate($credentials);
-
-			if ($user) {
+			if (!$user) {
+				Alerte::set('authentification_fail');
+				Outils::goTo('compte', 'Erreur authentification');
+			} else {
 				$_SESSION["wishlist_userid"] = $user->id;
 				$_SESSION["wishlist_username"] = $user->email;
-				echo '
-				<div class= "row column align-center medium-6 large-6">
-					<h4>Authentification reussi, Redirection en cours..</h4>
-				</div>';
-				header('Refresh: 2; url=compte');
-			} else {
-				echo '
-				<div class= "row column align-center medium-6 large-6">
-					<h4>Erreur identifiants, veuillez rééssayer.</h4>
-				</div>';
-				header('Refresh: 2; url=compte');
+				Outils::goTo('index.php', 'Authentification reussi, Redirection en cours..');
 			}
 		}
 
 		public static function Deconnection() {
 			$_SESSION["wishlist_userid"] = null;
-			echo '
-			<div class= "row column align-center medium-6 large-6">
-				<h4>Deconnecté. Redirection en cours..</h4>
-			</div>';
-			header('Refresh: 0; url=index.php');
+			Outils::goTo('index.php', 'Deconnecté. Redirection en cours..');
 		}
 
 		public static function Inscription($username, $password) {
-			$user = User::select('email')
-				->where('email', 'like', $username)
-				->first();
 
-			if ($user) {
-				echo '
-				<div class= "row column align-center medium-6 large-6">
-					<h4>Nom d\'utilisateur déjà utilisé. Veuillez chang.</h4>
-				</div>';
-				header('Refresh: 2; url=compte');
+			$username = htmlspecialchars($username);
+			$password = htmlspecialchars($password);
+
+			if (!SELF::usernameIsConform($username)) {
+				Outils::goTo("compte", "Nom d'utilisateur invalide");
+				exit();
+			} else if (!SELF::passwordIsConform($password)) {
+				Outils::goTo("compte", "Mot de passe invalide");
+				exit();
+			} else if (!SELF::usernameIsUnique($username)) {
+				Outils::goTo("compte", "Nom d'utilisateur déjà utilisé");
+				exit();
 			} else {
 				Sentinel::register([
 	    			'email'    => $username,
 	    			'password' => $password,
 				]);
-				echo '
-				<div class= "row column align-center medium-6 large-6">
-					<h4>Compte crée ! Veuillez vous authentifier.</h4>
-				</div>';
-				header('Refresh: 2; url=compte');
+				Outils::goTo('compte', 'Compte crée ! Veuillez vous authentifier.');
 			}
 		}
 
@@ -123,4 +118,37 @@ class Authentification {
 			}
 		}
 
+		public static function usernameIsConform($username) {
+			$size = strlen($username);
+			if (($size < 3 || $size > 20) || (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $username))) {
+				Alerte::set('username_invalid');
+				return false;
+			}
+			return true;
+		}
+
+		public static function passwordIsConform($password) {
+			$size = strlen($password);
+			if ($size < 6 && $size > 30) {
+				Alerte::set('password_invalid');
+				return false;
+			}
+			if (!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $password)) {
+				Alerte::set('password_invalid');
+				return false;
+			}
+			return true;
+		}
+
+		public static function usernameIsUnique($username) {
+			$user = User::select('id')
+				->where('email', 'like', $username)
+				->first();
+
+			if ($user) {
+				Alerte::set('username_already_existe');
+				return false;
+			}
+			return true;
+		}
 }
