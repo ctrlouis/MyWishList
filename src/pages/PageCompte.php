@@ -2,9 +2,9 @@
 
 namespace wishlist\pages;
 
+use wishlist\fonction\Authentification as AUTH;
 use wishlist\fonction\Compte;
 
-use wishlist\fonction\Authentification as AUTH;
 
 class PageCompte {
 
