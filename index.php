@@ -3,11 +3,9 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use wishlist\conf\ConnectionFactory as CF;
+use wishlist\divers\Outils;
 
-use wishlist\modele\Item;
-use wishlist\modele\Liste;
-use wishlist\modele\User;
-
+use wishlist\fonction\Authentification as AUTH;
 use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\FctnCagnotte as CG;
@@ -16,10 +14,6 @@ use wishlist\fonction\GestionImage as GI;
 
 use wishlist\pages\PageItem as PI;
 use wishlist\pages\PageCompte as PC;
-
-use wishlist\fonction\Authentification as AUTH;
-
-use wishlist\divers\Outils;
 
 
 session_start();
@@ -40,17 +34,17 @@ echo '
 
 // connection utilisateur
 $connected_user = AUTH::Identification();
-
+if ($connected_user)
+{
+} else {
+}
 
 $app = new \Slim\Slim();
 
 
-if ($connected_user)
-{
-
-} else {
-}
-
+// #########
+// # LISTE #
+// #########
 
 //Affiche l'ensemble des listes
 $app->get('/liste', function ()
@@ -116,6 +110,10 @@ $app->get('/set-cagnotte/:name', function ($item_name){
 	CG::setCagnotte($item_name);
 });
 
+
+// ########
+// # ITEM #
+// ########
 // reserver un item
 $app->post('/reserver/:name', function ($item_name){
 	$_SESSION['item_action'] = "reserve";
@@ -140,12 +138,16 @@ $app->post('/upload-image/:name', function ($item_name){
 	PI::displayItem($item_name);
 });
 
-// supprimer un item
+// supprimer une image
 $app->post('/delete-image/:name', function ($item_name){
 	$_SESSION['item_action'] = "deleteImage";
 	PI::displayItem($item_name);
 });
 
+
+// ####################
+// # AUTHENTIFICATION #
+// ####################
 // connection & inscription
 $app->post('/connection', function(){
 	if (isset($_POST['signin']))
@@ -159,6 +161,10 @@ $app->get('/deconnection', function(){
 	AUTH::Deconnection();
 });
 
+
+// ###########
+// # COMPTE #
+// ##########
 // affiche details d'un compte
 $app->get('/compte', function() {
 	PC::displayCompte();
@@ -175,7 +181,6 @@ $app->post('/change-password-compte', function (){
 	$_SESSION['compte_action'] = "change_password";
 	PC::displayCompte();
 });
-
 
 // si url vide
 $app->get('/', function (){
