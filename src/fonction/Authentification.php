@@ -87,15 +87,27 @@ class Authentification {
 
 		public static function Inscription($username, $password)
 		{
-			Sentinel::register([
-    			'email'    => $username,
-    			'password' => $password,
-			]);
-			echo '
-			<div class= "row column align-center medium-6 large-6">
-				<h4>Compte crée ! Veuillez vous authentifier.</h4>
-			</div>';
-			header('Refresh: 2; url=compte');
+			$user = User::select('email')
+				->where('email', 'like', $username)
+				->first();
+
+			if ($user) {
+				echo '
+				<div class= "row column align-center medium-6 large-6">
+					<h4>Nom d\'utilisateur déjà utilisé. Veuillez chang.</h4>
+				</div>';
+				header('Refresh: 2; url=compte');
+			} else {
+				Sentinel::register([
+	    			'email'    => $username,
+	    			'password' => $password,
+				]);
+				echo '
+				<div class= "row column align-center medium-6 large-6">
+					<h4>Compte crée ! Veuillez vous authentifier.</h4>
+				</div>';
+				header('Refresh: 2; url=compte');
+			}
 		}
 
 		public static function isConnect()
