@@ -37,9 +37,8 @@ class PageItem {
 
 			if ($list) {
 				$createur = true; // défini en accès privée si token privée
-				echo "createur = true";
 			} else { // stop si token invalid
-				echo "Aucuns token de liste correspondant"; // alerte
+				echo "Aucuns token de liste correspondant";
 				exit();
 			}
 		}
