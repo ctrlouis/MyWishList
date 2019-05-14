@@ -2,16 +2,15 @@
 
 namespace wishlist\pages;
 
+use wishlist\fonction\CreateurItem as CI;
+use wishlist\fonction\FctnCagnotte as CG;
+use wishlist\fonction\ParticipantItem as PI;
+use wishlist\fonction\GestionImage as GI;
+
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\Reservation;
 use wishlist\modele\User;
-
-use wishlist\fonction\TousItem as TI;
-use wishlist\fonction\ParticipantItem as PI;
-use wishlist\fonction\CreateurItem as CI;
-use wishlist\fonction\FctnCagnotte as CG;
-use wishlist\fonction\GestionImage as GI;
 
 
 class PageItem {
