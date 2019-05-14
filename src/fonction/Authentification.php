@@ -2,30 +2,24 @@
 
 namespace wishlist\fonction;
 
-use Illuminate\Database\Capsule\Manager as DB;
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use wishlist\divers\Outils;
 
 use wishlist\modele\User;
-use wishlist\divers\Outils;
 
 
 class Authentification {
 
-		public static function Identification()
-		{
-			if (SELF::isConnect())
-			{
+		public static function Identification() {
+			if (SELF::isConnect()) {
 				$user = Sentinel::findById($_SESSION['wishlist_userid']);
 
-				if ($user) {
-					return $user;
-				}
+				if ($user) return $user;
 			}
 			return null;
 		}
 
-		public static function FormulaireConnection()
-		{
+		public static function FormulaireConnection() {
 				echo '
 				<div class= "row column align-center medium-6 large-4">
 					<form action="connection" method="post" class="log-in-form">
@@ -47,17 +41,14 @@ class Authentification {
 				</div>';
 		}
 
-		public static function Connection($username, $password)
-		{
+		public static function Connection($username, $password) {
 			$credentials = [
     			'email'    => $username,
     			'password' => $password,
 			];
-
 			$user = Sentinel::forceAuthenticate($credentials);
 
-			if ($user)
-			{
+			if ($user) {
 				$_SESSION["wishlist_userid"] = $user->id;
 				$_SESSION["wishlist_username"] = $user->email;
 				echo '
@@ -65,8 +56,7 @@ class Authentification {
 					<h4>Authentification reussi, Redirection en cours..</h4>
 				</div>';
 				header('Refresh: 2; url=compte');
-			}
-			else {
+			} else {
 				echo '
 				<div class= "row column align-center medium-6 large-6">
 					<h4>Erreur identifiants, veuillez rééssayer.</h4>
@@ -75,8 +65,7 @@ class Authentification {
 			}
 		}
 
-		public static function Deconnection()
-		{
+		public static function Deconnection() {
 			$_SESSION["wishlist_userid"] = null;
 			echo '
 			<div class= "row column align-center medium-6 large-6">
@@ -85,8 +74,7 @@ class Authentification {
 			header('Refresh: 0; url=index.php');
 		}
 
-		public static function Inscription($username, $password)
-		{
+		public static function Inscription($username, $password) {
 			$user = User::select('email')
 				->where('email', 'like', $username)
 				->first();
@@ -110,8 +98,7 @@ class Authentification {
 			}
 		}
 
-		public static function isConnect()
-		{
+		public static function isConnect() {
 			if (isset($_SESSION["wishlist_userid"]) && $_SESSION["wishlist_userid"] != null) {
 				return true;
 			} else {
@@ -119,12 +106,10 @@ class Authentification {
 			}
 		}
 
-		public static function menuDisplay()
-		{
+		public static function menuDisplay() {
 			if (!SELF::isConnect()) {
 				return '<a href="/MyWishList/compte">Connexion</a>';
-			}
-			else {
+			} else {
 				return '
 					<ul class="dropdown menu align-right" data-dropdown-menu>
 						<li>
