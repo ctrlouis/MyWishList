@@ -132,7 +132,7 @@ $app->post('/delete-item/:name', function($item_name) {
 });
 
 // Uploader imager
-$app->post('/upload-image-item/:name', function($item_name) {
+$app->post('/upload-image/:name', function($item_name) {
 	$_SESSION['item_action'] = "uploadImage";
 	PI::displayItem($item_name);
 });
@@ -178,12 +178,6 @@ $app->post('/edit-compte', function () {
 //  Changer mot de passe
 $app->post('/change-password-compte', function () {
 	$_SESSION['compte_action'] = "change_password";
-	PC::displayCompte();
-});
-
-// Uploader imager
-$app->post('/upload-image-compte', function() {
-	$_SESSION['compte_action'] = "uploadImage";
 	PC::displayCompte();
 });
 

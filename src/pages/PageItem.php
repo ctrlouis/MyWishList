@@ -78,11 +78,11 @@ class PageItem {
 			        break;
 			    case "uploadImage":
 					$_SESSION['item_action'] = null;
-					GI::imageUploadItem($item);
+					GI::imageUpload($item);
 			        break;
 				case "deleteImage":
 					$_SESSION['item_action'] = null;
-					GI::imageItemDelete($item);
+					GI::imageDelete($item);
 					break;
 			}
 
@@ -93,7 +93,7 @@ class PageItem {
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) {
 			// enter code here
 		} else {
-			GI::imageUploadItemForm($item->nom);
+			GI::imageUploadForm($item->nom);
 			GI::imageDeleteForm($item->nom);
 			CI::itemEditForm($item->nom);
 			$cagnotte = Cagnotte::where('item_id', '=', $item->id)->first();

@@ -4,7 +4,6 @@ namespace wishlist\pages;
 
 use wishlist\fonction\Authentification as AUTH;
 use wishlist\fonction\Compte;
-use wishlist\fonction\GestionImage as GI;
 
 
 class PageCompte {
@@ -17,23 +16,13 @@ class PageCompte {
 
 			if (isset($_SESSION['compte_action']) && $_SESSION['compte_action']) // par défault
 			{
-				switch ($_SESSION['compte_action']) {
-				    case "edit":
-						$_SESSION['compte_action'] = null;
-						Compte::compteEdit();
-						break;
-				    case "change-Password":
-						$_SESSION['compte_action'] = null;
-						Compte::compteChangePassword();
-				        break;
-				    case "uploadImage":
-						$_SESSION['compte_action'] = null;
-						GI::imageUploadCompte();
-						break;
-					case "deleteImage":
-						/*$_SESSION['compte_action'] = null;
-						GI::imageUploadItem($item);*/
-						break;
+				if ($_SESSION['compte_action'] == "edit") {
+					Compte::compteEdit();
+					$_SESSION['compte_action'] = null;
+				}
+				if ($_SESSION['compte_action'] == "change-password") {
+					Compte::compteChangePassword();
+					$_SESSION['compte_action'] = null;
 				}
 			}
 
@@ -42,7 +31,6 @@ class PageCompte {
 			if (!isset($_SESSION['compte_action']) || !$_SESSION['compte_action']) // par défault
 			{
 				Compte::compteEditForm();
-				GI::imageUploadCompteForm();
 			}
 			else // si action
 			{

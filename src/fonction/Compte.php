@@ -58,6 +58,8 @@ class Compte {
 		if ($_POST['last_name'] && $_POST['last_name'] != '') $user->last_name = $_POST['last_name'];
 		if ($_POST['first_name'] && $_POST['first_name'] != '') $user->first_name = $_POST['first_name'];
 		$user->save();
+		echo 'Compte modifié ! Redirection en cours...';
+		header('Refresh: 0; url=index.php');
 	}
 
 	public static function compteChangePasswordForm() {
@@ -79,7 +81,7 @@ class Compte {
 		if (!$hasher->check($_POST['oldPassword'], $user->password) || $_POST['newPassword'] != $_POST['newPasswordConf']) {
             //Session::flash('error', 'Check input is correct.');
             Sentinel::update($user, array('password' => $password));
-		}
+        }
 	}
 
 }

@@ -3,15 +3,14 @@
 namespace wishlist\fonction;
 
 use wishlist\modele\Item;
-use wishlist\modele\User;
 
-
+// https://openclassrooms.com/fr/courses/1085676-upload-de-fichiers-par-formulaire
 class GestionImage {
 
-	public static function imageUploadItemForm($item_name)
+	public static function imageUploadForm($item_name)
 	{
 			echo '
-				<form method="post" action="../upload-image-item/' . $item_name . '" enctype="multipart/form-data">
+				<form method="post" action="../upload-image/' . $item_name . '" enctype="multipart/form-data">
 					<div class= "row align-center medium-6 large-4">
 						<div class="columns small-12 medium-expand">
 							<button type="submit" class="button" name="submit">Modifier image</button>
@@ -24,7 +23,7 @@ class GestionImage {
 				</form>';
 	}
 
-	public static function imageUploadItem($item)
+	public static function imageUpload($item)
 	{
 		// si une erreur est survenu
 		$erreur = SELF::imageVerify($_FILES);
@@ -43,63 +42,6 @@ class GestionImage {
 
 		$item->img = $nom;
 		$item->save();
-	}
-
-	public static function imageDeleteForm($item_name)
-	{
-		echo '
-			<form action="../delete-image/' . $item_name . '" method="POST">
-				<div class= "row align-center medium-6 large-4">
-					<div class="columns small-12 medium-expand">
-						<button type="submit" class="alert button">Delete image</button>
-					</div>
-				</div>
-			</form>';
-	}
-
-	public static function imageitemDelete($item)
-	{
-		$item->img = NULL;
-		$item->save();
-	}
-
-	public static function imageUploadCompteForm()
-	{
-		echo '
-			<form method="post" action=upload-image-compte enctype="multipart/form-data">
-				<div class= "row align-center medium-6 large-4">
-					<div class="columns small-12 medium-expand">
-						<button type="submit" class="button" name="submit">Modifier image</button>
-					</div>
-					<div class="columns small-12 medium-expand">
-						<label for="icone" class="button">Selectionner un fichier...</label>
-						<input type="file" class="show-for-sr" name="icone" id="icone" />
-					</div>
-				</div>
-			</form>';
-	}
-
-	public static function imageUploadCompte()
-	{
-		// si une erreur est survenu
-		$erreur = SELF::imageVerify($_FILES);
-		if ($erreur) {
-			echo $erreur;
-			exit;
-		}
-
-		if(!is_dir('img/')){
-   			mkdir('img/');
-		}
-
-		$nom = "img/" . $_SESSION['wishlist_userid'] . "-pp.png";
-		$resultat = move_uploaded_file($_FILES['icone']['tmp_name'],$nom);
-		if ($resultat) echo "Transfert réussi";
-
-		$user = User::where('id', '=', $_SESSION['wishlist_userid'])
-			->first();
-		$user->img = $nom;
-		$user->save();
 	}
 
 	public static function imageVerify($file)
@@ -127,6 +69,25 @@ class GestionImage {
 
 		return null;
 
+	}
+
+	public static function imageDeleteForm($item_name)
+	{
+		echo '
+			<form action="../delete-image/' . $item_name . '" method="POST">
+				<div class= "row align-center medium-6 large-4">
+					<div class="columns small-12 medium-expand">
+						<button type="submit" class="alert button">Delete image</button>
+					</div>
+				</div>
+
+			</form>';
+	}
+
+	public static function imageDelete($item)
+	{
+		$item->img = NULL;
+		$item->save();
 	}
 
 }

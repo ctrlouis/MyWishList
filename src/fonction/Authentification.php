@@ -13,31 +13,32 @@ class Authentification {
 		public static function Identification() {
 			if (SELF::isConnect()) {
 				$user = Sentinel::findById($_SESSION['wishlist_userid']);
+
 				if ($user) return $user;
 			}
 			return null;
 		}
 
 		public static function FormulaireConnection() {
-			echo '
-			<div class= "row column align-center medium-6 large-4">
-				<form action="connection" method="post" class="log-in-form">
+				echo '
+				<div class= "row column align-center medium-6 large-4">
+					<form action="connection" method="post" class="log-in-form">
 
-					<h4 class="text-center">Connection / Inscription</h4>
+						<h4 class="text-center">Connection / Inscription</h4>
 
-					<label>Username
-						<input type="text" name="username" placeholder="MyPseudo">
-					</label>
+						<label>Username
+							<input type="text" name="username" placeholder="MyPseudo">
+						</label>
 
-					<label>Password
-						<input type="password" name="password" placeholder="Password">
-					</label>
+						<label>Password
+							<input type="password" name="password" placeholder="Password">
+						</label>
 
-					<p><input type="submit" class="button expanded" name="signin" value="Connection"></input></p>
-					<p><input type="submit" class="button expanded" name="signup" value="Inscription"></input></p>
+						<p><input type="submit" class="button expanded" name="signin" value="Connection"></input></p>
+						<p><input type="submit" class="button expanded" name="signup" value="Inscription"></input></p>
 
-				</form>
-			</div>';
+					</form>
+				</div>';
 		}
 
 		public static function Connection($username, $password) {
@@ -109,9 +110,6 @@ class Authentification {
 			if (!SELF::isConnect()) {
 				return '<a href="/MyWishList/compte">Connexion</a>';
 			} else {
-				$img = "";
-				$user = User::where('email', 'like', $_SESSION['wishlist_userid'])->first();
-				if ($user->img && $user->img != '') $img = $user->img;
 				return '
 					<ul class="dropdown menu align-right" data-dropdown-menu>
 						<li>
