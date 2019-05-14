@@ -117,7 +117,7 @@ class CreateurItem {
 	{
 		echo '
 			<form action="../edit-item/' . $item_name . '" method="post">
-			
+
 				<div class= "row align-center medium-5 large-3">
 					<input type="text" name="nom" placeholder="Nom"/>
 				</div>
@@ -144,14 +144,16 @@ class CreateurItem {
 		if ($_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
 		if ($_POST['url'] && $_POST['url'] != '') $item->url = $_POST['url'];
 		$item->save();
-		echo 'Item modifié';
 	}
 
 	public static function itemDeleteForm ($item_name)
 	{
-		echo '<form action="../delete-image/' . $item_name . '" method="POST">
-				<input type="submit" class="button" name="" value="Delete" >
-			</form>';
+		echo '
+			<form action="../delete-image/' . $item_name . '" method="POST">
+			<div class= "row column align-center medium-6 large-4">
+				<input type="submit" class="alert button" name="" value="Supprimer item" >
+			</div>
+		</form>';
 	}
 
 	public static function itemDelete ($item)
