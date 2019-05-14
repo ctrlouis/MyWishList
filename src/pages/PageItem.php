@@ -78,11 +78,11 @@ class PageItem {
 			        break;
 			    case "uploadImage":
 					$_SESSION['item_action'] = null;
-					GI::imageUpload($item);
+					GI::imageUploadItem($item);
 			        break;
 				case "deleteImage":
 					$_SESSION['item_action'] = null;
-					GI::imageDelete($item);
+					GI::imageItemDelete($item);
 					break;
 			}
 
@@ -93,7 +93,7 @@ class PageItem {
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) {
 			// enter code here
 		} else {
-			GI::imageUploadForm($item->nom);
+			GI::imageUploadItemForm($item->nom);
 			GI::imageDeleteForm($item->nom);
 			CI::itemEditForm($item->nom);
 			if ($item->reservation[0]->reservation == 0 && $item->reservation[0]->cagnotte == 0) {
