@@ -32,7 +32,7 @@ $cf = new CF();
 $cf->setConfig('src/conf/conf.ini');
 $db = $cf->makeConnection();
 
-echo '<h1>Application MyWishList</h1>
+echo '
 	<div class="small button-group">
 	  <a href="/MyWishList/liste" class="button">Listes publiques</a>
 	  <a href="/MyWishList/add-liste-form" class="button">Créer une liste</a>
