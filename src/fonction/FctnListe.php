@@ -172,23 +172,13 @@ class FctnListe {
 				if($liste){
 					$_SESSION['wishlist_liste_token'] = $liste->token_publique;
 					$itemlist=$liste->item;
-					$messlist=$liste->message;
 					echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
 					echo "<ul>";
 					foreach($itemlist as $item)
 							{
-								echo '<li>Item id : ' . $item->id . '
-												<a href="item/'. $item->nom .'"> Details</a>
-												<br/>Nom de l\'objet : '. $item->nom . '<br/>
-											</li>';
+								SELF::affichageItemListe($item);
 							}
-					echo "Message : <br/>";
-
-					//Affiche chaque message lié à la liste
-					foreach ($messlist as $message)
-					{
-						echo '- ' . $message->msg . '<br/>';
-					}
+					SELF::affichageMsgListe($liste);
 					echo "</ul>";
 				}
 				else{
@@ -288,21 +278,12 @@ class FctnListe {
 				echo "<ul>"; // HTML CODE debut liste
 				foreach($itemlist as $item)
 						{
-							echo '<li>Item id : ' . $item->id . '
-										  <a href="../item/'. $item->nom .'"> Details</a>
-											<br/>Nom de l\'objet : '. $item->nom . '<br/>
-										</li>
-										<form action="../liste-remove/'. $item->id .'" method="get">
+							SELF::affichageItemListe($item);
+							echo	'<form action="../liste-remove/'. $item->id .'" method="get">
 											<button class="button tiny" type="submit">Supprimer l`item</button>
 										</form>';
 						}
-				echo "Message : <br/>";
-
-				//Affiche chaque message lié à la liste
-				foreach ($messlist as $message)
-				{
-					echo '- ' . $message->msg . '<br/>';
-				}
+				SELF::affichageMsgListe($liste);
 
 				echo "</ul>"; // HTML CODE fin liste
 
@@ -339,14 +320,23 @@ class FctnListe {
 									let copy = document.getElementById("bouttonCopie");
 					  			copy.addEventListener("click", copyListeLink);
 								</script>';
-
-					//javascript bouton qui copie le lien publique de la liste
-					/*echo '<script type="text/javascript" src="FonctionListe.js"></script>';  //Importation de fichier JS cause des erreurs
-
-					echo '<button id="bouttonCopie">Copie le lien vers la liste pulbique</button>';*/
-
-
-
 				}
+			}
+
+			//Affiche les message de la liste
+			public static function affichageMsgListe($liste){
+				$messlist=$liste->message;
+				echo "Message : <br/>";
+				foreach ($messlist as $message)
+				{
+					echo '- ' . $message->msg . '<br/>';
+				}
+			}
+
+			public static function affichageItemListe($item){
+				echo '<li>
+								Nom de l\'objet : <a href="../item/'. $item->nom .'">'. $item->nom .'</a>
+								<br/>Description : '. $item->descr . '<br/>
+							</li>';
 			}
 		}
