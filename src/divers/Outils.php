@@ -61,8 +61,10 @@ class Outils
 
 	public static function listeExpiration($date_expiration)
 	{
-		if (date($date_expiration) < time())
-			return true; // si la date expiration est passé
+    $date = date('Y-m-d');
+		if (date($date_expiration) < date($date)){
+      return true; // si la date expiration est passé
+    }
 		else
 			return false; // si la date expiration n'est pas passé
 	}

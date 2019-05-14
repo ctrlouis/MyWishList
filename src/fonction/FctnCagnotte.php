@@ -11,7 +11,7 @@ use wishlist\divers\Outils;
 class FctnCagnotte{
 
   public static function setCagnotte($item_name){
-    $liste = Liste::where('token_publique', 'like', $_SESSION['wishlist_liste_token'])->first();
+    $liste = Liste::where('token_private', 'like', $_SESSION['wishlist_liste_token'])->first();
     $item = Item::where('nom', 'like', $item_name)->where('liste_id', '=', $liste->no)->first();
 
 
