@@ -9,7 +9,6 @@ use wishlist\fonction\GestionImage as GI;
 
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
-use wishlist\modele\Reservation;
 use wishlist\modele\User;
 
 
@@ -96,12 +95,13 @@ class PageItem {
 			GI::imageUploadForm($item->nom);
 			GI::imageDeleteForm($item->nom);
 			CI::itemEditForm($item->nom);
-			if ($item->reservation[0]->reservation == 0 && $item->reservation[0]->cagnotte == 0) {
+			if ($item->reservation == 0 && $item->cagnotte == 0) {
 				echo '
 					<div class= "row column align-center medium-6 large-4">
 						<a class="button" href="/MyWishList/set-cagnotte/' . $item->nom .'">Crée une cagnotte</a>
 					</div>';
 			}
+
 			CI::itemDeleteForm($item->nom);
 		}
 

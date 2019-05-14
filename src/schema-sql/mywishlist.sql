@@ -14,6 +14,10 @@ CREATE TABLE `item` (
   `url` text DEFAULT NULL,
   `tarif` decimal(5,2) DEFAULT NULL,
   `token_private` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `reservation` tinyint(1) NOT NULL DEFAULT '0',
+  `participant_name` text NOT NULL,
+  `message` text NOT NULL,
+  `cagnotte` tinyint(1) NOT NULL DEFAULT '0'
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -59,19 +63,6 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 (2,	2,	'Liste de mariage d\'Alice et Bob',	'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	'2018-06-30',	'tokenprivate2', 'tokenpublic2');
 
 
-
-DROP TABLE IF EXISTS `reservation`;
-CREATE TABLE `reservation` (
-  `item_id` int(11),
-  `reservation` boolean DEFAULT 0,
-  `participant_name` varchar(255) DEFAULT NULL,
-  `message` text DEFAULT NULL,
-  `cagnotte` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `reservation` (`item_id`) VALUES
-(1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (19), (22), (23), (24), (25), (26), (27);
 
 DROP TABLE IF EXISTS `cagnotte`;
 CREATE TABLE IF NOT EXISTS `cagnotte` (
