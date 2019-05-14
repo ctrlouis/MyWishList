@@ -66,11 +66,23 @@ CREATE TABLE `reservation` (
   `reservation` boolean DEFAULT 0,
   `participant_name` varchar(255) DEFAULT NULL,
   `message` text DEFAULT NULL,
+  `cagnotte` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `reservation` (`item_id`) VALUES
 (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (19), (22), (23), (24), (25), (26), (27);
+
+DROP TABLE IF EXISTS `cagnotte`;
+CREATE TABLE IF NOT EXISTS `cagnotte` (
+  `id_participation` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `name` text NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `montant` int(11) NOT NULL DEFAULT '0',
+  `message` text,
+  PRIMARY KEY (`id_participation`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `user`;
