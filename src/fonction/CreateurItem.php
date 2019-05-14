@@ -31,13 +31,26 @@ class CreateurItem {
 			<div class="card-divider align-middle">';
 		if (Outils::listeExpiration($item->liste->expiration))
 		{
-			echo '<h4>Reservation</h4>';
+			echo 'Reservation : ';
 			if ( $item->reservation == 0) {
-				echo '<p>Item non reservé</p>';
-			} else {
-				echo '<p>Item reservé par ' . $item->participant_name . '</p>' .
-					'<p>Son message : ' . $item->message . '<p>';
+				echo 'Non reservé';
 			}
+			else if ($item->cagnotte == 0){
+				echo 'Reservé par '. $item->participant_name;
+				if($item->mesage){
+					echo ' son message '. $item->message;
+				}
+			}
+			else if ($item->cagnotte == 1){
+				echo 'Reservé par cagnotte
+							<ul>';
+				$contribution = $item->cagnottes;
+				foreach ($contribution as $key) {
+					echo '<li>'.$key->name. ' a contribué à une hauteur de '. $key->montant . '€';
+				}
+				echo '</ul>';
+			}
+
 		} else {
 			echo '<p>Veuillez attendre l\'expiration de la liste</p>';
 		}

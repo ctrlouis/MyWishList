@@ -57,7 +57,7 @@ class PageItem {
 		} else {
 			SELF::publicView($item);
 		}
-		echo '<a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
+		echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
 	}
 
 

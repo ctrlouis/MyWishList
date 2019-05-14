@@ -44,7 +44,6 @@ class ParticipantItem {
 
 		if($item->reservation == 0 && $item->cagnotte == 0) SELF::itemReserveForm($item->nom);
 		else if ($item->reservation == 0 && $item->cagnotte == 1) {
-			echo '<br/>Mode cagnotte';
 			CG::addCagnotteForm($item->nom);
 		}
 	}
