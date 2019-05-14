@@ -39,12 +39,14 @@ class Outils
 					AUTH::menuDisplay() . '
 				</div>
   			</div>
-		</div>';
+		</div>
+		<div class="app">';
     }
 
     public static function footerHTML()
     {
         echo '
+				</div>
 			<script src="/MyWishList/src/js/jquery.js"></script>
 	    	<script src="/MyWishList/src/js/what-input.js"></script>
 	    	<script src="/MyWishList/src/js/foundation.js"></script>
