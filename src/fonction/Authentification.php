@@ -101,17 +101,17 @@ class Authentification {
 			}
 		}
 
-		public static function menuDisplay() {
+		public static function menuDisplay($arbo) {
 			if (!SELF::isConnect()) {
-				return '<a href="/MyWishList/compte">Connexion</a>';
+				return '<a href="' . $arbo .'compte">Connexion</a>';
 			} else {
 				return '
 					<ul class="dropdown menu align-right" data-dropdown-menu>
 						<li>
 							<a href="">Connecté en tant que <strong><i>' . $_SESSION['wishlist_username'] . '</i></strong></a>
 							<ul class="menu">
-								<li><a href="/MyWishList/compte">Mon Compte</a></li>
-								<li><a href="/MyWishList/deconnection">Deconnexion <i class="step fi-power size-24"></i></a></li>
+								<li><a href="' . $arbo .'compte">Mon Compte</a></li>
+								<li><a href="' . $arbo .'deconnection">Deconnexion <i class="step fi-power size-24"></i></a></li>
 							</ul>
 						</li>
 					</ul>';
