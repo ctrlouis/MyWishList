@@ -28,6 +28,7 @@ class CreateurItem {
 				<div class="card-section">
 					<h3 class="article-title">' . $item->nom . '</h3>
 					<p class="article-summary">' . $item->descr . '</p>
+					<p class="article-summary">Prix : ' . $item->tarif . '€</p>
 				</div>
 
 				<div class="card-divider align-middle">';
