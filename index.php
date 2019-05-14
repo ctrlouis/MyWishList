@@ -21,34 +21,33 @@ session_start();
 Outils::headerHTML("MyWishList");
 Outils::menuHTML();
 
-// db connection
+// Connection base de données
 $cf = new CF();
 $cf->setConfig('src/conf/conf.ini');
 $db = $cf->makeConnection();
 
-echo '
-	<div class="small button-group">
-	  <a href="/MyWishList/liste" class="button">Listes publiques</a>
-	  <a href="/MyWishList/add-liste-form" class="button">Créer une liste</a>
-	</div>';
-
-// connection utilisateur
-$connected_user = AUTH::Identification();
-if ($connected_user)
-{
-} else {
-}
 
 $app = new \Slim\Slim();
+
+// ###########
+// # ACCUEIL #
+// ###########
+$app->get('/', function () {
+	echo '<h4>Bienvenu sur l`utilitaire de liste de souhait.</h4>';
+	echo '
+		<div class="small button-group">
+		  <a href="/MyWishList/liste" class="button">Listes publiques</a>
+		  <a href="/MyWishList/add-liste-form" class="button">Créer une liste</a>
+		</div>';
+});
 
 
 // #########
 // # LISTE #
 // #########
 
-//Affiche l'ensemble des listes
-$app->get('/liste', function ()
-{
+// Affiche l'ensemble des listes
+$app->get('/liste', function () {
 	echo 'Accéder à une liste
 				<form action"/liste/" method="get">
 					<p>Token : <br/><input type="text" name="token" /></p>
@@ -56,57 +55,57 @@ $app->get('/liste', function ()
 				</form>';
     FL::allListe();
 });
-//Affiche une liste particulière lorsque le token est renseigné dans l'URL
-$app->get('/liste/:one', function($token){
+// Affiche une liste particulière lorsque le token est renseigné dans l'URL
+$app->get('/liste/:one', function($token) {
 	FL::liste($token);
 });
 
-//Supprime un item de la liste (l'item ou juste effacer de la liste ?)
-$app->get('/liste-remove/:item', function($item){
+// Supprime un item de la liste (l'item ou juste effacer de la liste ?)
+$app->get('/liste-remove/:item', function($item) {
 	FL::delItem($item);
 });
 
 
 // Créer une liste
-$app->get('/add-liste-form', function(){
+$app->get('/add-liste-form', function() {
 	FL::listeAddTokenForm();
 	FL::listeAddForm();
 });
-$app->post('/add-liste', function(){
+$app->post('/add-liste', function() {
 	FL::listeAdd();
 });
-$app->post('/add-user', function(){
+$app->post('/add-user', function() {
 	FL::addUser();
 });
 
-//Ajout un message à une liste
-$app->post('/add-mess/:token', function($token){
+// Ajout un message à une liste
+$app->post('/add-mess/:token', function($token) {
   FL::addMessage($token);
 });
-//Rend la liste visible par tous
-$app->post('/liste-published/:id', function($token){
+// Rend la liste visible par tous
+$app->post('/liste-published/:id', function($token) {
   FL::publication($token);
 });
 
 
-// créer un item
-$app->get('/add-item-form', function (){
+// Créer un item
+$app->get('/add-item-form', function() {
 	CI::itemAddForm();
 });
-$app->post('/add-item', function (){
+$app->post('/add-item', function() {
 	CI::itemAdd();
 });
 
-// affiche les details d'un item
-$app->get('/item/:name', function ($item_name){
+// Affiche les details d'un item
+$app->get('/item/:name', function($item_name) {
 	PI::displayItem($item_name);
 });
-//Ajout d'une cagnotte pour un item
-$app->post('/add-cagnotte/:name', function ($item_name){
+// Ajout d'une cagnotte pour un item
+$app->post('/add-cagnotte/:name', function($item_name) {
 	CG::addCagnotte($item_name);
 });
-//Défini une cagnotte pour un objet
-$app->get('/set-cagnotte/:name', function ($item_name){
+// Défini une cagnotte pour un objet
+$app->get('/set-cagnotte/:name', function($item_name) {
 	CG::setCagnotte($item_name);
 });
 
@@ -114,32 +113,32 @@ $app->get('/set-cagnotte/:name', function ($item_name){
 // ########
 // # ITEM #
 // ########
-// reserver un item
-$app->post('/reserver/:name', function ($item_name){
+// Reserver un item
+$app->post('/reserver/:name', function($item_name) {
 	$_SESSION['item_action'] = "reserve";
 	PI::displayItem($item_name);
 });
 
-//  modifier item
-$app->post('/edit-item/:name', function ($item_name){
+//  Modifier item
+$app->post('/edit-item/:name', function($item_name) {
 	$_SESSION['item_action'] = "edit";
 	PI::displayItem($item_name);
 });
 
-// supprimer un item
-$app->post('/delete-item/:name', function ($item_name){
+// Supprimer un item
+$app->post('/delete-item/:name', function($item_name) {
 	$_SESSION['item_action'] = "delete";
 	PI::displayItem($item_name);
 });
 
-// uploader imager
-$app->post('/upload-image/:name', function ($item_name){
+// Uploader imager
+$app->post('/upload-image/:name', function($item_name) {
 	$_SESSION['item_action'] = "uploadImage";
 	PI::displayItem($item_name);
 });
 
-// supprimer une image
-$app->post('/delete-image/:name', function ($item_name){
+// Supprimer une image
+$app->post('/delete-image/:name', function($item_name) {
 	$_SESSION['item_action'] = "deleteImage";
 	PI::displayItem($item_name);
 });
@@ -148,16 +147,16 @@ $app->post('/delete-image/:name', function ($item_name){
 // ####################
 // # AUTHENTIFICATION #
 // ####################
-// connection & inscription
-$app->post('/connection', function(){
+// Connection & inscription
+$app->post('/connection', function() {
 	if (isset($_POST['signin']))
 		AUTH::Connection($_POST['username'], $_POST['password']);
 	else if (isset($_POST['signup']))
     	AUTH::Inscription($_POST['username'], $_POST['password']);
 });
 
-// deconnection
-$app->get('/deconnection', function(){
+// Deconnection
+$app->get('/deconnection', function() {
 	AUTH::Deconnection();
 });
 
@@ -165,26 +164,21 @@ $app->get('/deconnection', function(){
 // ###########
 // # COMPTE #
 // ##########
-// affiche details d'un compte
+// Affiche details d'un compte
 $app->get('/compte', function() {
 	PC::displayCompte();
 });
 
-//  modifier un compte
-$app->post('/edit-compte', function (){
+//  Modifier un compte
+$app->post('/edit-compte', function () {
 	$_SESSION['compte_action'] = "edit";
 	PC::displayCompte();
 });
 
-//  changer mot de passe
-$app->post('/change-password-compte', function (){
+//  Changer mot de passe
+$app->post('/change-password-compte', function () {
 	$_SESSION['compte_action'] = "change_password";
 	PC::displayCompte();
-});
-
-// si url vide
-$app->get('/', function (){
-	echo 'Bienvenu sur l`utilitaire de liste de souhait.';
 });
 
 $app->run();
