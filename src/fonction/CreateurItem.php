@@ -4,7 +4,6 @@ namespace wishlist\fonction;
 
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
-use wishlist\modele\Reservation;
 
 use wishlist\divers\Outils;
 
@@ -32,13 +31,26 @@ class CreateurItem {
 			<div class="card-divider align-middle">';
 		if (Outils::listeExpiration($item->liste->expiration))
 		{
-			echo '<h4>Reservation</h4>';
-			if ( $item->reservation[0]->reservation == 0) {
-				echo '<p>Item non reservé</p>';
-			} else {
-				echo '<p>Item reservé par ' . $item->reservation[0]->participant_name . '</p>' .
-					'<p>Son message : ' . $item->reservation[0]->message . '<p>';
+			echo 'Reservation : ';
+			if ( $item->reservation == 0) {
+				echo 'Non reservé';
 			}
+			else if ($item->cagnotte == 0){
+				echo 'Reservé par '. $item->participant_name;
+				if($item->mesage){
+					echo ' son message '. $item->message;
+				}
+			}
+			else if ($item->cagnotte == 1){
+				echo 'Reservé par cagnotte
+							<ul>';
+				$contribution = $item->cagnottes;
+				foreach ($contribution as $key) {
+					echo '<li>'.$key->name. ' a contribué à une hauteur de '. $key->montant . '€';
+				}
+				echo '</ul>';
+			}
+
 		} else {
 			echo '<p>Veuillez attendre l\'expiration de la liste</p>';
 		}
@@ -97,10 +109,6 @@ class CreateurItem {
 		$item->tarif = htmlspecialchars($_POST['tarif']);
 		$item->token_private = Outils::generateToken();
 		$item->save();
-
-		$reservation = new Reservation();
-		$reservation->item_id = $item->id;
-		$reservation->save();
 
 		echo $_POST['nom'] . ' est ajouté à la liste.<br/>' .
 				 '<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';

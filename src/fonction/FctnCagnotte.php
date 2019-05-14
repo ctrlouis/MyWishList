@@ -4,7 +4,6 @@ namespace wishlist\fonction;
 
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
-use wishlist\modele\Reservation;
 use wishlist\modele\Cagnotte;
 
 use wishlist\divers\Outils;
@@ -15,10 +14,9 @@ class FctnCagnotte{
     $item = Item::where('nom', 'like', $item_name)->where('liste_id', '=', $liste->no)->first();
 
 
-    if($item->reservation[0]->cagnotte == 0) {
-      $reservation = $item->reservation[0];
-      $reservation->cagnotte = 1;
-      $reservation->save();
+    if($item->cagnotte == 0) {
+      $item->cagnotte = 1;
+      $item->save();
       echo 'Cagnotte crée pour '. $item_name.' ! </br>';
     }
     else {
@@ -28,19 +26,32 @@ class FctnCagnotte{
   }
 
   public static function addCagnotteForm($item_name){
-    echo '<h3>Ajout participation</h3>
-          <form action="../add-cagnotte/' . $item_name . '" method="post">';
-    if(!isset($_SESSION['wishlist_userid']))
-      echo '<p><input type="text" name="name" placeholder="Nom" required/></p>';
+    $liste = Liste::where('token_publique', 'like', $_SESSION['wishlist_liste_token'])->first();
+    $item = Item::where('nom', 'like', $item_name)->where('liste_id', '=', $liste->no)->first();
+    $cagnotte = Cagnotte::where('item_id', '=', $item->id)->first();
 
-    echo   '<p><input type="number" name="montant" placeholder="Montant..." required/></p>
-            <p><textarea type="text" name="message" placeholder="Laissez votre message..." required/></textarea></p>
-            <p><input type="submit" name="Make a present"></p>
-          </form>';
+    if(SELF::calculPrixRestant($item) > 0)
+    {
+      echo '<h3>Ajout participation</h3>
+            <form action="../add-cagnotte/' . $item_name . '" method="post">';
+      if($cagnotte){
+        echo $item->tarif - SELF::calculPrixRestant($item) . '€ on déjà été cotiser, il reste : '. SELF::calculPrixRestant($item). '€ à payer.';
+      }
+      if(!isset($_SESSION['wishlist_userid']))
+        echo '<p><input type="text" name="name" placeholder="Nom" required/></p>';
+
+      echo   '<p><input type="number" name="montant" max="'.SELF::calculPrixRestant($item).'" placeholder="Montant..." required/></p>
+              <p><textarea type="text" name="message" placeholder="Laissez votre message..."/></textarea></p>
+              <p><input type="submit" name="Make a present"></p>
+            </form>';
+    }
+    else {
+      echo "La cagnotte est terminé.";
+    }
+
   }
 
   public static function addCagnotte($item_name){
-
     $liste = Liste::where('token_publique', 'like', $_SESSION['wishlist_liste_token'])->first();
     if($liste){
       $item = Item::where('nom', 'like', $item_name)->where('liste_id', '=', $liste->no)->first();
@@ -64,9 +75,24 @@ class FctnCagnotte{
       else
         echo "Participation déjà effectué ! </br>";
       echo '<a href="/MyWishList/item/' . $item_name .'">Retour à l`item</a>';
+      if(SELF::calculPrixRestant($item) == 0)
+      {
+        $item->reservation == 1;
+        $item->save();
+      }
     }
     else {
       echo "Erreur, veuillez ressayer !";
     }
+  }
+
+  public static function calculPrixRestant($item){
+    $participation = $item->cagnottes;
+    $cotiser = 0;
+    foreach ($participation as $cagn) {
+      if($cagn->item_id == $item->id)
+        $cotiser += $cagn->montant;
+    }
+    return $item->tarif - $cotiser;
   }
 }

@@ -12,8 +12,8 @@ class Item extends \Illuminate\Database\Eloquent\Model
         return $this->belongsTo('wishlist\modele\Liste' , 'liste_id');
     }
 
-	public function reservation() {
-        return $this->hasMany('wishlist\modele\Reservation', 'item_id');
+    public function cagnottes() {
+        return $this->hasMany('wishlist\modele\Cagnotte' , 'item_id');
     }
 
 }

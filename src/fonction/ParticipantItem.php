@@ -15,8 +15,7 @@ class ParticipantItem {
 
 	public static function itemDetails ($item)
 	{
-		$reserv = $item->reservation[0];
-		if ($reserv->reservation == 0) $reservation_state = 'non';
+		if ($item->reservation == 0) $reservation_state = 'non';
 		else $reservation_state = 'oui';
 
 		echo '
@@ -34,6 +33,7 @@ class ParticipantItem {
 				<div class="card-section">
 					<h3 class="article-title">' . $item->nom . '</h3>
 					<p class="article-summary">' . $item->descr . '</p>
+					<p class="article-summary">Prix : ' . $item->tarif . '€</p>
 				</div>
 
 				<div class="card-divider align-middle">
@@ -42,9 +42,8 @@ class ParticipantItem {
 			</div>
 		</div>';
 
-		if($reserv->reservation == 0) SELF::itemReserveForm($item->nom);
-		else if ($reserv->reservation == 0 && $reserv->cagnotte == 1) {
-			echo '<br/>Mode cagnotte';
+		if($item->reservation == 0 && $item->cagnotte == 0) SELF::itemReserveForm($item->nom);
+		else if ($item->reservation == 0 && $item->cagnotte == 1) {
 			CG::addCagnotteForm($item->nom);
 		}
 	}
