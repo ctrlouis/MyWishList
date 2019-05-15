@@ -7,7 +7,6 @@ use wishlist\divers\Outils;
 
 use wishlist\fonction\Authentification as AUTH;
 use wishlist\fonction\Alerte;
-use wishlist\fonction\FctnItem as FI;
 use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\FctnCagnotte as CG;
 use wishlist\fonction\CreateurItem as CI;
