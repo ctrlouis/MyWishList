@@ -10,7 +10,7 @@ class Alerte {
 	}
 
 	public static function getSuccesAlert($name_session, $texte) {
-		if (SELF::isAlert($name_session))
+		if (SELF::isAlert($name_session)) {
 			SELF::clear();
 			echo '
 			<div class="callout success" data-closable>
@@ -19,6 +19,7 @@ class Alerte {
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>';
+		}
 	}
 
 	public static function getWarningAlert($name_session, $texte) {

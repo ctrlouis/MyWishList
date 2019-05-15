@@ -13,27 +13,26 @@ class PageCompte {
 		if (!AUTH::isConnect()) {
 			AUTH::FormulaireConnection();
 		} else if (AUTH::isConnect()) {
-
-			if (isset($_SESSION['compte_action']) && $_SESSION['compte_action']) // par défault
+			if (isset($_SESSION['compte_action']) && $_SESSION['compte_action'])
 			{
 				switch ($_SESSION['compte_action']) {
 				    case "edit":
 						$_SESSION['compte_action'] = null;
 						Compte::compteEdit();
 						break;
-				    case "change-Password":
+				    case "change_password":
 						$_SESSION['compte_action'] = null;
-						Compte::compteChangePassword();
+						AUTH::passwordEdit();
 				        break;
 				}
 			}
 
 			Compte::compteDetails();
 
-			if (!isset($_SESSION['compte_action']) || !$_SESSION['compte_action']) // par défault
+			if (!isset($_SESSION['compte_action']) && !$_SESSION['compte_action']) // par défault
 			{
 				Compte::compteEditForm();
-				Compte::passwordEditForm();
+				AUTH::passwordEditForm();
 			}
 			else // si action
 			{

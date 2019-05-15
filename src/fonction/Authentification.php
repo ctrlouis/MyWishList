@@ -30,6 +30,7 @@ class Authentification {
 			Alerte::getErrorAlert("username_invalid", "L'identifiant doit contenir de 3 à 20 caractères, et aucuns caractère spécial");
 			Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
 			Alerte::getErrorAlert("authentification_fail", "Identifiant ou mot de passe erroné");
+			Alerte::getSuccesAlert("password_change", "Mot de passe modifié. Veuillez vous reconnecter");
 
 			echo '
 					<label>Username
@@ -91,6 +92,60 @@ class Authentification {
 				]);
 				Outils::goTo('compte', 'Compte crée ! Veuillez vous authentifier.');
 			}
+		}
+
+		public static function passwordEditForm() {
+			echo '<div class= "row align-center medium-5 large-3">';
+			Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
+			Alerte::getErrorAlert("pass_not_match", "Les nouveaux mot de passes doivent être identique");
+			Alerte::getErrorAlert("authentification_fail", "Mot de passe erroné");
+			echo '
+			</div>
+			<form action="change-password" method="post">
+				<div class= "row align-center medium-5 large-3">
+					<input type="text" name="oldPassword" placeholder="Ancien mot de passe*" required/>
+				</div>
+				<div class= "row align-center medium-5 large-3">
+					<input type="text" name="newPassword" placeholder="Nouveau mot de passe*" required/>
+				</div>
+				<div class= "row align-center medium-5 large-3">
+					<input type="text" name="newPasswordConf" placeholder="Confirmer mot de passe*" required/>
+				</div>
+				<div class="row align-left medium-5 large-3">
+					<button type="submit" class="button" name="">Changer mot de passe</button>
+				</div>
+			</form>';
+		}
+
+		public static function passwordEdit() {
+			$oldPassword = htmlspecialchars($_POST['oldPassword']);
+			$newPassword = htmlspecialchars($_POST['newPassword']);
+			$newPasswordConf = htmlspecialchars($_POST['newPasswordConf']);
+
+			if ($newPassword != $newPasswordConf) {
+				Alerte::set('pass_not_match');
+				Outils::goTo("compte", "Nouveaux mot de passe pas identiques");
+				exit();
+			}
+
+			if (!SELF::passwordIsConform($newPassword)) {
+				Alerte::set('password_invalid');
+				Outils::goTo("compte", "Mot de passe invalide");
+				exit();
+			}
+
+			$user = Sentinel::findById($_SESSION['wishlist_userid']);
+
+			$hasher = Sentinel::getHasher();
+			if (!$hasher->check($_POST['oldPassword'], $user->password)) {
+				Alerte::set('authentification_fail');
+				Outils::goTo("compte", "Mot de passe érroné");
+				exit();
+	        }
+			Sentinel::update($user, array('password' => $newPassword));
+			$_SESSION["wishlist_userid"] = null;
+			Alerte::set('password_change');
+			Outils::goTo('compte', 'Mot de passe modifié ! Veuillez vous réauthentifier');
 		}
 
 		public static function isConnect() {

@@ -177,7 +177,7 @@ $app->post('/edit-compte', function () {
 });
 
 //  Changer mot de passe
-$app->post('/change-password-compte', function () {
+$app->post('/change-password', function () {
 	$_SESSION['compte_action'] = "change_password";
 	PC::displayCompte();
 });
