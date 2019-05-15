@@ -341,4 +341,8 @@ class FctnListe {
 								<br/>Description : '. $item->descr . '<br/>
 							</li>';
 			}
+
+	public static function returnBouton() {
+		echo '<a href="'. Outils::getArbo().'liste/' . $_SESSION['wishlist_liste_token'] . '" class="button">Retour à la liste</a>';
+	}
 		}
