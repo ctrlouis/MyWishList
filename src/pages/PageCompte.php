@@ -33,6 +33,7 @@ class PageCompte {
 			if (!isset($_SESSION['compte_action']) || !$_SESSION['compte_action']) // par défault
 			{
 				Compte::compteEditForm();
+				Compte::passwordEditForm();
 			}
 			else // si action
 			{
