@@ -55,8 +55,8 @@ class Compte {
 		$user = User::where('id', '=', $_SESSION['wishlist_userid'])
 			->first();
 
-		if ($_POST['last_name'] && $_POST['last_name'] != '') $user->last_name = $_POST['last_name'];
-		if ($_POST['first_name'] && $_POST['first_name'] != '') $user->first_name = $_POST['first_name'];
+		if ($_POST['last_name'] && $_POST['last_name'] != '') $user->last_name = htmlspecialchars($_POST['last_name']);
+		if ($_POST['first_name'] && $_POST['first_name'] != '') $user->first_name = htmlspecialchars($_POST['first_name']);
 		$user->save();
 		echo 'Compte modifié ! Redirection en cours...';
 		header('Refresh: 0; url=index.php');
