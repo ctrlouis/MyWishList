@@ -89,7 +89,7 @@ class CreateurItem {
 			$item->token_private = Outils::generateToken();
 			$item->save();
 		}
-		Outils::goTo('/MyWishList/liste/' . $_SESSION['wishlist_liste_token'], 'Retour a la liste');
+		Outils::goTo(Outils::getArbo(). 'liste/' . $_SESSION['wishlist_liste_token'], 'Retour a la liste');
 	}
 
 	public static function itemEditForm($item_name) {
