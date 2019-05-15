@@ -2,9 +2,8 @@
 
 namespace wishlist\fonction;
 
-use wishlist\modele\User;
-
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use wishlist\modele\User;
 
 
 class Compte {

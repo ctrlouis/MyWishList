@@ -2,12 +2,14 @@
 
 namespace wishlist\fonction;
 
+use wishlist\divers\Outils;
+
+use wishlist\fonction\CreateurItem as CI;
+
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\Message;
-use wishlist\fonction\CreateurItem as CI;
 use wishlist\modele\Reservation;
-use wishlist\divers\Outils;
 
 
 class FctnListe {
