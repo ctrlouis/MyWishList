@@ -2,8 +2,11 @@
 
 namespace wishlist\pages;
 
+use wishlist\divers\Outils;
+
 use wishlist\fonction\CreateurItem as CI;
 use wishlist\fonction\FctnCagnotte as CG;
+use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\ParticipantItem as PI;
 use wishlist\fonction\GestionImage as GI;
 
@@ -37,7 +40,7 @@ class PageItem {
 			if ($list) {
 				$createur = true; // défini en accès privée si token privée
 			} else { // stop si token invalid
-				echo "Aucuns token de liste correspondant";
+				Outils::goTo('../', 'Erreur, liste introuvable', 2);
 				exit();
 			}
 		}
@@ -48,7 +51,7 @@ class PageItem {
 
 		// stop si aucuns item trouvé dans la liste
 		if (!$item) {
-			echo "Aucuns item trouvé";
+			Outils::goTo('../liste/' . $_SESSION['wishlist_liste_token'], 'Erreur, item introuvable', 2);
 			exit();
 		}
 
@@ -65,6 +68,7 @@ class PageItem {
 	// PRIVATE VIEW
 	public static function privateView($item)
 	{
+		FL::returnBouton();
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) {
 			switch ($_SESSION['item_action']) {
 			    case "edit":
@@ -119,6 +123,7 @@ class PageItem {
 	// PUBLIC VIEW
 	public static function publicView($item)
 	{
+		FL::returnBouton();
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
 			switch ($_SESSION['item_action']) {
