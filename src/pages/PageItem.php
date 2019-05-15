@@ -19,7 +19,6 @@ use wishlist\modele\Cagnotte;
 class PageItem {
 
 	public static function displayItem($item_name) {
-
 		// stop si pas de token enregistré
 		if (!isset($_SESSION['wishlist_liste_token']) && !$_SESSION['wishlist_liste_token']) {
 			echo "Aucunes liste trouvé"; // alerte
@@ -78,7 +77,6 @@ class PageItem {
 			    case "delete":
 					$_SESSION['item_action'] = null;
 					CI::itemDelete($item);
-					exit();
 			        break;
 			    case "uploadImage":
 					$_SESSION['item_action'] = null;

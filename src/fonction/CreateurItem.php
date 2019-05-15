@@ -131,7 +131,7 @@ class CreateurItem {
 
 	public static function itemDeleteForm($item_name) {
 		echo '
-			<form action="../delete-image/' . $item_name . '" method="POST">
+			<form action="../delete-item/' . $item_name . '" method="POST">
 			<div class= "row column align-center medium-6 large-4">
 				<button type="submit" class="alert button">
 					<div class ="row">
@@ -146,7 +146,8 @@ class CreateurItem {
 
 	public static function itemDelete($item) {
 		$item->delete();
-		echo 'Item supprimé';
+		Outils::goTo('../liste/' . $_SESSION['wishlist_liste_token'], 'Item supprimé, retour a la liste', 1);
+		exit();
 	}
 
 	public static function itemVerify() {
