@@ -96,10 +96,6 @@ class GestionImage {
 			return false;
 		}
 
-		$image_size = $_FILES['icone']['size'];
-		var_dump($image_size);
-		//if ($image_sizes[0] > $maxwidth OR $image_sizes[1] > $maxheight) return "Image trop grande";*/
-
 		return true;
 	}
 
