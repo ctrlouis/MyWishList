@@ -55,7 +55,7 @@ class Authentification {
     			'email'    => $username,
     			'password' => $password,
 			];
-			$user = Sentinel::forceAuthenticate($credentials);
+			$user = Sentinel::authenticate($credentials);
 			if (!$user) {
 				Alerte::set('authentification_fail');
 				Outils::goTo('compte', 'Erreur authentification');
@@ -86,7 +86,7 @@ class Authentification {
 				Outils::goTo("compte", "Nom d'utilisateur déjà utilisé");
 				exit();
 			} else {
-				Sentinel::register([
+				Sentinel::registerAndActivate([
 	    			'email'    => $username,
 	    			'password' => $password,
 				]);
