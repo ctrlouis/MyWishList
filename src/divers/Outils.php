@@ -58,12 +58,12 @@ class Outils
 		</body></html>';
     }
 
-	public static function goTo($link, $message) {
+	public static function goTo($link, $message, $time=0) {
 		echo '
 		<div class= "row column align-center medium-6 large-6">
 			<h4>' . $message . '</h4>
 		</div>';
-		header('Refresh: 0; url='. $link);
+		header('Refresh: ' . $time . '; url='. $link);
 	}
 
 	public static function generateToken()
