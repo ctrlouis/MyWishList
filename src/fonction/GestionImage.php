@@ -41,7 +41,8 @@ class GestionImage {
 	public static function imageUpload($item)
 	{
 		if (SELF::imageVerify($_FILES)) {
-			if(!is_dir('img/')) mkdir('img/');
+			if ($item->img) unlink($item->img);
+			if (!is_dir('img/')) mkdir('img/');
 
 			$nom = "img/$item->id-icone.png";
 			$resultat = move_uploaded_file($_FILES['icone']['tmp_name'],$nom);
@@ -66,12 +67,12 @@ class GestionImage {
 						</button>
 					</div>
 				</div>
-
 			</form>';
 	}
 
 	public static function imageDelete($item)
 	{
+		if ($item->img) unlink($item->img);
 		$item->img = NULL;
 		$item->save();
 	}
