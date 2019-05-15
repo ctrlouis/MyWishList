@@ -121,10 +121,10 @@ class CreateurItem {
 	}
 
 	public static function itemEdit($item) {
-		if ($_POST['nom'] && $_POST['nom'] != '') $item->nom = $_POST['nom'];
-		if ($_POST['descr'] && $_POST['descr'] != '') $item->descr = $_POST['descr'];
-		if ($_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
-		if ($_POST['url'] && $_POST['url'] != '') $item->url = $_POST['url'];
+		if ($_POST['nom'] && $_POST['nom'] != '') $item->nom = htmlspecialchars($_POST['nom']);
+		if ($_POST['descr'] && $_POST['descr'] != '') $item->descr = htmlspecialchars($_POST['descr']);
+		if ($_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = htmlspecialchars($_POST['tarif']);
+		if ($_POST['url'] && $_POST['url'] != '') $item->url = htmlspecialchars($_POST['url']);
 		$item->save();
 	}
 
