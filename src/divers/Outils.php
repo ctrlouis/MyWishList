@@ -71,13 +71,11 @@ class Outils
 		return base_convert(hash('sha256', time() . mt_rand()), 16, 36);
 	}
 
-	public static function listeExpiration($date_expiration)
-	{
-    $date = date('Y-m-d');
+	public static function listeExpiration($date_expiration) {
+	    $date = date('Y-m-d');
 		if (date($date_expiration) < date($date)){
-      return true; // si la date expiration est passé
-    }
-		else
+			return true; // si la date expiration est passé
+	    }else
 			return false; // si la date expiration n'est pas passé
 	}
 
