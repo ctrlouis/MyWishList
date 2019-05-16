@@ -28,7 +28,7 @@ class PageCompte {
 			Compte::compteDetails();
 			Compte::compteEditForm();
 			AUTH::passwordEditForm();
-
+			Compte::compteDeleteForm();
 		}
 	}
 

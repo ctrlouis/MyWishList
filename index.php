@@ -182,6 +182,12 @@ $app->post('/change-password', function () {
 	PC::displayCompte();
 });
 
+//  Modifier un compte
+$app->post('/delete-compte', function () {
+	AUTH::deleteUser();
+	Outils::goTo('index.php', 'Compte supprimé!');
+});
+
 $app->run();
 
 Outils::footerHTML();

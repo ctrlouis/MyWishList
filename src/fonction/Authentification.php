@@ -207,4 +207,9 @@ class Authentification {
 		return true;
 	}
 
+	public static function deleteUser() {
+		$user = Sentinel::findById($_SESSION['wishlist_userid']);
+		$user->delete();
+		$_SESSION["wishlist_userid"] = null;
+	}
 }
