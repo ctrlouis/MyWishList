@@ -13,8 +13,7 @@ class PageCompte {
 		if (!AUTH::isConnect()) {
 			AUTH::FormulaireConnection();
 		} else if (AUTH::isConnect()) {
-			if (isset($_SESSION['compte_action']) && $_SESSION['compte_action'])
-			{
+			if (isset($_SESSION['compte_action']) && $_SESSION['compte_action']) {
 				switch ($_SESSION['compte_action']) {
 				    case "edit":
 						$_SESSION['compte_action'] = null;
@@ -26,18 +25,9 @@ class PageCompte {
 				        break;
 				}
 			}
-
 			Compte::compteDetails();
-
-			if (!isset($_SESSION['compte_action']) && !$_SESSION['compte_action']) // par défault
-			{
-				Compte::compteEditForm();
-				AUTH::passwordEditForm();
-			}
-			else // si action
-			{
-				$_SESSION['compte_action'] = null;
-			}
+			Compte::compteEditForm();
+			AUTH::passwordEditForm();
 
 		}
 	}
