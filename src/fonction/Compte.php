@@ -61,7 +61,7 @@ class Compte {
 
 	public static function compteDeleteForm() {
 		echo '
-			<form action="delete-compte" method="POST">
+		<form action="delete-compte" method="POST">
 			<div class= "row column align-center medium-6 large-4">
 				<button type="submit" class="alert button">
 					<div class ="row">
@@ -69,7 +69,6 @@ class Compte {
 						<div class="columns">Supprimer item</div>
 					</div>
 				</button>
-
 			</div>
 		</form>';
 	}
