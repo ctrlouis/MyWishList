@@ -4,8 +4,11 @@ namespace wishlist\pages;
 
 use wishlist\fonction\CreateurItem as CI;
 use wishlist\fonction\FctnCagnotte as CG;
+use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\ParticipantItem as PI;
 use wishlist\fonction\GestionImage as GI;
+
+use wishlist\divers\Outils;
 
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
@@ -24,15 +27,13 @@ class PageItem {
 		}
 
 		// test token publique
-		$list = Liste::where('token_publique', 'like', $_SESSION['wishlist_liste_token'])
-			->first();
+		$list = FL::getCurrentPublicList();
 
 		$createur = false; // défini en accès publique par défault
 
 		// test token privée
 		if(!$list) {
-			$list = Liste::where('token_private', 'like', $_SESSION['wishlist_liste_token'])
-				->first();
+			$list = FL::getCurrentPrivateList();
 
 			if ($list) {
 				$createur = true; // défini en accès privée si token privée
@@ -90,28 +91,22 @@ class PageItem {
 
 		CI::itemDetails($item);
 
-		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) {
-			// enter code here
-		} else {
+		$list = FL::getCurrentPrivateList();
+		//Si la liste n'est pas arrivé a expiration
+		if(!Outils::listeExpiration($list->expiration)){
 			GI::imageUploadForm($item->nom);
 			GI::imageDeleteForm($item->nom);
-			CI::itemEditForm($item->nom);
-			$cagnotte = Cagnotte::where('item_id', '=', $item->id)->first();
-			if ($item->reservation == 0 && $item->cagnotte == 0) {
-				echo '
-					<div class= "row column align-center medium-6 large-4">
-						<a class="button" href="/MyWishList/set-cagnotte/' . $item->nom .'">Crée une cagnotte</a>
-					</div>';
+			//Si l'item n'est pas reserver
+			if($item->reservation == 0){
+				CI::itemEditForm($item->nom);
+				CI::itemDeleteForm($item->nom);
+				if($item->cagnotte == 0)
+					CG::boutonCreate($item->nom);
+				else
+					CG::boutonDel($item->nom);
 			}
-			else if ($item->reservation == 0 && $item->cagnotte == 1){
-				echo '
-					<div class= "row column align-center medium-6 large-4">
-						<a class="button" href="/MyWishList/del-cagnotte/' . $item->nom .'">Supprimer la cagnotte</a>
-					</div>';
-			}
-
-			CI::itemDeleteForm($item->nom);
 		}
+
 
 	}
 

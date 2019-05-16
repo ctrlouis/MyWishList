@@ -6,11 +6,13 @@ use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\Cagnotte;
 
+use wishlist\fonction\FctnListe as FL;
+
 use wishlist\divers\Outils;
 class FctnCagnotte{
 
   public static function setCagnotte($item_name){
-    $liste = Liste::where('token_private', 'like', $_SESSION['wishlist_liste_token'])->first();
+    $liste = FL::getCurrentPrivateList();
     $item = Item::where('nom', 'like', $item_name)->where('liste_id', '=', $liste->no)->first();
 
 
@@ -26,7 +28,7 @@ class FctnCagnotte{
   }
 
   public static function addCagnotteForm($item_name){
-    $liste = Liste::where('token_publique', 'like', $_SESSION['wishlist_liste_token'])->first();
+    $liste = FL::getCurrentPublicList();
     $item = Item::where('nom', 'like', $item_name)->where('liste_id', '=', $liste->no)->first();
     $cagnotte = Cagnotte::where('item_id', '=', $item->id)->first();
 
@@ -52,7 +54,7 @@ class FctnCagnotte{
   }
 
   public static function addCagnotte($item_name){
-    $liste = Liste::where('token_publique', 'like', $_SESSION['wishlist_liste_token'])->first();
+    $liste = FL::getCurrentPublicList();
     if($liste){
       $item = Item::where('nom', 'like', $item_name)->where('liste_id', '=', $liste->no)->first();
       $participation = Cagnotte::where('item_id', '=', $item->id)->where('name', 'like', $_POST['name'])->first();

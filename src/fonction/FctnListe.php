@@ -131,8 +131,8 @@ class FctnListe {
 		{
 			echo 'Aucunes modification effectué, pas de champs renseigné.'; //alerte
 		}
-		$liste = Liste::where('token_private', 'like', $_SESSION['wishlist_liste_token'])
-						 ->first();
+		$liste = SELF::getCurrentPrivateList();
+					
 		// stop si aucuns item trouvé
 		if (!$liste)
 		{
@@ -340,5 +340,18 @@ class FctnListe {
 								Nom de l\'objet : <a href="../item/'. $item->nom .'">'. $item->nom .'</a>
 								<br/>Description : '. $item->descr . '<br/>
 							</li>';
+			}
+
+
+			public static function getCurrentPrivateList(){
+				$list = Liste::where('token_private', 'like', $_SESSION['wishlist_liste_token'])
+					->first();
+				return $list;
+			}
+
+			public static function getCurrentPublicList(){
+				$list = Liste::where('token_publique', 'like', $_SESSION['wishlist_liste_token'])
+					->first();
+				return $list;
 			}
 		}
