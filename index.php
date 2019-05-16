@@ -6,7 +6,7 @@ use wishlist\conf\ConnectionFactory as CF;
 use wishlist\divers\Outils;
 
 use wishlist\fonction\Authentification as AUTH;
-use wishlist\fonction\FctnItem as FI;
+use wishlist\fonction\Alerte;
 use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\FctnCagnotte as CG;
 use wishlist\fonction\CreateurItem as CI;
@@ -33,6 +33,7 @@ $app = new \Slim\Slim();
 // # ACCUEIL #
 // ###########
 $app->get('/', function () {
+	Alerte::clear();
 	echo '<h4>Bienvenu sur l`utilitaire de liste de souhait.</h4>';
 	echo '
 		<div class="small button-group">
@@ -176,9 +177,15 @@ $app->post('/edit-compte', function () {
 });
 
 //  Changer mot de passe
-$app->post('/change-password-compte', function () {
+$app->post('/change-password', function () {
 	$_SESSION['compte_action'] = "change_password";
 	PC::displayCompte();
+});
+
+//  Modifier un compte
+$app->post('/delete-compte', function () {
+	AUTH::deleteUser();
+	Outils::goTo('index.php', 'Compte supprimé!');
 });
 
 $app->run();

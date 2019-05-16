@@ -2,6 +2,8 @@
 
 namespace wishlist\pages;
 
+use wishlist\divers\Outils;
+
 use wishlist\fonction\CreateurItem as CI;
 use wishlist\fonction\FctnCagnotte as CG;
 use wishlist\fonction\FctnListe as FL;
@@ -19,7 +21,6 @@ use wishlist\modele\Cagnotte;
 class PageItem {
 
 	public static function displayItem($item_name) {
-
 		// stop si pas de token enregistré
 		if (!isset($_SESSION['wishlist_liste_token']) && !$_SESSION['wishlist_liste_token']) {
 			echo "Aucunes liste trouvé"; // alerte
@@ -38,7 +39,7 @@ class PageItem {
 			if ($list) {
 				$createur = true; // défini en accès privée si token privée
 			} else { // stop si token invalid
-				echo "Aucuns token de liste correspondant";
+				Outils::goTo('../', 'Erreur, liste introuvable', 2);
 				exit();
 			}
 		}
@@ -49,7 +50,7 @@ class PageItem {
 
 		// stop si aucuns item trouvé dans la liste
 		if (!$item) {
-			echo "Aucuns item trouvé";
+			Outils::goTo('../liste/' . $_SESSION['wishlist_liste_token'], 'Erreur, item introuvable', 2);
 			exit();
 		}
 
@@ -59,13 +60,13 @@ class PageItem {
 		} else {
 			SELF::publicView($item);
 		}
-		echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
 	}
 
 
 	// PRIVATE VIEW
 	public static function privateView($item)
 	{
+		FL::returnBouton();
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) {
 			switch ($_SESSION['item_action']) {
 			    case "edit":
@@ -75,7 +76,6 @@ class PageItem {
 			    case "delete":
 					$_SESSION['item_action'] = null;
 					CI::itemDelete($item);
-					exit();
 			        break;
 			    case "uploadImage":
 					$_SESSION['item_action'] = null;
@@ -114,6 +114,7 @@ class PageItem {
 	// PUBLIC VIEW
 	public static function publicView($item)
 	{
+		FL::returnBouton();
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
 			switch ($_SESSION['item_action']) {

@@ -7,36 +7,40 @@ use wishlist\fonction\Authentification as AUTH;
 class Outils
 {
 
+	public static function getArbo() {
+		return '/MyWishList/';
+	}
+
     public static function headerHTML($title)
     {
+		$arbo = SELF::getArbo();
         echo
             '<!DOCTYPE html>
             <html lang=\"fr\">
             <head>
                 <meta charset=\"UTF-8\">
                 <title>'.$title.'</title>
-                <link href="/MyWishList/src/css/foundation.css" rel="stylesheet" type="text/css">
-				<link href="/MyWishList/src/css/foundation-icons.css" rel="stylesheet"/>
-				<link href="/MyWishList/src/css/style.css" rel="stylesheet" type="text/css">
+                <link href="' . $arbo .'src/css/foundation.css" rel="stylesheet" type="text/css">
+				<link href="' . $arbo .'src/css/foundation-icons.css" rel="stylesheet"/>
+				<link href="' . $arbo .'src/css/style.css" rel="stylesheet" type="text/css">
             </head>
             <body>';
     }
 
 	public static function menuHTML()
     {
-		if (AUTH::isConnect()) $connect = "Connexion";
-		else $connect = "Mon compte";
+		$arbo = SELF::getArbo();
         echo
 		'<div data-sticky-container>
   			<div class="title-bar" data-sticky data-options="marginTop:0;" style="width:100%">
 		    	<div class="title-bar-left">
-					<a class="item" href="/MyWishList/"><i class="fi-home"></i> Accueil</a>
+					<a class="item" href="' . $arbo .'"><i class="fi-home"></i> Accueil</a>
 				</div>
 		        <div class="title-bar-center">
 		          <span class="title-bar-title">MyWishList</span>
 		        </div>
 		    	<div class="title-bar-right"> ' .
-					AUTH::menuDisplay() . '
+					AUTH::menuDisplay($arbo) . '
 				</div>
   			</div>
 		</div>
@@ -54,18 +58,24 @@ class Outils
 		</body></html>';
     }
 
+	public static function goTo($link, $message, $time=0) {
+		echo '
+		<div class= "row column align-center medium-6 large-6">
+			<h4>' . $message . '</h4>
+		</div>';
+		header('Refresh: ' . $time . '; url='. $link);
+	}
+
 	public static function generateToken()
 	{
 		return base_convert(hash('sha256', time() . mt_rand()), 16, 36);
 	}
 
-	public static function listeExpiration($date_expiration)
-	{
-    $date = date('Y-m-d');
+	public static function listeExpiration($date_expiration) {
+	    $date = date('Y-m-d');
 		if (date($date_expiration) < date($date)){
-      return true; // si la date expiration est passé
-    }
-		else
+			return true; // si la date expiration est passé
+	    }else
 			return false; // si la date expiration n'est pas passé
 	}
 

@@ -2,16 +2,17 @@
 
 namespace wishlist\fonction;
 
+use wishlist\divers\Outils;
+
+use wishlist\fonction\Alerte;
+
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
-
-use wishlist\divers\Outils;
 
 
 class CreateurItem {
 
-	public static function itemDetails ($item)
-	{
+	public static function itemDetails($item) {
 		echo '
 		<div class= "row column align-center medium-6 large-4">
 			<div class="card-flex-article card">';
@@ -60,62 +61,39 @@ class CreateurItem {
 		</div>';
 	}
 
-	public static function itemAddForm ()
-	{
-		echo '<form action="../add-item" method="post">
-			<p><input type="text" name="nom" placeholder="Nom" required/></p>
-			<p><br/><input type="text" name="descr" placeholder="Description" required/></p>
-			<p><br/><input type="number" name="tarif" placeholder="Prix" required/></p>
+	public static function itemAddForm() {
+		Alerte::getErrorAlert("empty_field", "Les champs nom, description et tarifs sont obligatoire");
+		Alerte::getErrorAlert("liste_not_found", "Aucune liste spécifié pour l'ajout");
+		Alerte::getErrorAlert("already_exists", "L'item existe déjà dans cette liste");
+		Alerte::getErrorAlert("invalide_price", "Le prix doit être un nombre");
+		echo '
+		<form action="../add-item" method="post">
+			<p><input type="text" name="nom" placeholder="Nom*" required/></p>
+			<p><br/><input type="text" name="descr" placeholder="Description*" required/></p>
+			<p><br/><input type="number" name="tarif" placeholder="Prix*" step="0.01" required/></p>
 			<p><br/><input type="text" name="url" placeholder="url"/></p>
 			<p><input type="submit" class="button" name="Ajouter item" value="Ajouter item"></p>
-			</form>';
+		</form>';
 	}
 
-	public static function itemAdd ()
-	{
+	public static function itemAdd() {
+		if (SELF::itemVerify()) {
+			$liste = Liste::select('no')
+					->where('token_private', 'like', $_SESSION['wishlist_liste_token'])
+					->first();
 
-		// stop si un champ requis vide
-		if (!$_POST['nom'] || !$_POST['descr'] || !$_POST['tarif']) {
-			echo 'Création impossible, des champs requis sont vides. <br/>
-			 			<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';
-			exit();
+			$item = new Item();
+			$item->liste_id = $liste->no;
+			$item->nom = htmlspecialchars($_POST['nom']);
+			$item->descr = htmlspecialchars($_POST['descr']);
+			$item->tarif = htmlspecialchars($_POST['tarif']);
+			$item->token_private = Outils::generateToken();
+			$item->save();
 		}
-
-		$list = Liste::where('token_private', 'like', $_SESSION['wishlist_liste_token'])
-			->first();
-
-		// stop si token invalide
-		if (!$list) {
-			echo 'Aucuns token de liste correspondant <br/>
-			 			<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';
-			exit();
-		}
-
-		// stop si un item avec le même nom existe deja
-		$test = Item::where('nom', 'like', $_POST['nom'])
-									->where('liste_id', "=", $list->no)
-									->first();
-    	if ($test) {
-        	echo 'Un item avec le même nom existe déjà <br/>
-								<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';
-			exit();
-    	}
-
-		// creation de l'item
-		$item = new Item();
-		$item->liste_id = $list->no;
-		$item->nom = htmlspecialchars($_POST['nom']);
-		$item->descr = htmlspecialchars($_POST['descr']);
-		$item->tarif = htmlspecialchars($_POST['tarif']);
-		$item->token_private = Outils::generateToken();
-		$item->save();
-
-		echo $_POST['nom'] . ' est ajouté à la liste.<br/>' .
-				 '<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste '. $list->titre.'</a>';
+		Outils::goTo(Outils::getArbo(). 'liste/' . $_SESSION['wishlist_liste_token'], 'Retour a la liste');
 	}
 
-	public static function itemEditForm ($item_name)
-	{
+	public static function itemEditForm($item_name) {
 		echo '
 			<form action="../edit-item/' . $item_name . '" method="post">
 
@@ -132,35 +110,76 @@ class CreateurItem {
 					<input type="text" name="url" placeholder="url"/>
 				</div>
 				<div class="row align-center medium-5 large-3">
-					<button type="submit" class="button" name="">Modifier</button>
+					<button type="submit" class="button">
+						<div class ="row">
+							<div class="columns small-2 fi-pencil"></div>
+							<div class="columns">Modifier</div>
+						</div>
+					</button>
 				</div>
 
 			</form>';
 	}
 
-	public static function itemEdit ($item)
-	{
-		if ($_POST['nom'] && $_POST['nom'] != '') $item->nom = $_POST['nom'];
-		if ($_POST['descr'] && $_POST['descr'] != '') $item->descr = $_POST['descr'];
-		if ($_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = $_POST['tarif'];
-		if ($_POST['url'] && $_POST['url'] != '') $item->url = $_POST['url'];
+	public static function itemEdit($item) {
+		if ($_POST['nom'] && $_POST['nom'] != '') $item->nom = htmlspecialchars($_POST['nom']);
+		if ($_POST['descr'] && $_POST['descr'] != '') $item->descr = htmlspecialchars($_POST['descr']);
+		if ($_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = htmlspecialchars($_POST['tarif']);
+		if ($_POST['url'] && $_POST['url'] != '') $item->url = htmlspecialchars($_POST['url']);
 		$item->save();
 	}
 
-	public static function itemDeleteForm ($item_name)
-	{
+	public static function itemDeleteForm($item_name) {
 		echo '
-			<form action="../delete-image/' . $item_name . '" method="POST">
+			<form action="../delete-item/' . $item_name . '" method="POST">
 			<div class= "row column align-center medium-6 large-4">
-				<input type="submit" class="alert button" name="" value="Supprimer item" >
+				<button type="submit" class="alert button">
+					<div class ="row">
+						<div class="columns small-2 fi-trash"></div>
+						<div class="columns">Supprimer item</div>
+					</div>
+				</button>
+
 			</div>
 		</form>';
 	}
 
-	public static function itemDelete ($item)
-	{
+	public static function itemDelete($item) {
 		$item->delete();
-		echo 'Item supprimé';
+		Outils::goTo('../liste/' . $_SESSION['wishlist_liste_token'], 'Item supprimé, retour a la liste', 1);
+		exit();
+	}
+
+	public static function itemVerify() {
+		// erreur si un champ requis vide
+		if (!$_POST['nom'] || !$_POST['descr'] || !$_POST['tarif']) {
+			Alerte::set('empty_field');
+			return false;
+		}
+
+		// erreur si token invalide
+		$liste = Liste::select('no')
+				->where('token_private', 'like', $_SESSION['wishlist_liste_token'])
+				->first();
+		if (!$liste) {
+			Alerte::set('liste_not_found');
+			return false;
+		}
+
+		// erreur si un item avec le même nom existe deja
+		$test_item = Item::where('nom', 'like', $_POST['nom'])
+				->where('liste_id', "=", $liste->no)
+				->first();
+    	if ($test_item) {
+			Alerte::set('already_exists');
+        	return false;
+    	}
+
+		if (!is_numeric($_POST['tarif'])) {
+			Alerte::set('invalide_price');
+			return false;
+		}
+		return true;
 	}
 
 }

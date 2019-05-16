@@ -132,7 +132,6 @@ class FctnListe {
 			echo 'Aucunes modification effectué, pas de champs renseigné.'; //alerte
 		}
 		$liste = SELF::getCurrentPrivateList();
-					
 		// stop si aucuns item trouvé
 		if (!$liste)
 		{
@@ -353,5 +352,9 @@ class FctnListe {
 				$list = Liste::where('token_publique', 'like', $_SESSION['wishlist_liste_token'])
 					->first();
 				return $list;
+			}
+
+			public static function returnBouton() {
+				echo '<a href="'. Outils::getArbo().'liste/' . $_SESSION['wishlist_liste_token'] . '" class="button">Retour à la liste</a>';
 			}
 		}

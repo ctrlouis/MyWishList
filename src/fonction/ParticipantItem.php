@@ -2,6 +2,7 @@
 
 namespace wishlist\fonction;
 
+use wishlist\modele\User;
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\Reservation;
@@ -50,18 +51,40 @@ class ParticipantItem {
 
 	public static function itemReserveForm ($item_name)
 	{
-		echo '
-			<form action="../reserver/' . $item_name . '" method="post">
-				<div class= "row align-center medium-5 large-3">
-					<input type="text" name="name" placeholder="Nom" required/>
-				</div>
-				<div class="row align-center medium-5 large-3">
-					<input type="text" name="message" placeholder="Laissez votre message..." required/>
-				</div>
-				<div class="row align-center medium-5 large-3">
-					<button type="submit" class="button" name="submit">Réserver</button>
-				</div>
-			</form>';
+		if (isset($_SESSION['wishlist_userid'])) {
+			$user = User::select('first_name', 'last_name')
+				->where('id', '=', $_SESSION['wishlist_userid'])
+				->first();
+			$last_name = $user->last_name;
+			$first_name = $user->first_name;
+
+			echo '
+				<form action="../reserver/' . $item_name . '" method="post">
+					<div class= "row align-center medium-5 large-3">
+						<input type="text" name="name" value="' . $last_name . ' ' . $first_name . '" placeholder="Nom" required/>
+					</div>
+					<div class="row align-center medium-5 large-3">
+						<input type="text" name="message" placeholder="Laissez votre message..." required/>
+					</div>
+					<div class="row align-center medium-5 large-3">
+						<button type="submit" class="button" name="submit">Réserver</button>
+					</div>
+				</form>';
+		} else {
+			echo '
+				<form action="../reserver/' . $item_name . '" method="post">
+					<div class= "row align-center medium-5 large-3">
+						<input type="text" name="name" placeholder="Nom" required/>
+					</div>
+					<div class="row align-center medium-5 large-3">
+						<input type="text" name="message" placeholder="Laissez votre message..." required/>
+					</div>
+					<div class="row align-center medium-5 large-3">
+						<button type="submit" class="button" name="submit">Réserver</button>
+					</div>
+				</form>';
+		}
+
 	}
 
 	public static function itemReserve ($item)
