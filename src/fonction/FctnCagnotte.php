@@ -95,4 +95,19 @@ class FctnCagnotte{
     }
     return $item->tarif - $cotiser;
   }
+
+
+  public static function boutonDel($item_name){
+    echo '
+      <div class= "row column align-center medium-6 large-4">
+        <a class="button" href="/MyWishList/del-cagnotte/' . $item_name .'">Supprimer la cagnotte</a>
+      </div>';
+  }
+
+  public static function boutonCreate($item_name){
+    echo '
+      <div class= "row column align-center medium-6 large-4">
+        <a class="button" href="/MyWishList/set-cagnotte/' . $item_name .'">Crée une cagnotte</a>
+      </div>';
+  }
 }
