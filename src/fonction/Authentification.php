@@ -26,9 +26,7 @@ class Authentification {
 
 				<h4 class="text-center">Connection / Inscription</h4>';
 
-		Alerte::getWarningAlert("username_already_existe", "L'identifiant est déjà utilisé");
-		Alerte::getErrorAlert("username_invalid", "L'identifiant doit contenir de 3 à 20 caractères, et aucuns caractère spécial");
-		Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
+		Alerte::getErrorAlert("field_missing", "Un ou plusieurs champs requis sont vide");
 		Alerte::getErrorAlert("authentification_fail", "Identifiant ou mot de passe erroné");
 		Alerte::getSuccesAlert("password_change", "Mot de passe modifié. Veuillez vous reconnecter");
 		Alerte::getSuccesAlert("user_signup", "Compte crée ! Veuillez vous connecter");
@@ -51,6 +49,12 @@ class Authentification {
 	}
 
 	public static function Connection() {
+		if (!Outils::checkPost(array('username', 'password'))) {
+			Alerte::set('field_missing');
+			Outils::goTo('auth-connexion', "Un ou plusieurs champs requis sont vide");
+			exit();
+		}
+
 		$username = htmlspecialchars($_POST['username']);
 		$password = htmlspecialchars($_POST['password']);
 		$credentials = [
@@ -75,6 +79,7 @@ class Authentification {
 
 				<h4 class="text-center">Connection / Inscription</h4>';
 
+			Alerte::getErrorAlert("field_missing", "Un ou plusieurs champs requis sont vide");
 			Alerte::getWarningAlert("username_already_existe", "L'identifiant est déjà utilisé");
 			Alerte::getErrorAlert("pass_not_match", "Les mots de passes doivent être identiques");
 			Alerte::getErrorAlert("username_invalid", "L'identifiant doit contenir de 3 à 20 caractères, et aucuns caractère spécial");
@@ -113,6 +118,12 @@ class Authentification {
 	}
 
 	public static function Inscription() {
+
+		if (!Outils::checkPost(array('username', 'password', 'passwordConf', 'last_name', 'first_name'))) {
+			Alerte::set('field_missing');
+			Outils::goTo('auth-inscription', "Un ou plusieurs champs requis sont vide");
+			exit();
+		}
 
 		$username = htmlspecialchars($_POST['username']);
 		$password = htmlspecialchars($_POST['password']);
@@ -159,6 +170,7 @@ class Authentification {
 
 	public static function passwordEditForm() {
 		echo '<div class= "row align-center medium-5 large-3">';
+		Alerte::getErrorAlert("field_missing", "Un ou plusieurs champs requis sont vide");
 		Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
 		Alerte::getErrorAlert("pass_not_match", "Les nouveaux mot de passes doivent être identique");
 		Alerte::getErrorAlert("authentification_fail", "Mot de passe erroné");
@@ -181,6 +193,12 @@ class Authentification {
 	}
 
 	public static function passwordEdit() {
+		if (!Outils::checkPost(array('oldPassword', 'newPassword', 'newPasswordConf'))) {
+			Alerte::set('field_missing');
+			Outils::goTo('compte', "Un ou plusieurs champs requis sont vide");
+			exit();
+		}
+
 		$oldPassword = htmlspecialchars($_POST['oldPassword']);
 		$newPassword = htmlspecialchars($_POST['newPassword']);
 		$newPasswordConf = htmlspecialchars($_POST['newPasswordConf']);
@@ -271,10 +289,10 @@ class Authentification {
 	}
 
 	public static function nameIsValide($name) {
-		/*setLocale(LC_CTYPE, 'FR_fr.UTF-8');
-		if (ctype_alpha($name)) {
+		/*setLocale(LC_CTYPE, 'FR_fr.UTF-8');*/
+		if ($name && $name != "" /*&& ctype_alpha($name)*/) {
 			return false;
-		}*/
+		}
 		return true;
 
 	}
