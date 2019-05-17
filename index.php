@@ -36,10 +36,19 @@ $app->get('/', function () {
 	Alerte::clear();
 	echo '<h4>Bienvenu sur l`utilitaire de liste de souhait.</h4>';
 	echo '
+		<div class="input-group input-group-rounded">
+			<input class="input-group-field" type="search" placeholder="token de liste">
+			<div class="input-group-button">
+				<input type="submit" class="button secondary" value="Search">
+			</div>
+		</div>
+		';
+	echo '
 		<div class="small button-group">
 		  <a href="/MyWishList/liste" class="button">Listes publiques</a>
 		  <a href="/MyWishList/add-liste-form" class="button">Créer une liste</a>
 		</div>';
+
 });
 
 
