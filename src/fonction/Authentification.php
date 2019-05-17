@@ -38,12 +38,13 @@ class Authentification {
 				</label>
 
 				<label>Password
-					<input type="password" name="password" placeholder="Password" required/>
+					<input type="password" name="password" placeholder="Mot de passe" required/>
 				</label>
 
-				<input type="submit" class="button expanded" name="signin" value="Connection"/>
-				<input type="submit" class="button expanded" name="signup" value="Inscription"/>
-
+				<input type="submit" class="button expanded" name="" value="Connection"/>
+			</form>
+			<form action="auth-inscription" method="get" class="log-in-form">
+				<input type="submit" class="button expanded" name="" value="Inscription"/>
 			</form>
 		</div>';
 	}
@@ -66,9 +67,46 @@ class Authentification {
 		}
 	}
 
-	public static function Deconnection() {
-		$_SESSION["wishlist_userid"] = null;
-		Outils::goTo('index.php', 'Deconnecté. Redirection en cours..');
+	public static function FormulaireInscription() {
+		echo '
+		<div class= "row column align-center medium-6 large-4">
+			<form action="connection" method="post" class="log-in-form">
+
+				<h4 class="text-center">Connection / Inscription</h4>';
+
+		Alerte::getWarningAlert("username_already_existe", "L'identifiant est déjà utilisé");
+		Alerte::getErrorAlert("username_invalid", "L'identifiant doit contenir de 3 à 20 caractères, et aucuns caractère spécial");
+		Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
+
+		echo '
+				<label>Username
+					<input type="text" name="username" placeholder="MyPseudo*" required/>
+				</label>
+
+				<label>Username
+					<input type="text" name="last_name" placeholder="Nom*" required/>
+				</label>
+
+				<label>Username
+					<input type="text" name="first_name" placeholder="Prenom*" required/>
+				</label>
+
+				<label>Password
+					<input type="password" name="password" placeholder="Mot de passe*" required/>
+				</label>
+
+				<label>Password
+					<input type="password" name="passwordConf" placeholder="Confirmer mot de passe*" required/>
+				</label>
+
+				<input type="submit" class="button expanded" name="signin" value="Connection"/>
+
+
+			</form>
+			<form action="auth-connexion" method="get" class="log-in-form">
+				<input type="submit" class="button expanded" name="signup" value="Inscription"/>
+			</form>
+		</div>';
 	}
 
 	public static function Inscription($username, $password) {
@@ -92,6 +130,11 @@ class Authentification {
 			]);
 			Outils::goTo('compte', 'Compte crée ! Veuillez vous authentifier.');
 		}
+	}
+
+	public static function Deconnection() {
+		$_SESSION["wishlist_userid"] = null;
+		Outils::goTo('index.php', 'Deconnecté. Redirection en cours..');
 	}
 
 	public static function passwordEditForm() {
