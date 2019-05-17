@@ -290,7 +290,7 @@ class Authentification {
 
 	public static function nameIsValide($name) {
 		/*setLocale(LC_CTYPE, 'FR_fr.UTF-8');*/
-		if ($name && $name != "" /*&& ctype_alpha($name)*/) {
+		if (!$name && $name == "" /*&& ctype_alpha($name)*/) {
 			return false;
 		}
 		return true;
