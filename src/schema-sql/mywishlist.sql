@@ -15,8 +15,8 @@ CREATE TABLE `item` (
   `tarif` decimal(5,2) DEFAULT NULL,
   `token_private` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `reservation` tinyint(1) NOT NULL DEFAULT '0',
-  `participant_name` text NOT NULL,
-  `message` text NOT NULL,
+  `participant_name` text DEFAULT NULL,
+  `message` text DEFAULT NULL,
   `cagnotte` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
