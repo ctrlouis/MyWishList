@@ -83,7 +83,7 @@ class Authentification {
 			Alerte::getWarningAlert("username_already_existe", "L'identifiant est déjà utilisé");
 			Alerte::getErrorAlert("pass_not_match", "Les mots de passes doivent être identiques");
 			Alerte::getErrorAlert("username_invalid", "L'identifiant doit contenir de 3 à 20 caractères, et aucuns caractère spécial");
-			Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
+			Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères, et au moins 1 caractère spécial");
 			Alerte::getErrorAlert("name_invalid", "Le nom est prenom ne doit contenir que des lettres");
 
 		echo '
