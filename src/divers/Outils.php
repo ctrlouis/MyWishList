@@ -11,8 +11,7 @@ class Outils
 		return '/MyWishList/';
 	}
 
-    public static function headerHTML($title)
-    {
+    public static function headerHTML($title) {
 		$arbo = SELF::getArbo();
         echo
             '<!DOCTYPE html>
@@ -27,8 +26,7 @@ class Outils
             <body>';
     }
 
-	public static function menuHTML()
-    {
+	public static function menuHTML() {
 		$arbo = SELF::getArbo();
         echo
 		'<div data-sticky-container>
@@ -47,8 +45,7 @@ class Outils
 		<div class="app">';
     }
 
-    public static function footerHTML()
-    {
+    public static function footerHTML() {
         echo '
 				</div>
 			<script src="/MyWishList/src/js/jquery.js"></script>
@@ -66,8 +63,7 @@ class Outils
 		header('Refresh: ' . $time . '; url='. $link);
 	}
 
-	public static function generateToken()
-	{
+	public static function generateToken() {
 		return base_convert(hash('sha256', time() . mt_rand()), 16, 36);
 	}
 
@@ -79,8 +75,7 @@ class Outils
 			return false; // si la date expiration n'est pas passé
 	}
 
-	public static function checkPost($post_name_tab)
-	{
+	public static function checkPost($post_name_tab) {
 		foreach ($post_name_tab as $post_name) {
 			if (!isset($_POST[$post_name]) || !$_POST[$post_name])
 				return false;
@@ -88,8 +83,7 @@ class Outils
 		return true;
 	}
 
-	public static function clearSession($session_name_tab)
-	{
+	public static function clearSession($session_name_tab) {
 		foreach ($session_name_tab as $session_name)
 			$_SESSION[$session_name];
 	}
