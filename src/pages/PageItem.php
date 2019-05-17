@@ -10,8 +10,6 @@ use wishlist\fonction\FctnListe as FL;
 use wishlist\fonction\ParticipantItem as PI;
 use wishlist\fonction\GestionImage as GI;
 
-use wishlist\divers\Outils;
-
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\User;
