@@ -79,6 +79,15 @@ class Outils
 			return false; // si la date expiration n'est pas passé
 	}
 
+	public static function checkPost($post_name_tab)
+	{
+		foreach ($post_name_tab as $post_name) {
+			if (!isset($_POST[$post_name]) || !$_POST[$post_name])
+				return false;
+		}
+		return true;
+	}
+
 	public static function clearSession($session_name_tab)
 	{
 		foreach ($session_name_tab as $session_name)
