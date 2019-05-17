@@ -89,12 +89,10 @@ class ParticipantItem {
 
 	public static function itemReserve ($item)
 	{
-		$reservation = Reservation::where('item_id', '=', $item->id)
-			->first();
-		$reservation->reservation = 1;
-		$reservation->participant_name = htmlspecialchars($_POST['name']);
-		$reservation->message = htmlspecialchars($_POST['message']);
-		$reservation->save();
+		$item->reservation = 1;
+		$item->participant_name = htmlspecialchars($_POST['name']);
+		$item->message = htmlspecialchars($_POST['message']);
+		$item->save();
 
 		echo 'Item reservé ! </br>
 					<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste</a>';
