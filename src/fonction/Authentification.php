@@ -31,6 +31,7 @@ class Authentification {
 		Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
 		Alerte::getErrorAlert("authentification_fail", "Identifiant ou mot de passe erroné");
 		Alerte::getSuccesAlert("password_change", "Mot de passe modifié. Veuillez vous reconnecter");
+		Alerte::getSuccesAlert("user_signup", "Compte crée ! Veuillez vous connecter");
 
 		echo '
 				<label>Username
@@ -41,17 +42,17 @@ class Authentification {
 					<input type="password" name="password" placeholder="Mot de passe" required/>
 				</label>
 
-				<input type="submit" class="button expanded" name="" value="Connection"/>
+				<input type="submit" class="button expanded" name="signin" value="Connection"/>
 			</form>
 			<form action="auth-inscription" method="get" class="log-in-form">
-				<input type="submit" class="button expanded" name="" value="Inscription"/>
+				<input type="submit" class="hollow button success expanded" name="" value="Inscription"/>
 			</form>
 		</div>';
 	}
 
-	public static function Connection($username, $password) {
-		$username = htmlspecialchars($username);
-		$password = htmlspecialchars($password);
+	public static function Connection() {
+		$username = htmlspecialchars($_POST['username']);
+		$password = htmlspecialchars($_POST['password']);
 		$credentials = [
 			'email'    => $username,
 			'password' => $password,
@@ -59,7 +60,7 @@ class Authentification {
 		$user = Sentinel::authenticate($credentials);
 		if (!$user) {
 			Alerte::set('authentification_fail');
-			Outils::goTo('compte', 'Erreur authentification');
+			Outils::goTo('auth-connexion', 'Erreur authentification');
 		} else {
 			$_SESSION["wishlist_userid"] = $user->id;
 			$_SESSION["wishlist_username"] = $user->email;
@@ -74,61 +75,80 @@ class Authentification {
 
 				<h4 class="text-center">Connection / Inscription</h4>';
 
-		Alerte::getWarningAlert("username_already_existe", "L'identifiant est déjà utilisé");
-		Alerte::getErrorAlert("username_invalid", "L'identifiant doit contenir de 3 à 20 caractères, et aucuns caractère spécial");
-		Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
+			Alerte::getWarningAlert("username_already_existe", "L'identifiant est déjà utilisé");
+			Alerte::getErrorAlert("pass_not_match", "Les mots de passes doivent être identiques");
+			Alerte::getErrorAlert("username_invalid", "L'identifiant doit contenir de 3 à 20 caractères, et aucuns caractère spécial");
+			Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
+			Alerte::getErrorAlert("name_invalid", "Le nom est prenom ne doit contenir que des lettres");
 
 		echo '
-				<label>Username
+				<label>Nom d\'utilisateur
 					<input type="text" name="username" placeholder="MyPseudo*" required/>
 				</label>
 
-				<label>Username
+				<label>Nom
 					<input type="text" name="last_name" placeholder="Nom*" required/>
 				</label>
 
-				<label>Username
+				<label>Prenom
 					<input type="text" name="first_name" placeholder="Prenom*" required/>
 				</label>
 
-				<label>Password
+				<label>Mot de passe
 					<input type="password" name="password" placeholder="Mot de passe*" required/>
 				</label>
 
-				<label>Password
-					<input type="password" name="passwordConf" placeholder="Confirmer mot de passe*" required/>
+				<label>Confirmation de mot de passe
+					<input type="password" name="passwordConf" placeholder="Confirmation de mot de passe*" required/>
 				</label>
 
-				<input type="submit" class="button expanded" name="signin" value="Connection"/>
+				<input type="submit" class="button expanded" name="signup" value="Inscription"/>
 
 
 			</form>
 			<form action="auth-connexion" method="get" class="log-in-form">
-				<input type="submit" class="button expanded" name="signup" value="Inscription"/>
+				<input type="submit" class="hollow button success expanded" name="" value="Connection"/>
 			</form>
 		</div>';
 	}
 
-	public static function Inscription($username, $password) {
+	public static function Inscription() {
 
-		$username = htmlspecialchars($username);
-		$password = htmlspecialchars($password);
+		$username = htmlspecialchars($_POST['username']);
+		$password = htmlspecialchars($_POST['password']);
+		$passwordConf = htmlspecialchars($_POST['passwordConf']);
+		$last_name = htmlspecialchars($_POST['last_name']);
+		$first_name = htmlspecialchars($_POST['first_name']);
 
 		if (!SELF::usernameIsConform($username)) {
-			Outils::goTo("compte", "Nom d'utilisateur invalide");
+			Alerte::set('username_invalid');
+			Outils::goTo('auth-inscription', "Nom d'utilisateur invalide");
+			exit();
+		} else if ($password != $passwordConf) {
+			Alerte::set('pass_not_match');
+			Outils::goTo('auth-inscription', "Nouveaux mot de passe pas identiques");
 			exit();
 		} else if (!SELF::passwordIsConform($password)) {
-			Outils::goTo("compte", "Mot de passe invalide");
+			Alerte::set('password_invalid');
+			Outils::goTo('auth-inscription', "Mot de passe invalide");
 			exit();
 		} else if (!SELF::usernameIsUnique($username)) {
-			Outils::goTo("compte", "Nom d'utilisateur déjà utilisé");
+			Alerte::set('username_already_existe');
+			Outils::goTo('auth-inscription', "Nom d'utilisateur déjà utilisé");
+			exit();
+		} else if (!SELF::nameIsValide($last_name) && !SELF::nameIsValide($first_name)) {
+			Alerte::set('nom_invalide');
+			Outils::goTo('auth-inscription', "Nom ou prénom invalide");
 			exit();
 		} else {
 			Sentinel::registerAndActivate([
     			'email'    => $username,
-    			'password' => $password,
+				'password' => $password,
+				'last_name' => $last_name,
+    			'first_name' => $first_name,
 			]);
-			Outils::goTo('compte', 'Compte crée ! Veuillez vous authentifier.');
+			Alerte::set('user_signup');
+			Outils::goTo('auth-connexion', 'Compte crée ! Veuillez vous authentifier.');
 		}
 	}
 
@@ -169,9 +189,7 @@ class Authentification {
 			Alerte::set('pass_not_match');
 			Outils::goTo("compte", "Nouveaux mot de passe pas identiques");
 			exit();
-		}
-
-		if (!SELF::passwordIsConform($newPassword)) {
+		} else if (!SELF::passwordIsConform($newPassword)) {
 			Alerte::set('password_invalid');
 			Outils::goTo("compte", "Mot de passe invalide");
 			exit();
@@ -188,7 +206,7 @@ class Authentification {
 		Sentinel::update($user, array('password' => $newPassword));
 		$_SESSION["wishlist_userid"] = null;
 		Alerte::set('password_change');
-		Outils::goTo('compte', 'Mot de passe modifié ! Veuillez vous réauthentifier');
+		Outils::goTo('auth-connexion', 'Mot de passe modifié ! Veuillez vous réauthentifier');
 	}
 
 	public static function isConnect() {
@@ -199,9 +217,15 @@ class Authentification {
 		}
 	}
 
+	public static function deleteUser() {
+		$user = Sentinel::findById($_SESSION['wishlist_userid']);
+		$user->delete();
+		$_SESSION["wishlist_userid"] = null;
+	}
+
 	public static function menuDisplay($arbo) {
 		if (!SELF::isConnect()) {
-			return '<a href="' . $arbo .'compte">Connexion</a>';
+			return '<a href="' . $arbo .'auth-connexion">Connexion</a>';
 		} else {
 			return '
 				<ul class="dropdown menu align-right" data-dropdown-menu>
@@ -219,7 +243,6 @@ class Authentification {
 	public static function usernameIsConform($username) {
 		$size = strlen($username);
 		if (($size < 3 || $size > 20) || (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $username))) {
-			Alerte::set('username_invalid');
 			return false;
 		}
 		return true;
@@ -228,11 +251,9 @@ class Authentification {
 	public static function passwordIsConform($password) {
 		$size = strlen($password);
 		if ($size < 6 && $size > 30) {
-			Alerte::set('password_invalid');
 			return false;
 		}
 		if (!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $password)) {
-			Alerte::set('password_invalid');
 			return false;
 		}
 		return true;
@@ -244,15 +265,18 @@ class Authentification {
 			->first();
 
 		if ($user) {
-			Alerte::set('username_already_existe');
 			return false;
 		}
 		return true;
 	}
 
-	public static function deleteUser() {
-		$user = Sentinel::findById($_SESSION['wishlist_userid']);
-		$user->delete();
-		$_SESSION["wishlist_userid"] = null;
+	public static function nameIsValide($name) {
+		/*setLocale(LC_CTYPE, 'FR_fr.UTF-8');
+		if (ctype_alpha($name)) {
+			return false;
+		}*/
+		return true;
+
 	}
+
 }

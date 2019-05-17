@@ -151,9 +151,9 @@ $app->post('/delete-image/:name', function($item_name) {
 // Connection & inscription
 $app->post('/connection', function() {
 	if (isset($_POST['signin']))
-		AUTH::Connection($_POST['username'], $_POST['password']);
+		AUTH::Connection();
 	else if (isset($_POST['signup']))
-    	AUTH::Inscription($_POST['username'], $_POST['password']);
+    	AUTH::Inscription();
 });
 // Deconnection
 $app->get('/deconnection', function() {
@@ -169,7 +169,7 @@ $app->get('/compte', function() {
 	PC::displayCompte();
 });
 $app->get('/auth-connexion', function() {
-	AUTH::FormulaireConnection()
+	AUTH::FormulaireConnection();
 });
 $app->get('/auth-inscription', function() {
 	AUTH::FormulaireInscription();
