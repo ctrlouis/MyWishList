@@ -8,31 +8,13 @@ use wishlist\modele\Message;
 use wishlist\fonction\CreateurItem as CI;
 use wishlist\modele\Reservation;
 use wishlist\divers\Outils;
+use wishlist\divers\Formulaire;
 
 
 class FctnListe {
-	//Formulaire pour ajouter une liste
-	public static function listeAddForm ()
-	{
-		echo '<form action="add-liste" method="post">
-			<p>Titre : (obligatoire)<br/><input type="text" name="titre" /></p>
-			<p>Description : <br/><input type="text" name="description" /></p>
-			Format de la date dexpiration (YYYY-MM-DD)
-			<p>Date dexpiration : <br/><input type="date" min=' . date('Y-m-d') . ' name="expiration" /></p>
-			<p><input class="button" type="submit" name="Ajouter liste"></p>
-			</form>';
-	}
-
-	public static function listeAddTokenForm() {
-		echo '<h2>Ajouter une liste a votre compte utilisateur</h2>
-				<form action="add-user" method="post">
-					<p>Token privé de la liste : <br/><input type="text" name="token" /></p>
-					<p><input class="button" type="submit" name="Ajouter liste" value="Ajouter au compte"></p>
-				</form>';
-	}
 
 	//Rediriger vers cette fonction par listeAddForm, crée la liste dans la base de donnée
-	public static function listeAdd ()
+	public static function cree()
 	{
 		// stop si un champ requis vide
 		if (!$_POST['titre']) {
@@ -89,7 +71,7 @@ class FctnListe {
 
 	}
 
-	public static function addUser()
+	public static function ajoutUtilisateur()
 	{
 		if($_SESSION["wishlist_userid"] != null)
 		{
@@ -120,7 +102,7 @@ class FctnListe {
 		}
 	}
 
-	public static function listeEdit ($token)
+	public static function modifier($token)//A MODIFIER !
 	{
 		// stop si pas de token renseigné
 		if (!isset($_SESSION['wishlist_liste_token']))
@@ -145,23 +127,23 @@ class FctnListe {
   }
 
 
-			public static function addMessage($token)
-			{
-				$liste = Liste::where('token_private', 'like', $token)->orWhere('token_publique', 'like', $token)->first();
-				$message = new Message;
-				$message->no_liste=htmlspecialchars($liste->no);
-				$message->msg=htmlspecialchars($_POST['message']);
-				$message->save();
-				echo 'Message ajouté à la liste';
-				echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
-			}
+	public static function ajouterMessage($token)
+	{
+		$liste = Liste::where('token_private', 'like', $token)->orWhere('token_publique', 'like', $token)->first();
+		$message = new Message;
+		$message->no_liste=htmlspecialchars($liste->no);
+		$message->msg=htmlspecialchars($_POST['message']);
+		$message->save();
+		echo 'Message ajouté à la liste';
+		echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
+	}
 
 
 
 //PARTIE PAGE DE LISTE
 
 		//Affiche chaque liste publiques existante avec leur items correspondants
-    public static function allListe()
+    public static function displayAll()
     {
 			//Lorsqu'on utilise la recherche de liste
 			if(isset($_GET["token"]))
@@ -305,7 +287,7 @@ class FctnListe {
 							<p><input class="button" type="submit" name="Modifier" value="Modifier"></p>
 						</form></br>
 					Ajout d un item dans votre liste';
-					CI::itemAddForm ();
+					Formulaire::ajoutItem ();
 
 					//Partage de la liste via le token
 					echo '<h3>Token de partage<h3>

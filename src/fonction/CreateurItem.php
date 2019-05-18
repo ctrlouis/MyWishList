@@ -61,20 +61,6 @@ class CreateurItem {
 		</div>';
 	}
 
-	public static function itemAddForm() {
-		Alerte::getErrorAlert("empty_field", "Les champs nom, description et tarifs sont obligatoire");
-		Alerte::getErrorAlert("liste_not_found", "Aucune liste spécifié pour l'ajout");
-		Alerte::getErrorAlert("already_exists", "L'item existe déjà dans cette liste");
-		Alerte::getErrorAlert("invalide_price", "Le prix doit être un nombre");
-		echo '
-		<form action="../add-item" method="post">
-			<p><input type="text" name="nom" placeholder="Nom*" required/></p>
-			<p><br/><input type="text" name="descr" placeholder="Description*" required/></p>
-			<p><br/><input type="number" name="tarif" placeholder="Prix*" step="0.01" required/></p>
-			<p><br/><input type="text" name="url" placeholder="url"/></p>
-			<p><input type="submit" class="button" name="Ajouter item" value="Ajouter item"></p>
-		</form>';
-	}
 
 	public static function itemAdd() {
 		if (SELF::itemVerify()) {

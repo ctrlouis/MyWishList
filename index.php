@@ -4,6 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use wishlist\conf\ConnectionFactory as CF;
 use wishlist\divers\Outils;
+use wishlist\divers\Formulaire;
 
 use wishlist\fonction\Authentification as AUTH;
 use wishlist\fonction\Alerte;
@@ -35,14 +36,7 @@ $app = new \Slim\Slim();
 $app->get('/', function () {
 	Alerte::clear();
 	echo '<h4>Bienvenu sur l`utilitaire de liste de souhait.</h4>';
-	echo '
-		<div class="input-group input-group-rounded">
-			<input class="input-group-field" type="search" placeholder="token de liste">
-			<div class="input-group-button">
-				<input type="submit" class="button secondary" value="Search">
-			</div>
-		</div>
-		';
+	Formulaire::rechercheListe();
 	echo '
 		<div class="small button-group">
 		  <a href="/MyWishList/liste" class="button">Listes publiques</a>
@@ -58,12 +52,8 @@ $app->get('/', function () {
 
 // Affiche l'ensemble des listes
 $app->get('/liste', function () {
-	echo 'Accéder à une liste
-				<form action"/liste/" method="get">
-					<p>Token : <br/><input type="text" name="token" /></p>
-					<p><input class="button" type="submit" value="Accès à la liste"></p>
-				</form>';
-    FL::allListe();
+		Formulaire::rechercheListe();
+    FL::displayAll();
 });
 // Affiche une liste particulière lorsque le token est renseigné dans l'URL
 $app->get('/liste/:one', function($token) {
@@ -78,14 +68,14 @@ $app->get('/liste-remove/:item', function($item) {
 
 // Créer une liste
 $app->get('/add-liste-form', function() {
-	FL::listeAddTokenForm();
-	FL::listeAddForm();
+	Formulaire::ajouterListe();
+	Formulaire::creeListe();
 });
 $app->post('/add-liste', function() {
-	FL::listeAdd();
+	FL::cree();
 });
 $app->post('/add-user', function() {
-	FL::addUser();
+	FL::ajoutUtilisateur();
 });
 
 // Ajout un message à une liste
@@ -96,11 +86,14 @@ $app->post('/add-mess/:token', function($token) {
 $app->post('/liste-published/:id', function($token) {
   FL::publication($token);
 });
+$app->post('/edit-liste/:id', function($token) {
+  FL::modifier($token);
+});
 
 
 // Créer un item
 $app->get('/add-item-form', function() {
-	CI::itemAddForm();
+	Formulaire::ajoutItem();
 });
 $app->post('/add-item', function() {
 	CI::itemAdd();
