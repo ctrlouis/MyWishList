@@ -7,6 +7,7 @@ use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\modele\Reservation;
 
+use wishlist\fonction\Alerte;
 use wishlist\fonction\FctnCagnotte as CG;
 
 use wishlist\divers\Outils;
