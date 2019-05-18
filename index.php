@@ -59,6 +59,10 @@ $app->get('/liste', function () {
 $app->get('/liste/:one', function($token) {
 	FL::liste($token);
 });
+// Affiche les listes créer par l'utilisateur
+$app->get('/myliste', function() {
+	FL::displayOwnListe();
+});
 
 // Supprime un item de la liste (l'item ou juste effacer de la liste ?)
 $app->get('/liste-remove/:item', function($item) {

@@ -2,7 +2,9 @@
 
 namespace wishlist\fonction;
 
+use wishlist\fonction\Authentification as AUTH;
 use wishlist\modele\Item;
+use wishlist\modele\User;
 use wishlist\modele\Liste;
 use wishlist\modele\Message;
 use wishlist\fonction\CreateurItem as CI;
@@ -179,6 +181,22 @@ class FctnListe {
 				}
 				echo "</li>";
 			}
+		}
+	}
+
+	public static function displayOwnListe() {
+		if (!AUTH::isConnect()) {
+			Outils::goTo('compte', "Veuillez vous connecter.");
+		}
+
+		$user = User::where('id', '=', $_SESSION['wishlist_userid'])->first();
+		if (!$user) {
+			echo 'Aucunes listes crée pour le moment';
+		}
+
+		foreach($user->listes as $liste) {
+			echo "<h4>" . $liste->titre ."</h4>";
+			if ()
 		}
 	}
 
