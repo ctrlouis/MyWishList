@@ -190,13 +190,17 @@ class FctnListe {
 		}
 
 		$user = User::where('id', '=', $_SESSION['wishlist_userid'])->first();
-		if (!$user) {
-			echo 'Aucunes listes crée pour le moment';
+		if (!$user->listes) {
+			echo '<h4>Aucunes listes crée pour le moment</h4>';
 		}
 
 		foreach($user->listes as $liste) {
-			echo "<h4>" . $liste->titre ."</h4>";
-			if ()
+			echo '<a href="liste/'. $liste->token_private . '"><h4>' . $liste->titre .'</h4></a>';
+			if (Outils::listeExpiration($liste->expiration)) {
+				echo "Etat : expiré";
+			} else {
+				echo "Etat : en cours...";
+			}
 		}
 	}
 
