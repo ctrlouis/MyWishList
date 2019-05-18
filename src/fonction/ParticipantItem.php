@@ -15,14 +15,14 @@ use wishlist\divers\Outils;
 
 class ParticipantItem {
 
-	public static function itemDetails ($item)
-	{
+	public static function itemDetails ($item) {
 		if ($item->reservation == 0) $reservation_state = 'non';
 		else $reservation_state = 'oui';
 
 		echo '
 		<div class= "row column align-center medium-6 large-4">
 			<div class="card-flex-article card">';
+			Alerte::getSuccesAlert("item_reserve", "Item reservé !");
 
 		if ($item->img) {
 			echo'
@@ -94,9 +94,7 @@ class ParticipantItem {
 		$item->participant_name = htmlspecialchars($_POST['name']);
 		$item->message = htmlspecialchars($_POST['message']);
 		$item->save();
-
-		echo 'Item reservé ! </br>
-					<a href="/MyWishList/liste/' . $_SESSION['wishlist_liste_token'].'">Retour à la liste</a>';
+		Alerte::set('item_reserve');
 	}
 
 }
