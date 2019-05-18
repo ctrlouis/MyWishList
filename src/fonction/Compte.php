@@ -66,7 +66,7 @@ class Compte {
 				<button type="submit" class="alert button">
 					<div class ="row">
 						<div class="columns small-2 fi-trash"></div>
-						<div class="columns">Supprimer item</div>
+						<div class="columns">Supprimer le compte</div>
 					</div>
 				</button>
 			</div>
