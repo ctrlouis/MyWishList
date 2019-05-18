@@ -13,7 +13,7 @@ class PageCompte {
 	public static function displayCompte() {
 
 		if (!AUTH::isConnect()) {
-			Outils::goTo('compte', 'Redirection en cours...');
+			Outils::goTo('auth-connexion', 'Redirection en cours...');
 		} else if (AUTH::isConnect()) {
 			if (isset($_SESSION['compte_action']) && $_SESSION['compte_action']) {
 				switch ($_SESSION['compte_action']) {
