@@ -35,7 +35,7 @@ class Outils
 					<a class="item" href="' . $arbo .'"><i class="fi-home"></i> Accueil</a>';
 
 		if (!AUTH::isConnect()) {
-			echo '<a href="' . $arbo .'auth-connexion">Connexion</a>';
+			echo '<a href="' . $arbo .'auth-connexion"> Liste</a>';
 		} else {
 			echo '
 				<ul class="dropdown menu" data-dropdown-menu>
