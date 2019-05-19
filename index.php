@@ -75,10 +75,6 @@ $app->post('/saveliste-add', function() {
 $app->post('/saveliste-remove/:token', function($token) {
 	FL::unsaveListe($token);
 });
-// Supprime un item de la liste (l'item ou juste effacer de la liste ?)
-$app->get('/liste-remove/:item', function($item) {
-	FL::delItem($item);
-});
 
 
 // Créer une liste

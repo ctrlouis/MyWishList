@@ -318,22 +318,6 @@ class FctnListe {
 		Outils::goTo('../saveliste', 'Redirection en cours..');
 	}
 
-	public static function delItem($id) {
-		$item = Item::where('id', '=', $id)->first();
-		if($item) {
-			$reservation = Reservation::where('item_id', '=', $item->id)->first();
-			if($reservation->reservation == 1){
-				echo "L'item ne peut être supprimé car il est déjà réservé";
-			} else {
-				$item->delete();
-				echo 'Item supprimer';
-			}
-		} else {
-			echo "Erreur item introuvable";
-		}
-		echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
-	}
-
 	//Affiche une liste particulière, gére la modification de la liste si..
 	//..token_private dans la variable de session
 	public static function liste($token) {
@@ -369,7 +353,7 @@ class FctnListe {
 
 		foreach($itemlist as $item) {
 			SELF::affichageItemListe($item);
-			echo '<form action="../liste-remove/'. $item->id .'" method="get">
+			echo '<form action="../delete-item/'. $item->nom .'" method="POST">
 				<button class="button tiny" type="submit">Supprimer l`item</button>
 			</form>';
 		}
