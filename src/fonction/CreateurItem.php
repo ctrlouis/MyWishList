@@ -87,21 +87,6 @@ class CreateurItem {
 		$item->save();
 	}
 
-	public static function itemDeleteForm($item_name) {
-		echo '
-			<form action="../delete-item/' . $item_name . '" method="POST">
-			<div class= "row column align-center medium-6 large-4">
-				<button type="submit" class="alert button">
-					<div class ="row">
-						<div class="columns small-2 fi-trash"></div>
-						<div class="columns">Supprimer item</div>
-					</div>
-				</button>
-
-			</div>
-		</form>';
-	}
-
 	public static function itemDelete($item) {
 		$item->delete();
 		Outils::goTo('../liste/' . $_SESSION['wishlist_liste_token'], 'Item supprimé, retour a la liste', 1);

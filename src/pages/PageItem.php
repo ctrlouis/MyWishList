@@ -98,7 +98,7 @@ class PageItem {
 			//Si l'item n'est pas reserver
 			if($item->reservation == 0){
 				FORM::itemEdit($item->nom);
-				CI::itemDeleteForm($item->nom);
+				BTN::itemDelete($item->nom);
 				if($item->cagnotte == 0)
 					CG::boutonCreate($item->nom);
 				else
