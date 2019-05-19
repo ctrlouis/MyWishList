@@ -75,6 +75,7 @@ class CreateurItem {
 			$item->tarif = strip_tags($_POST['tarif']);
 			$item->token_private = Outils::generateToken();
 			$item->save();
+			Alerte::set('item_added');
 		}
 		Outils::goTo(Outils::getArbo(). 'liste/' . $_SESSION['wishlist_liste_token'], 'Retour a la liste');
 	}
