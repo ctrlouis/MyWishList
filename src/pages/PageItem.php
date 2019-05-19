@@ -63,8 +63,7 @@ class PageItem {
 
 
 	// PRIVATE VIEW
-	public static function privateView($item)
-	{
+	public static function privateView($item) {
 		FL::returnBouton();
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) {
 			switch ($_SESSION['item_action']) {
@@ -105,14 +104,11 @@ class PageItem {
 					CG::boutonDel($item->nom);
 			}
 		}
-
-
 	}
 
 
 	// PUBLIC VIEW
-	public static function publicView($item)
-	{
+	public static function publicView($item) {
 		FL::returnBouton();
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{
