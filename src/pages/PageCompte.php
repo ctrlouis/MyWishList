@@ -2,6 +2,7 @@
 
 namespace wishlist\pages;
 
+use wishlist\divers\Formulaire as FORM;
 use wishlist\divers\Outils;
 
 use wishlist\fonction\Authentification as AUTH;
@@ -28,8 +29,8 @@ class PageCompte {
 				}
 			}
 			Compte::compteDetails();
-			Compte::compteEditForm();
-			AUTH::passwordEditForm();
+			FORM::compteEdit();
+			FORM::passwordEdit();
 			Compte::compteDeleteForm();
 		}
 	}
