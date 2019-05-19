@@ -79,7 +79,10 @@ $app->post('/saveliste-remove/:token', function($token) {
 
 // Créer une liste
 $app->get('/add-liste-form', function() {
-	Formulaire::ajouterListe();
+	if(AUTH::isConnect()){
+		Formulaire::ajouterListe();
+		echo '<hr>';
+	}
 	Formulaire::creeListe();
 });
 $app->post('/add-liste', function() {
