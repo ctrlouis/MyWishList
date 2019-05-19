@@ -2,6 +2,7 @@
 
 namespace wishlist\pages;
 
+use wishlist\divers\Bouton as BTN;
 use wishlist\divers\Formulaire as FORM;
 use wishlist\divers\Outils;
 
@@ -93,7 +94,7 @@ class PageItem {
 		//Si la liste n'est pas arrivé a expiration
 		if(!Outils::listeExpiration($list->expiration)){
 			FORM::imageUpload($item->nom);
-			GI::imageDeleteForm($item->nom);
+			BTN::imageDelete($item->nom);
 			//Si l'item n'est pas reserver
 			if($item->reservation == 0){
 				FORM::itemEdit($item->nom);
