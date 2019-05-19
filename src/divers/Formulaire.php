@@ -58,6 +58,36 @@ class Formulaire {
 			</form>';
 	}
 
+	public static function imageUpload($item_name) {
+		echo '<div class= "row align-center medium-8 large-6">';
+		Alerte::getErrorAlert("transfer_error", "Erreur lors du transfert, veuillez réessayer");
+		Alerte::getErrorAlert("max_file_size", "L'image peut peser 10mo max");
+		Alerte::getErrorAlert("invalide_extension", "Selectionnez une image en .jpg .jpeg .gif .png");
+		echo '</div>';
+		echo '
+			<form method="post" action="../upload-image/' . $item_name . '" enctype="multipart/form-data">
+				<div class= "row align-center medium-6 large-4">
+					<div class="columns small-12 medium-expand">
+						<button type="submit" class="button" name="submit">
+							<div class ="row">
+								<div class="columns small-2 fi-pencil"></div>
+								<div class="columns">Modifier image</div>
+							</div>
+						</button>
+					</div>
+					<div class="columns small-12 medium-expand">
+						<label for="icone" class="button">
+						<div class ="row">
+							<div class="columns small-2 fi-folder-add large"></div>
+							<div class="columns">Selectionnez</div>
+						</div>
+						</label>
+						<input type="file" class="show-for-sr" name="icone" id="icone" />
+					</div>
+				</div>
+			</form>';
+	}
+
 
 	// ####################
 	// # AUTHENTIFICATION #

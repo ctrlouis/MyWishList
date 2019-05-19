@@ -93,7 +93,7 @@ class PageItem {
 		$list = FL::getCurrentPrivateList();
 		//Si la liste n'est pas arrivé a expiration
 		if(!Outils::listeExpiration($list->expiration)){
-			GI::imageUploadForm($item->nom);
+			FORM::imageUpload($item->nom);
 			GI::imageDeleteForm($item->nom);
 			//Si l'item n'est pas reserver
 			if($item->reservation == 0){
