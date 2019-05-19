@@ -136,4 +136,50 @@ class Formulaire {
 		</div>';
 	}
 
+
+	// ###########
+	// # COMPTE #
+	// ##########
+
+	public static function compteEdit() {
+		echo '
+			<form action="edit-compte" method="post">
+
+				<div class= "row align-center medium-5 large-3">
+					<input type="text" name="last_name" placeholder="Nom"/>
+				</div>
+				<div class="row align-center medium-5 large-3">
+					<input type="text" name="first_name" placeholder="Prenom"/>
+				</div>
+				<div class="row align-left medium-5 large-3">
+					<button type="submit" class="button" name="">Modifier</button>
+				</div>
+
+			</form>';
+	}
+
+	public static function passwordEdit() {
+		echo '<div class= "row align-center medium-5 large-3">';
+		Alerte::getErrorAlert("field_missing", "Un ou plusieurs champs requis sont vide");
+		Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
+		Alerte::getErrorAlert("pass_not_match", "Les nouveaux mot de passes doivent être identique");
+		Alerte::getErrorAlert("authentification_fail", "Mot de passe erroné");
+		echo '
+		</div>
+		<form action="change-password" method="post">
+			<div class= "row align-center medium-5 large-3">
+				<input type="password" name="oldPassword" placeholder="Ancien mot de passe*" required/>
+			</div>
+			<div class= "row align-center medium-5 large-3">
+				<input type="password" name="newPassword" placeholder="Nouveau mot de passe*" required/>
+			</div>
+			<div class= "row align-center medium-5 large-3">
+				<input type="password" name="newPasswordConf" placeholder="Confirmer mot de passe*" required/>
+			</div>
+			<div class="row align-left medium-5 large-3">
+				<button type="submit" class="button" name="">Changer mot de passe</button>
+			</div>
+		</form>';
+	}
+
 }

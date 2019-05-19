@@ -94,30 +94,6 @@ class Authentification {
 		Outils::goTo('index.php', 'Deconnecté. Redirection en cours..');
 	}
 
-	public static function passwordEditForm() {
-		echo '<div class= "row align-center medium-5 large-3">';
-		Alerte::getErrorAlert("field_missing", "Un ou plusieurs champs requis sont vide");
-		Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
-		Alerte::getErrorAlert("pass_not_match", "Les nouveaux mot de passes doivent être identique");
-		Alerte::getErrorAlert("authentification_fail", "Mot de passe erroné");
-		echo '
-		</div>
-		<form action="change-password" method="post">
-			<div class= "row align-center medium-5 large-3">
-				<input type="text" name="oldPassword" placeholder="Ancien mot de passe*" required/>
-			</div>
-			<div class= "row align-center medium-5 large-3">
-				<input type="text" name="newPassword" placeholder="Nouveau mot de passe*" required/>
-			</div>
-			<div class= "row align-center medium-5 large-3">
-				<input type="text" name="newPasswordConf" placeholder="Confirmer mot de passe*" required/>
-			</div>
-			<div class="row align-left medium-5 large-3">
-				<button type="submit" class="button" name="">Changer mot de passe</button>
-			</div>
-		</form>';
-	}
-
 	public static function passwordEdit() {
 		if (!Outils::checkPost(array('oldPassword', 'newPassword', 'newPasswordConf'))) {
 			Alerte::set('field_missing');
