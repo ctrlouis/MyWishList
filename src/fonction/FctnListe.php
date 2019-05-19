@@ -64,14 +64,13 @@ class FctnListe {
 		{
 			$liste->published = false;
 			$liste->save();
-			echo 'La liste a été rendu privée</br>
-						<a href="../liste/'. $token .'">Retourner sur la liste</a>';
+			Outils::goTo(Outils::getArbo(). '/liste/'. $token, 'La liste a été rendu privée.', 2);
 		}
 		else
 		{
 			$liste->published = true;
 			$liste->save();
-			echo 'La liste a été rendu publique</br>';
+			Outils::goTo(Outils::getArbo(). '/liste/'. $token, 'La liste a été rendu publique.', 2);
 		}
 
 	}
