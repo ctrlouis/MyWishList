@@ -34,7 +34,7 @@ git update-index --assume-unchanged src/conf/conf.ini
 ```
 git clone git@github.com:ctrlouis/MyWishList.git && cd MyWishList && composer install && git update-index --assume-unchanged src/conf/conf.ini
 ```
-5. Créez la base de données avec le fichier `/MyWishList/src/schema-sql/wishlist.sql`
+5. Créez la base de données avec le fichier `/MyWishList/src/schema-sql/wishlist.sql`. Si des erreurs arrivent, utilisez le fichier `/MyWishList/src/schema-sql/wishlist-alternatif.sql`
 6. Modifier le nom de la base de données et les identifiants (= lignes commentées) de connexion dans le fichier `../MyWishList/src/conf/conf.ini` et décommentez les lignes.
 7. Dans le fichier `/MyWishList/src/divers/Outils.php` à la ligne 11, modifiez la valeur de la variable **$arbo** en indiquant le chemin depuis la source du serveur apache jusqu'au fichier index.php
 
