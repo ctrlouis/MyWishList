@@ -65,8 +65,10 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 
 DROP TABLE IF EXISTS `save_liste`;
 CREATE TABLE `save_liste` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`user_id` int(11) NOT NULL,
-  `no_liste` int(11) NOT NULL
+	`no_liste` int(11) NOT NULL,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
