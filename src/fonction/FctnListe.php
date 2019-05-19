@@ -339,8 +339,9 @@ class FctnListe {
 		//Affiche l'ensemble des items pour chaque liste
 		$itemlist=$liste->item;
 		$messlist=$liste->message;
-		echo "<h1>Nom de la liste : " . $liste->titre . "</h1>
-					<h2>Description : " . $liste->description. "</h2>";
+		echo "<h1>Nom de la liste : " . $liste->titre . "</h1>";
+		if($liste->description)
+			echo "<h2>Description : " . $liste->description. "</h2>";
 
 		//Affiche l'expiration de la liste
 		if(Outils::listeExpiration($liste->expiration))
