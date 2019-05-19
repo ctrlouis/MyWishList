@@ -77,12 +77,13 @@ class Outils
     }
 
     public static function footerHTML() {
+		$arbo = SELF::getArbo();
         echo '
 				</div>
-			<script src="/MyWishList/src/js/jquery.js"></script>
-	    	<script src="/MyWishList/src/js/what-input.js"></script>
-	    	<script src="/MyWishList/src/js/foundation.js"></script>
-	    	<script src="/MyWishList/src/js/app.js"></script>
+			<script src="' .$arbo. 'src/js/jquery.js"></script>
+	    	<script src="' .$arbo. 'src/js/what-input.js"></script>
+	    	<script src="' .$arbo. 'src/js/foundation.js"></script>
+	    	<script src="' .$arbo. 'src/js/app.js"></script>
 		</body></html>';
     }
 
