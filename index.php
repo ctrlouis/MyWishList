@@ -91,7 +91,7 @@ $app->post('/add-user', function() {
 
 // Ajout un message à une liste
 $app->post('/add-mess/:token', function($token) {
-  FL::addMessage($token);
+  FL::ajouterMessage($token);
 });
 // Rend la liste visible par tous
 $app->post('/liste-published/:id', function($token) {
