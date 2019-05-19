@@ -42,6 +42,9 @@ $app->get('/', function () {
 	FL::displayAll();
 });
 
+$app->post('/search', function () {
+	Outils::goTo('liste/'. $_POST['token'], 'Redirection vers la liste en cours..');
+});
 
 // #########
 // # LISTE #
