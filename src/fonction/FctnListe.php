@@ -164,7 +164,7 @@ class FctnListe {
 
 			foreach ($listes as $liste) { // Si le token privée d'une liste est dans la variable de session, le lien menera vers la liste en mode édition
 				echo "<li>";
-				if($_SESSION['wishlist_liste_token'] == $liste->token_private) {
+				if(AUTH::isConnect() && $liste->user_id == $_SESSION['wishlist_userid']) {
 					echo '<a href="liste/' . $liste->token_private . '">' . $liste->titre . '</a></br>';
 				} else {
 					echo '<a href="liste/' . $liste->token_publique . '">' . $liste->titre . '</a></br>';
@@ -353,9 +353,12 @@ class FctnListe {
 
 		foreach($itemlist as $item) {
 			SELF::affichageItemListe($item);
-			echo '<form action="../delete-item/'. $item->nom .'" method="POST">
-				<button class="button tiny" type="submit">Supprimer l`item</button>
-			</form>';
+			if($liste->token_private == $_SESSION['wishlist_liste_token']){
+				echo '<form action="../delete-item/'. $item->nom .'" method="POST">
+					<button class="button tiny" type="submit">Supprimer l`item</button>
+				</form>';
+			}
+
 		}
 		SELF::affichageMsgListe($liste);
 
