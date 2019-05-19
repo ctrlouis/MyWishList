@@ -70,9 +70,9 @@ class CreateurItem {
 
 			$item = new Item();
 			$item->liste_id = $liste->no;
-			$item->nom = htmlspecialchars($_POST['nom']);
-			$item->descr = htmlspecialchars($_POST['descr']);
-			$item->tarif = htmlspecialchars($_POST['tarif']);
+			$item->nom = strip_tags($_POST['nom']);
+			$item->descr = strip_tags($_POST['descr']);
+			$item->tarif = strip_tags($_POST['tarif']);
 			$item->token_private = Outils::generateToken();
 			$item->save();
 		}
@@ -108,10 +108,10 @@ class CreateurItem {
 	}
 
 	public static function itemEdit($item) {
-		if ($_POST['nom'] && $_POST['nom'] != '') $item->nom = htmlspecialchars($_POST['nom']);
-		if ($_POST['descr'] && $_POST['descr'] != '') $item->descr = htmlspecialchars($_POST['descr']);
-		if ($_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = htmlspecialchars($_POST['tarif']);
-		if ($_POST['url'] && $_POST['url'] != '') $item->url = htmlspecialchars($_POST['url']);
+		if ($_POST['nom'] && $_POST['nom'] != '') $item->nom = strip_tags($_POST['nom']);
+		if ($_POST['descr'] && $_POST['descr'] != '') $item->descr = strip_tags($_POST['descr']);
+		if ($_POST['tarif'] && $_POST['tarif'] != '') $item->tarif = strip_tags($_POST['tarif']);
+		if ($_POST['url'] && $_POST['url'] != '') $item->url = strip_tags($_POST['url']);
 		$item->save();
 	}
 

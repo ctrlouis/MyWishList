@@ -42,11 +42,11 @@ class FctnListe {
 		else {
 			// creation d'une liste
 			$liste = new Liste();
-			$liste->titre = htmlspecialchars($_POST['titre']);
-			$liste->description = htmlspecialchars($_POST['description']);
+			$liste->titre = strip_tags($_POST['titre']);
+			$liste->description = strip_tags($_POST['description']);
 			if(isset($_SESSION['wishlist_userid']))
-				$liste->user_id = htmlspecialchars($_SESSION['wishlist_userid']);
-			$liste->expiration = htmlspecialchars($_POST['expiration']);
+				$liste->user_id = strip_tags($_SESSION['wishlist_userid']);
+			$liste->expiration = strip_tags($_POST['expiration']);
 			$liste->token_private = Outils::generateToken();
 			$liste->token_publique = Outils::generateToken();
 			$liste->save();
@@ -89,7 +89,7 @@ class FctnListe {
 					}
 					else if($liste->user_id == null)
 					{
-						$liste->user_id = htmlspecialchars($_SESSION["wishlist_userid"]);
+						$liste->user_id = strip_tags($_SESSION["wishlist_userid"]);
 						$liste->save();
 						echo 'La liste a bien été ajouter à votre compte';
 					}
@@ -126,8 +126,8 @@ class FctnListe {
 			exit();
 		}
 		echo "Modifications effectuées sur la liste " . $liste->titre;
-		$liste->titre = htmlspecialchars($_POST['titre']);
-		$liste->description = htmlspecialchars($_POST['description']);
+		$liste->titre = strip_tags($_POST['titre']);
+		$liste->description = strip_tags($_POST['description']);
 		$liste->save();
 	}
 
@@ -136,8 +136,8 @@ class FctnListe {
 	{
 		$liste = Liste::where('token_private', 'like', $token)->orWhere('token_publique', 'like', $token)->first();
 		$message = new Message;
-		$message->no_liste=htmlspecialchars($liste->no);
-		$message->msg=htmlspecialchars($_POST['message']);
+		$message->no_liste=strip_tags($liste->no);
+		$message->msg=strip_tags($_POST['message']);
 		$message->save();
 		echo 'Message ajouté à la liste';
 		echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
