@@ -394,6 +394,18 @@ class FctnListe {
 					let copy = document.getElementById("bouttonCopie");
 					copy.addEventListener("click", copyListeLink);
 				</script>';
+			echo '<h3>Token du créateur<h3>
+				<input type="text" value="'. $liste->token_private .'" id="privListe">
+				<button class="button" id="bouttonCopie">Copier le lien de la liste</button>
+				<script>
+					function copyListeLink() {
+						var copyText = document.getElementById("privListe");
+						copyText.select();
+						document.execCommand("copy");
+					}
+					let copy = document.getElementById("bouttonCopie");
+					copy.addEventListener("click", copyListeLink);
+				</script>';
 		}
 	}
 
