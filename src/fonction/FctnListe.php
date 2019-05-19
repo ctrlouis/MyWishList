@@ -339,7 +339,8 @@ class FctnListe {
 		//Affiche l'ensemble des items pour chaque liste
 		$itemlist=$liste->item;
 		$messlist=$liste->message;
-		echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
+		echo "<h1>Nom de la liste : " . $liste->titre . "</h1>
+					<h2>Description : " . $liste->description. "</h2>";
 
 		//Affiche l'expiration de la liste
 		if(Outils::listeExpiration($liste->expiration))
@@ -399,7 +400,7 @@ class FctnListe {
 	//Affiche les message de la liste
 	public static function affichageMsgListe($liste){
 		$messlist=$liste->message;
-		echo "Message : <br/>";
+		echo "<h2>Message : </h2>";
 		foreach ($messlist as $message) {
 			echo '- ' . $message->msg . '<br/>';
 		}
