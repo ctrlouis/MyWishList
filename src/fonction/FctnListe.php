@@ -205,7 +205,9 @@ class FctnListe {
 		Alerte::getWarningAlert('already_save', "Vous ne pouvez pas enregistrer une liste plusieurs fois");
 		Alerte::getSuccesAlert('liste_save', "Liste enregistré");
 		Alerte::getWarningAlert('liste_unsave', "Liste oublié");
-		SELF::saveListeForm();
+
+		Formulaire::saveListe();
+		echo '<hr>';
 
 		$save_listes = Save_liste::select('no_liste')
 					->where('user_id', '=', $_SESSION['wishlist_userid'])
@@ -226,14 +228,6 @@ class FctnListe {
 
 			SELF::unsaveListeButton($liste->token_publique);
 		}
-	}
-
-	public static function saveListeForm() {
-		echo '
-		<form action="saveliste-add" method="post">
-			<p><input type="text" name="token" placeholder="Token publique*" required/></p>
-			<p><input type="submit" class="button" name="Ajouter item" value="Enregistrer liste"></p>
-		</form>';
 	}
 
 	public static function saveListe() {
