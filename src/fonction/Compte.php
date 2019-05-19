@@ -33,29 +33,12 @@ class Compte {
 		</div>';
 	}
 
-	public static function compteEditForm() {
-		echo '
-			<form action="edit-compte" method="post">
-
-				<div class= "row align-center medium-5 large-3">
-					<input type="text" name="last_name" placeholder="Nom"/>
-				</div>
-				<div class="row align-center medium-5 large-3">
-					<input type="text" name="first_name" placeholder="Prenom"/>
-				</div>
-				<div class="row align-left medium-5 large-3">
-					<button type="submit" class="button" name="">Modifier</button>
-				</div>
-
-			</form>';
-	}
-
 	public static function compteEdit() {
 		$user = User::where('id', '=', $_SESSION['wishlist_userid'])
 			->first();
 
-		if ($_POST['last_name'] && $_POST['last_name'] != '') $user->last_name = htmlspecialchars($_POST['last_name']);
-		if ($_POST['first_name'] && $_POST['first_name'] != '') $user->first_name = htmlspecialchars($_POST['first_name']);
+		if ($_POST['last_name'] && $_POST['last_name'] != '') $user->last_name = strip_tags($_POST['last_name']);
+		if ($_POST['first_name'] && $_POST['first_name'] != '') $user->first_name = strip_tags($_POST['first_name']);
 		$user->save();
 	}
 

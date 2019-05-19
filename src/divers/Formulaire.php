@@ -5,7 +5,11 @@ namespace wishlist\divers;
 use wishlist\fonction\Alerte;
 use wishliste\divers\Outils;
 
-class Formulaire{
+class Formulaire {
+
+	// #########
+	// # LISTE #
+	// #########
 
 	//Formulaire pour ajouter une liste
 	public static function creeListe() {
@@ -51,6 +55,131 @@ class Formulaire{
 				</div>
 				</div>
 			</form>';
+	}
+
+
+	// ####################
+	// # AUTHENTIFICATION #
+	// ####################
+
+	public static function connection() {
+		echo '
+		<div class= "row column align-center medium-6 large-4">
+			<form action="connection" method="post" class="log-in-form">
+
+				<h4 class="text-center">Connection / Inscription</h4>';
+
+		Alerte::getErrorAlert("field_missing", "Un ou plusieurs champs requis sont vide");
+		Alerte::getErrorAlert("authentification_fail", "Identifiant ou mot de passe erroné");
+		Alerte::getSuccesAlert("password_change", "Mot de passe modifié. Veuillez vous reconnecter");
+		Alerte::getSuccesAlert("user_signup", "Compte crée ! Veuillez vous connecter");
+
+		echo '
+				<label>Username
+					<input type="text" name="username" placeholder="MyPseudo" required/>
+				</label>
+
+				<label>Password
+					<input type="password" name="password" placeholder="Mot de passe" required/>
+				</label>
+
+				<input type="submit" class="button expanded" name="signin" value="Connection"/>
+			</form>
+			<form action="auth-inscription" method="get" class="log-in-form">
+				<input type="submit" class="hollow button success expanded" name="" value="Inscription"/>
+			</form>
+		</div>';
+	}
+
+	public static function inscription() {
+		echo '
+		<div class= "row column align-center medium-6 large-4">
+			<form action="connection" method="post" class="log-in-form">
+
+				<h4 class="text-center">Connection / Inscription</h4>';
+
+			Alerte::getErrorAlert("field_missing", "Un ou plusieurs champs requis sont vide");
+			Alerte::getWarningAlert("username_already_existe", "L'identifiant est déjà utilisé");
+			Alerte::getErrorAlert("pass_not_match", "Les mots de passes doivent être identiques");
+			Alerte::getErrorAlert("username_invalid", "L'identifiant doit contenir de 3 à 20 caractères, et aucuns caractère spécial");
+			Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères, et au moins 1 caractère spécial");
+			Alerte::getErrorAlert("name_invalid", "Le nom est prenom ne doit contenir que des lettres");
+
+		echo '
+				<label>Nom d\'utilisateur
+					<input type="text" name="username" placeholder="MyPseudo*" required/>
+				</label>
+
+				<label>Nom
+					<input type="text" name="last_name" placeholder="Nom*" required/>
+				</label>
+
+				<label>Prenom
+					<input type="text" name="first_name" placeholder="Prenom*" required/>
+				</label>
+
+				<label>Mot de passe
+					<input type="password" name="password" placeholder="Mot de passe*" required/>
+				</label>
+
+				<label>Confirmation de mot de passe
+					<input type="password" name="passwordConf" placeholder="Confirmation de mot de passe*" required/>
+				</label>
+
+				<input type="submit" class="button expanded" name="signup" value="Inscription"/>
+
+
+			</form>
+			<form action="auth-connexion" method="get" class="log-in-form">
+				<input type="submit" class="hollow button success expanded" name="" value="Connection"/>
+			</form>
+		</div>';
+	}
+
+
+	// ###########
+	// # COMPTE #
+	// ##########
+
+	public static function compteEdit() {
+		echo '
+			<form action="edit-compte" method="post">
+
+				<div class= "row align-center medium-5 large-3">
+					<input type="text" name="last_name" placeholder="Nom"/>
+				</div>
+				<div class="row align-center medium-5 large-3">
+					<input type="text" name="first_name" placeholder="Prenom"/>
+				</div>
+				<div class="row align-left medium-5 large-3">
+					<button type="submit" class="button" name="">Modifier</button>
+				</div>
+
+			</form>';
+	}
+
+	public static function passwordEdit() {
+		echo '<div class= "row align-center medium-5 large-3">';
+		Alerte::getErrorAlert("field_missing", "Un ou plusieurs champs requis sont vide");
+		Alerte::getErrorAlert("password_invalid", "Le mot de passe doit contenir de 6 à 30 caractères");
+		Alerte::getErrorAlert("pass_not_match", "Les nouveaux mot de passes doivent être identique");
+		Alerte::getErrorAlert("authentification_fail", "Mot de passe erroné");
+		echo '
+		</div>
+		<form action="change-password" method="post">
+			<div class= "row align-center medium-5 large-3">
+				<input type="password" name="oldPassword" placeholder="Ancien mot de passe*" required/>
+			</div>
+			<div class= "row align-center medium-5 large-3">
+				<input type="password" name="newPassword" placeholder="Nouveau mot de passe*" required/>
+			</div>
+			<div class= "row align-center medium-5 large-3">
+				<input type="password" name="newPasswordConf" placeholder="Confirmer mot de passe*" required/>
+			</div>
+			<div class="row align-left medium-5 large-3">
+				<button type="submit" class="button" name="">Changer mot de passe</button>
+			</div>
+		</form>';
 	}
 
 }
