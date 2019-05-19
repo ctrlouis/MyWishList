@@ -44,13 +44,13 @@ class Formulaire{
 
 	public static function rechercheListe() {
 		echo '<form action="liste" method="get">
-			<div class="input-group input-group-rounded">
-			<input class="input-group-field" type="search" placeholder="token de liste" name="token">
-			<div class="input-group-button">
-			<input type="submit" class="button secondary" value="Search">
-			</div>
-			</div>
-		</form>';
+				<div class="input-group input-group-rounded">
+				<input class="input-group-field" type="search" placeholder="token de liste" name="token">
+				<div class="input-group-button">
+				<input type="submit" class="button secondary" value="Search">
+				</div>
+				</div>
+			</form>';
 	}
 
 }
