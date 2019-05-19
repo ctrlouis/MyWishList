@@ -32,6 +32,14 @@ class Formulaire {
 	        </form>';
 	}
 
+	public static function saveListe() {
+		echo '
+		<form action="saveliste-add" method="post">
+			<p><input type="text" name="token" placeholder="Token publique*" required/></p>
+			<p><input type="submit" class="button" name="Ajouter item" value="Enregistrer liste"></p>
+		</form>';
+	}
+
 	public static function ajoutItem() {
 	    Alerte::getErrorAlert("empty_field", "Les champs nom, description et tarifs sont obligatoire");
 	    Alerte::getErrorAlert("liste_not_found", "Aucune liste spécifié pour l'ajout");

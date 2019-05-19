@@ -38,24 +38,14 @@ $app->get('/', function () {
 	Alerte::clear();
 	echo '<h4>Bienvenu sur l\'utilitaire de liste de souhait.</h4>';
 	Formulaire::rechercheListe();
-	echo '
-		<div class="small button-group">
-		  <a href="/MyWishList/liste" class="button">Listes publiques</a>
-		  <a href="/MyWishList/add-liste-form" class="button">Créer une liste</a>
-		</div>';
-
+	echo '<hr>';
+	FL::displayAll();
 });
 
 
 // #########
 // # LISTE #
 // #########
-
-// Affiche l'ensemble des listes
-$app->get('/liste', function () {
-		Formulaire::rechercheListe();
-    FL::displayAll();
-});
 // Affiche une liste particulière lorsque le token est renseigné dans l'URL
 $app->get('/liste/:token', function($token) {
 	FL::liste($token);

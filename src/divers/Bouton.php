@@ -17,6 +17,11 @@ class Bouton {
 
 			</div>
 		</form>';
+		echo '
+		<div class= "row column align-center medium-6 large-4">
+			<p class="help-text">Cette action est irréversible</p>
+		</div>';
+
 	}
 
 	public static function imageDelete($item_name) {
@@ -33,6 +38,10 @@ class Bouton {
 					</div>
 				</div>
 			</form>';
+		echo '
+		<div class= "row column align-center medium-6 large-4">
+			<p class="help-text">Cette action est irréversible</p>
+		</div>';
 	}
 
 	public static function compteDelete() {
@@ -47,6 +56,10 @@ class Bouton {
 				</button>
 			</div>
 		</form>';
+		echo '
+		<div class= "row column align-center medium-6 large-4">
+			<p class="help-text">Cette action est irréversible</p>
+		</div>';
 	}
 
 }
