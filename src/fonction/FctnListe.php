@@ -352,15 +352,7 @@ class FctnListe {
 		} else {
 			$_SESSION['wishlist_liste_token'] = $liste->token_private;
 			//Bouton permettant de basculer entre privée et publique
-			if($liste->published == true) {
-				echo '<form action="../liste-published/'. $token .'" method="post">
-					<button class="button" type="submit">Rend la liste privée</button>
-				</form>';
-			} else {
-				echo '<form action="../liste-published/'. $token .'" method="post">
-					<button class="button" type="submit">Rend la liste publique</button>
-				</form>';
-			}
+			SELF::boutonPublication();
 		}
 
 		//Affiche l'ensemble des items pour chaque liste
@@ -454,5 +446,19 @@ class FctnListe {
 
 	public static function returnBouton() {
 		echo '<a href="'. Outils::getArbo().'liste/' . $_SESSION['wishlist_liste_token'] . '" class="button">Retour à la liste</a>';
+	}
+
+	public static function boutonPublication(){
+		$liste = SELF::getCurrentPrivateList();
+		$token = $_SESSION['wishlist_liste_token'];
+		if($liste->published == true) {
+			echo '<form action="../liste-published/'. $token .'" method="post">
+				<button class="button" type="submit">Rend la liste privée</button>
+			</form>';
+		} else {
+			echo '<form action="../liste-published/'. $token .'" method="post">
+				<button class="button" type="submit">Rend la liste publique</button>
+			</form>';
+		}
 	}
 }
