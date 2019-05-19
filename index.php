@@ -56,7 +56,7 @@ $app->get('/liste', function () {
     FL::displayAll();
 });
 // Affiche une liste particulière lorsque le token est renseigné dans l'URL
-$app->get('/liste/:one', function($token) {
+$app->get('/liste/:token', function($token) {
 	FL::liste($token);
 });
 // Affiche les listes créer par l'utilisateur
