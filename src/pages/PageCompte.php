@@ -2,6 +2,7 @@
 
 namespace wishlist\pages;
 
+use wishlist\divers\Bouton as BTN;
 use wishlist\divers\Formulaire as FORM;
 use wishlist\divers\Outils;
 
@@ -31,7 +32,7 @@ class PageCompte {
 			Compte::compteDetails();
 			FORM::compteEdit();
 			FORM::passwordEdit();
-			Compte::compteDeleteForm();
+			BTN::compteDelete();
 		}
 	}
 
