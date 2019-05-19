@@ -4,7 +4,7 @@ namespace wishlist\fonction;
 
 use wishlist\modele\Item;
 
-// https://openclassrooms.com/fr/courses/1085676-upload-de-fichiers-par-formulaire
+
 class GestionImage {
 
 	public static function imageUploadForm($item_name)
