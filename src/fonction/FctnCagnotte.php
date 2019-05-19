@@ -62,15 +62,15 @@ class FctnCagnotte{
         $cagnotte = new Cagnotte();
         $cagnotte->item_id = $item->id;
         if(isset($_SESSION['wishlist_userid'])){
-          $cagnotte->user_id = htmlspecialchars($_SESSION['wishlist_userid']);
+          $cagnotte->user_id = strip_tags($_SESSION['wishlist_userid']);
           $user = User::where('id', 'like', $_SESSION['wishlist_userid']);
-          $cagnotte->name = htmlspecialchars($user->email);
+          $cagnotte->name = strip_tags($user->email);
         }
         else {
-          $cagnotte->name = htmlspecialchars($_POST['name']);
+          $cagnotte->name = strip_tags($_POST['name']);
         }
-        $cagnotte->montant = htmlspecialchars($_POST['montant']);
-        $cagnotte->message = htmlspecialchars($_POST['message']);
+        $cagnotte->montant = strip_tags($_POST['montant']);
+        $cagnotte->message = strip_tags($_POST['message']);
         $cagnotte->save();
         echo 'Participation effectué !';
       }

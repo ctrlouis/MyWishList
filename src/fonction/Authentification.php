@@ -55,8 +55,8 @@ class Authentification {
 			exit();
 		}
 
-		$username = htmlspecialchars($_POST['username']);
-		$password = htmlspecialchars($_POST['password']);
+		$username = strip_tags($_POST['username']);
+		$password = strip_tags($_POST['password']);
 		$credentials = [
 			'email'    => $username,
 			'password' => $password,
@@ -125,11 +125,11 @@ class Authentification {
 			exit();
 		}
 
-		$username = htmlspecialchars($_POST['username']);
-		$password = htmlspecialchars($_POST['password']);
-		$passwordConf = htmlspecialchars($_POST['passwordConf']);
-		$last_name = htmlspecialchars($_POST['last_name']);
-		$first_name = htmlspecialchars($_POST['first_name']);
+		$username = strip_tags($_POST['username']);
+		$password = strip_tags($_POST['password']);
+		$passwordConf = strip_tags($_POST['passwordConf']);
+		$last_name = strip_tags($_POST['last_name']);
+		$first_name = strip_tags($_POST['first_name']);
 
 		if (!SELF::usernameIsConform($username)) {
 			Alerte::set('username_invalid');
@@ -199,9 +199,9 @@ class Authentification {
 			exit();
 		}
 
-		$oldPassword = htmlspecialchars($_POST['oldPassword']);
-		$newPassword = htmlspecialchars($_POST['newPassword']);
-		$newPasswordConf = htmlspecialchars($_POST['newPasswordConf']);
+		$oldPassword = strip_tags($_POST['oldPassword']);
+		$newPassword = strip_tags($_POST['newPassword']);
+		$newPasswordConf = strip_tags($_POST['newPasswordConf']);
 
 		if ($newPassword != $newPasswordConf) {
 			Alerte::set('pass_not_match');

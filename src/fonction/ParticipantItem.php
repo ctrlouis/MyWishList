@@ -91,8 +91,8 @@ class ParticipantItem {
 	public static function itemReserve ($item)
 	{
 		$item->reservation = 1;
-		$item->participant_name = htmlspecialchars($_POST['name']);
-		$item->message = htmlspecialchars($_POST['message']);
+		$item->participant_name = strip_tags($_POST['name']);
+		$item->message = strip_tags($_POST['message']);
 		$item->save();
 		Alerte::set('item_reserve');
 	}
