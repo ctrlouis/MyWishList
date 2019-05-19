@@ -169,18 +169,22 @@ class FctnListe {
 			}
 		} else {
 			$_SESSION['wishlist_liste_token'] = null;
-			$lists=Liste::where('published', 'like', '1')->orderBy('expiration', 'asc')->whereDate('expiration', '>', date('Y-m-d'))->get();
+			$listes=Liste::where('published', 'like', '1')
+				->where('user_id', '!=', $_SESSION['wishlist_userid'])
+				->orderBy('expiration', 'asc')
+				->whereDate('expiration', '>', date('Y-m-d'))
+				->get();
 			echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre
-			if (sizeof($lists) == 0) {
+			if (sizeof($listes) == 0) {
 				echo 'Aucune liste publique existante';
 			}
 
-			foreach ($lists as $key => $value) { // Si le token privée d'une liste est dans la variable de session, le lien menera vers la liste en mode édition
+			foreach ($listes as $liste) { // Si le token privée d'une liste est dans la variable de session, le lien menera vers la liste en mode édition
 				echo "<li>";
-				if($_SESSION['wishlist_liste_token'] == $value->token_private) {
-					echo '<a href="liste/' . $value->token_private . '">' . $value->titre . '</a></br>';
+				if($_SESSION['wishlist_liste_token'] == $liste->token_private) {
+					echo '<a href="liste/' . $liste->token_private . '">' . $liste->titre . '</a></br>';
 				} else {
-					echo '<a href="liste/' . $value->token_publique . '">' . $value->titre . '</a></br>';
+					echo '<a href="liste/' . $liste->token_publique . '">' . $liste->titre . '</a></br>';
 				}
 				echo "</li>";
 			}
