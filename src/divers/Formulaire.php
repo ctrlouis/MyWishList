@@ -56,7 +56,7 @@ class Formulaire {
 	}
 
 	public static function rechercheListe() {
-		echo '<form action="liste" method="get">
+		echo '<form action="search" method="post">
 				<div class="input-group input-group-rounded">
 				<input class="input-group-field" type="search" placeholder="token de liste" name="token">
 				<div class="input-group-button">
