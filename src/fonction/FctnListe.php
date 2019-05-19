@@ -139,7 +139,8 @@ class FctnListe {
 		$message->no_liste=strip_tags($liste->no);
 		$message->msg=strip_tags($_POST['message']);
 		$message->save();
-		Outils::goTo('../liste/'. $token, 'Message ajouté à la liste', 1);
+		Alerte::set('add_message');
+		Outils::goTo('../liste/'. $token, 'Message ajouté à la liste');
 	}
 
 

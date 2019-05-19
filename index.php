@@ -51,6 +51,8 @@ $app->post('/search', function () {
 // #########
 // Affiche une liste particulière lorsque le token est renseigné dans l'URL
 $app->get('/liste/:token', function($token) {
+	Alerte::getSuccesAlert('item_added', "Objet ajouté à la liste");
+	Alerte::getSuccesAlert('add_message', "Message ajouté à la liste.");
 	FL::liste($token);
 });
 // Affiche les listes créer par l'utilisateur
