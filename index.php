@@ -186,10 +186,10 @@ $app->get('/compte', function() {
 	PC::displayCompte();
 });
 $app->get('/auth-connexion', function() {
-	AUTH::FormulaireConnection();
+	Formulaire::connection();
 });
 $app->get('/auth-inscription', function() {
-	AUTH::FormulaireInscription();
+	Formulaire::inscription();
 });
 
 //  Modifier un compte
