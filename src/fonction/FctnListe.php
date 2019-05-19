@@ -34,7 +34,7 @@ class FctnListe {
 			exit();
     	}
 
-		if($_POST['expiration'] < date('Y-m-d'))
+		if(Outils::listeExpiration($_POST['expiration']))
 		{
 			echo 'Date invalide ! </br>
 						<a href="add-liste-form">Retour vers la creation de liste</a>';
@@ -377,6 +377,13 @@ class FctnListe {
 		$itemlist=$liste->item;
 		$messlist=$liste->message;
 		echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
+
+		//Affiche l'expiration de la liste
+		if(Outils::listeExpiration($liste->expiration))
+			echo '<h2>La liste est expirer.</h2>';
+		else
+			echo '<h2>Expiration de la liste : ' . $liste->expiration . '</h2>';
+
 		echo "<ul>"; // HTML CODE debut liste
 
 		foreach($itemlist as $item) {
