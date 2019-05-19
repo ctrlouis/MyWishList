@@ -33,7 +33,8 @@ class FctnListe {
 				exit(); //Evite de crée une nouvelle liste
     	}
 
-		if(Outils::listeExpiration($_POST['expiration']))
+		//Verifie que la date saisie soit pas expirer et qu'elle est un format valide (ex : 2019-13-052, ne sera pas accepter)
+		if(Outils::listeExpiration($_POST['expiration']) || preg_match('#^([0-9]{4})([/-])([0-9]{2})\2([0-9]{2})$#', $_POST['expiration'], $m) == 1 && checkdate($m[4], $m[3], $m[1]))
 		{
 			Outils::goTo(Outils::getArbo().'add-liste-form', 'Date saisie invalide', 2);
 		}
