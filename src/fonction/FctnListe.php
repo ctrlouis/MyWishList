@@ -196,6 +196,7 @@ class FctnListe {
 		}
 
 		foreach($user->listes as $liste) {
+			echo "<h4>" . $liste->titre ."</h4>";
 			echo '<a href="liste/'. $liste->token_private . '"><h4>' . $liste->titre .'</h4></a>';
 			if (Outils::listeExpiration($liste->expiration)) {
 				echo "Etat : expiré";
@@ -223,7 +224,7 @@ class FctnListe {
 			echo '<a href="liste/'. $liste->token_publique . '"><h4>' . $liste->titre .'</h4></a>';
 
 			if ($liste->user) echo '<p>Createur : ' . $liste->user->email . '</p>';
-			
+
 			if (Outils::listeExpiration($liste->expiration)) echo "Etat : expiré";
 			else echo "Etat : en cours...";
 		}
