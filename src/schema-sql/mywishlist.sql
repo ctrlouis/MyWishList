@@ -12,7 +12,7 @@ CREATE TABLE `item` (
   `descr` text,
   `img` text DEFAULT NULL,
   `url` text DEFAULT NULL,
-  `tarif` decimal(5,2) DEFAULT NULL,
+  `tarif` decimal(8,2) DEFAULT NULL,
   `token_private` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `reservation` tinyint(1) NOT NULL DEFAULT '0',
   `participant_name` text DEFAULT NULL,
