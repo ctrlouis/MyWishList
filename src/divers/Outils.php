@@ -37,9 +37,24 @@ class Outils
 		        <div class="title-bar-center">
 		          <span class="title-bar-title">MyWishList</span>
 		        </div>
-		    	<div class="title-bar-right"> ' .
-					AUTH::menuDisplay($arbo) . '
-				</div>
+		    	<div class="title-bar-right"> ';
+
+		if (!AUTH::isConnect()) {
+			echo '<a href="' . $arbo .'auth-connexion">Connexion</a>';
+		} else {
+			echo '
+				<ul class="dropdown menu align-right" data-dropdown-menu>
+					<li>
+						<a href="">Connecté en tant que <strong><i>' . $_SESSION['wishlist_username'] . '</i></strong></a>
+						<ul class="menu">
+							<li><a href="' . $arbo .'compte">Mon Compte</a></li>
+							<li><a href="' . $arbo .'deconnection">Deconnexion <i class="step fi-power size-24"></i></a></li>
+						</ul>
+					</li>
+				</ul>';
+		}
+
+		echo '</div>
   			</div>
 		</div>
 		<div class="app">';

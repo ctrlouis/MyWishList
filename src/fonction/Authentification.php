@@ -241,23 +241,6 @@ class Authentification {
 		$_SESSION["wishlist_userid"] = null;
 	}
 
-	public static function menuDisplay($arbo) {
-		if (!SELF::isConnect()) {
-			return '<a href="' . $arbo .'auth-connexion">Connexion</a>';
-		} else {
-			return '
-				<ul class="dropdown menu align-right" data-dropdown-menu>
-					<li>
-						<a href="">Connecté en tant que <strong><i>' . $_SESSION['wishlist_username'] . '</i></strong></a>
-						<ul class="menu">
-							<li><a href="' . $arbo .'compte">Mon Compte</a></li>
-							<li><a href="' . $arbo .'deconnection">Deconnexion <i class="step fi-power size-24"></i></a></li>
-						</ul>
-					</li>
-				</ul>';
-		}
-	}
-
 	public static function usernameIsConform($username) {
 		$size = strlen($username);
 		if (($size < 3 || $size > 20) || (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $username))) {
