@@ -151,7 +151,7 @@ class FctnListe {
 	public static function displayAll() {
 		//Lorsqu'on utilise la recherche de liste
 		if(isset($_GET["token"])) {
-			SELF::liste($_GET["token"]);
+			Outils::goTo('liste/'. $_GET['token'], 'Recherche en cours...', 1);
 		}
 		else {
 			$_SESSION['wishlist_liste_token'] = null;
