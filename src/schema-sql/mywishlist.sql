@@ -57,8 +57,8 @@ CREATE TABLE `liste` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `token_private`) VALUES
-(1,	1,	'Pour fêter le bac !',	'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	'2018-06-27',	'tokenprivate1'),
-(3,	3,	'C\'est l\'anniversaire de Charlie',	'Pour lui préparer une fête dont il se souviendra :)',	'2017-12-12',	'tokenprivate3');
+(1,	1,	'Pour fêter le bac !',	'Pour un week-end à Nancy qui nous fera oublier les épreuves. ',	'2018-06-27',	'tokenprivate1', 'tokenpublic1'),
+(3,	3,	'C\'est l\'anniversaire de Charlie',	'Pour lui préparer une fête dont il se souviendra :)',	'2017-12-12',	'tokenprivate3', 'tokenpublic3');
 INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `token_private`, `token_publique`) VALUES
 (2,	2,	'Liste de mariage d\'Alice et Bob',	'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	'2018-06-30',	'tokenprivate2', 'tokenpublic2');
 

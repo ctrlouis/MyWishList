@@ -75,10 +75,6 @@ $app->post('/saveliste-add', function() {
 $app->post('/saveliste-remove/:token', function($token) {
 	FL::unsaveListe($token);
 });
-// Supprime un item de la liste (l'item ou juste effacer de la liste ?)
-$app->get('/liste-remove/:item', function($item) {
-	FL::delItem($item);
-});
 
 
 // Créer une liste
@@ -95,7 +91,7 @@ $app->post('/add-user', function() {
 
 // Ajout un message à une liste
 $app->post('/add-mess/:token', function($token) {
-  FL::addMessage($token);
+  FL::ajouterMessage($token);
 });
 // Rend la liste visible par tous
 $app->post('/liste-published/:id', function($token) {

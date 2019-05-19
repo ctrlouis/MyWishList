@@ -29,15 +29,14 @@ class FctnListe {
 		// stop si une liste avec le même nom existe deja
 		$test = Liste::where('titre', 'like', $_POST['titre'])->first();
     	if ($test) {
-        	echo 'Une liste avec le même nom existe déjà </br>
-								<a href="add-liste-form">Retour vers la creation de liste</a>'; // alerte
-			exit();
+				Outils::goTo(Outils::getArbo().'add-liste-form', 'Une liste avec le même nom existe déjà !', 2);
+				exit(); //Evite de crée une nouvelle liste
     	}
 
-		if(Outils::listeExpiration($_POST['expiration']))
+		//Verifie que la date saisie soit pas expirer et qu'elle est un format valide (ex : 2019-13-052, ne sera pas accepter)
+		if(Outils::listeExpiration($_POST['expiration']) || preg_match('#^([0-9]{4})([/-])([0-9]{2})\2([0-9]{2})$#', $_POST['expiration'], $m) == 1 && checkdate($m[4], $m[3], $m[1]))
 		{
-			echo 'Date invalide ! </br>
-						<a href="add-liste-form">Retour vers la creation de liste</a>';
+			Outils::goTo(Outils::getArbo().'add-liste-form', 'Date saisie invalide', 2);
 		}
 		else {
 			// creation d'une liste
@@ -51,7 +50,7 @@ class FctnListe {
 			$liste->token_publique = Outils::generateToken();
 			$liste->save();
 			$_SESSION['wishlist_liste_token'] = $liste->token_private;
-			echo '<a href ="liste/' . $liste->token_private . '">URL de la liste : </a>';
+			Outils::goTo('liste/'. $liste->token_private, 'Redirection vers la liste crée', 1);
 		}
 	}
 
@@ -64,14 +63,13 @@ class FctnListe {
 		{
 			$liste->published = false;
 			$liste->save();
-			echo 'La liste a été rendu privée</br>
-						<a href="../liste/'. $token .'">Retourner sur la liste</a>';
+			Outils::goTo('../liste/'. $token, 'La liste a été rendu privée.', 2);
 		}
 		else
 		{
 			$liste->published = true;
 			$liste->save();
-			echo 'La liste a été rendu publique</br>';
+			Outils::goTo('../liste/'. $token, 'La liste a été rendu publique.', 2);
 		}
 
 	}
@@ -139,8 +137,7 @@ class FctnListe {
 		$message->no_liste=strip_tags($liste->no);
 		$message->msg=strip_tags($_POST['message']);
 		$message->save();
-		echo 'Message ajouté à la liste';
-		echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
+		Outils::goTo('../liste/'. $token, 'Message ajouté à la liste', 1);
 	}
 
 
@@ -319,22 +316,6 @@ class FctnListe {
 		Outils::goTo('../saveliste', 'Redirection en cours..');
 	}
 
-	public static function delItem($id) {
-		$item = Item::where('id', '=', $id)->first();
-		if($item) {
-			$reservation = Reservation::where('item_id', '=', $item->id)->first();
-			if($reservation->reservation == 1){
-				echo "L'item ne peut être supprimé car il est déjà réservé";
-			} else {
-				$item->delete();
-				echo 'Item supprimer';
-			}
-		} else {
-			echo "Erreur item introuvable";
-		}
-		echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
-	}
-
 	//Affiche une liste particulière, gére la modification de la liste si..
 	//..token_private dans la variable de session
 	public static function liste($token) {
@@ -352,21 +333,14 @@ class FctnListe {
 		} else {
 			$_SESSION['wishlist_liste_token'] = $liste->token_private;
 			//Bouton permettant de basculer entre privée et publique
-			if($liste->published == true) {
-				echo '<form action="../liste-published/'. $token .'" method="post">
-					<button class="button" type="submit">Rend la liste privée</button>
-				</form>';
-			} else {
-				echo '<form action="../liste-published/'. $token .'" method="post">
-					<button class="button" type="submit">Rend la liste publique</button>
-				</form>';
-			}
+			SELF::boutonPublication();
 		}
 
 		//Affiche l'ensemble des items pour chaque liste
 		$itemlist=$liste->item;
 		$messlist=$liste->message;
-		echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
+		echo "<h1>Nom de la liste : " . $liste->titre . "</h1>
+					<h2>Description : " . $liste->description. "</h2>";
 
 		//Affiche l'expiration de la liste
 		if(Outils::listeExpiration($liste->expiration))
@@ -378,7 +352,7 @@ class FctnListe {
 
 		foreach($itemlist as $item) {
 			SELF::affichageItemListe($item);
-			echo '<form action="../liste-remove/'. $item->id .'" method="get">
+			echo '<form action="../delete-item/'. $item->nom .'" method="POST">
 				<button class="button tiny" type="submit">Supprimer l`item</button>
 			</form>';
 		}
@@ -426,7 +400,7 @@ class FctnListe {
 	//Affiche les message de la liste
 	public static function affichageMsgListe($liste){
 		$messlist=$liste->message;
-		echo "Message : <br/>";
+		echo "<h2>Message : </h2>";
 		foreach ($messlist as $message) {
 			echo '- ' . $message->msg . '<br/>';
 		}
@@ -453,6 +427,20 @@ class FctnListe {
 	}
 
 	public static function returnBouton() {
-		echo '<a href="'. Outils::getArbo().'liste/' . $_SESSION['wishlist_liste_token'] . '" class="button">Retour à la liste</a>';
+		echo '<a href="../liste/' . $_SESSION['wishlist_liste_token'] . '" class="button">Retour à la liste</a>';
+	}
+
+	public static function boutonPublication(){
+		$liste = SELF::getCurrentPrivateList();
+		$token = $_SESSION['wishlist_liste_token'];
+		if($liste->published == true) {
+			echo '<form action="../liste-published/'. $token .'" method="post">
+				<button class="button" type="submit">Rend la liste privée</button>
+			</form>';
+		} else {
+			echo '<form action="../liste-published/'. $token .'" method="post">
+				<button class="button" type="submit">Rend la liste publique</button>
+			</form>';
+		}
 	}
 }
