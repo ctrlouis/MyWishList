@@ -1,4 +1,4 @@
-strip_tags<?php
+<?php
 
 namespace wishlist\fonction;
 
