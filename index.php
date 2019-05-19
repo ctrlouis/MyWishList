@@ -35,7 +35,7 @@ $app = new \Slim\Slim();
 // ###########
 $app->get('/', function () {
 	Alerte::clear();
-	echo '<h4>Bienvenu sur l`utilitaire de liste de souhait.</h4>';
+	echo '<h4>Bienvenu sur l\'utilitaire de liste de souhait.</h4>';
 	Formulaire::rechercheListe();
 	echo '
 		<div class="small button-group">
@@ -56,7 +56,7 @@ $app->get('/liste', function () {
     FL::displayAll();
 });
 // Affiche une liste particulière lorsque le token est renseigné dans l'URL
-$app->get('/liste/:one', function($token) {
+$app->get('/liste/:token', function($token) {
 	FL::liste($token);
 });
 // Affiche les listes créer par l'utilisateur
