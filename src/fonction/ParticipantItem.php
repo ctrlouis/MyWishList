@@ -45,10 +45,16 @@ class ParticipantItem {
 			</div>
 		</div>';
 
-		if($item->reservation == 0 && $item->cagnotte == 0) FORM::itemReserve($item->nom);
-		else if ($item->reservation == 0 && $item->cagnotte == 1) {
-			CG::addCagnotteForm($item->nom);
+		$liste = Liste::select('expiration')
+				->where('token_publique', '=', $_SESSION['wishlist_liste_token'])
+				->first();
+		if (!Outils::listeExpiration($liste->expiration)) {
+			if($item->reservation == 0 && $item->cagnotte == 0) FORM::itemReserve($item->nom);
+			else if ($item->reservation == 0 && $item->cagnotte == 1) {
+				CG::addCagnotteForm($item->nom);
+			}
 		}
+
 	}
 
 	public static function itemReserve ($item)
