@@ -8,7 +8,7 @@ class Outils
 {
 
 	public static function getArbo() {
-		$arbo = '/MyWishList/';
+		$arbo = '/MyWishList/'; // indiquer le chemin depuis la source du serveur apache jusqu'au fichier index.php
 		return $arbo;
 	}
 
