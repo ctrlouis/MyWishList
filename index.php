@@ -34,6 +34,7 @@ $app = new \Slim\Slim();
 // # ACCUEIL #
 // ###########
 $app->get('/', function () {
+	Alerte::getErrorAlert('list_missing', 'Aucune liste trouvée');
 	Alerte::clear();
 	echo '<h4>Bienvenu sur l\'utilitaire de liste de souhait.</h4>';
 	Formulaire::rechercheListe();
@@ -79,6 +80,8 @@ $app->post('/saveliste-remove/:token', function($token) {
 
 // Créer une liste
 $app->get('/add-liste-form', function() {
+	Alerte::getErrorAlert('date_fault', 'Date saisie invalide');
+	Alerte::getErrorAlert('existing_list', 'Une liste avec le même nom existe déjà !');
 	if(AUTH::isConnect()){
 		Formulaire::ajouterListe();
 		echo '<hr>';
