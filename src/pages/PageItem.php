@@ -2,6 +2,8 @@
 
 namespace wishlist\pages;
 
+use wishlist\divers\Bouton as BTN;
+use wishlist\divers\Formulaire as FORM;
 use wishlist\divers\Outils;
 
 use wishlist\fonction\CreateurItem as CI;
@@ -62,8 +64,7 @@ class PageItem {
 
 
 	// PRIVATE VIEW
-	public static function privateView($item)
-	{
+	public static function privateView($item) {
 		FL::returnBouton();
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) {
 			switch ($_SESSION['item_action']) {
@@ -92,26 +93,23 @@ class PageItem {
 		$list = FL::getCurrentPrivateList();
 		//Si la liste n'est pas arrivé a expiration
 		if(!Outils::listeExpiration($list->expiration)){
-			GI::imageUploadForm($item->nom);
-			GI::imageDeleteForm($item->nom);
+			FORM::imageUpload($item->nom);
+			BTN::imageDelete($item->nom);
 			//Si l'item n'est pas reserver
 			if($item->reservation == 0){
-				CI::itemEditForm($item->nom);
-				CI::itemDeleteForm($item->nom);
+				FORM::itemEdit($item->nom);
+				BTN::itemDelete($item->nom);
 				if($item->cagnotte == 0)
 					CG::boutonCreate($item->nom);
 				else
 					CG::boutonDel($item->nom);
 			}
 		}
-
-
 	}
 
 
 	// PUBLIC VIEW
-	public static function publicView($item)
-	{
+	public static function publicView($item) {
 		FL::returnBouton();
 		if (isset($_SESSION['item_action']) && $_SESSION['item_action']) // par défault
 		{

@@ -10,6 +10,7 @@ use wishlist\modele\Reservation;
 use wishlist\fonction\Alerte;
 use wishlist\fonction\FctnCagnotte as CG;
 
+use wishlist\divers\Formulaire as FORM;
 use wishlist\divers\Outils;
 
 
@@ -44,48 +45,10 @@ class ParticipantItem {
 			</div>
 		</div>';
 
-		if($item->reservation == 0 && $item->cagnotte == 0) SELF::itemReserveForm($item->nom);
+		if($item->reservation == 0 && $item->cagnotte == 0) FORM::itemReserve($item->nom);
 		else if ($item->reservation == 0 && $item->cagnotte == 1) {
 			CG::addCagnotteForm($item->nom);
 		}
-	}
-
-	public static function itemReserveForm ($item_name)
-	{
-		if (isset($_SESSION['wishlist_userid'])) {
-			$user = User::select('first_name', 'last_name')
-				->where('id', '=', $_SESSION['wishlist_userid'])
-				->first();
-			$last_name = $user->last_name;
-			$first_name = $user->first_name;
-
-			echo '
-				<form action="../reserver/' . $item_name . '" method="post">
-					<div class= "row align-center medium-5 large-3">
-						<input type="text" name="name" value="' . $last_name . ' ' . $first_name . '" placeholder="Nom" required/>
-					</div>
-					<div class="row align-center medium-5 large-3">
-						<input type="text" name="message" placeholder="Laissez votre message..." required/>
-					</div>
-					<div class="row align-center medium-5 large-3">
-						<button type="submit" class="button" name="submit">Réserver</button>
-					</div>
-				</form>';
-		} else {
-			echo '
-				<form action="../reserver/' . $item_name . '" method="post">
-					<div class= "row align-center medium-5 large-3">
-						<input type="text" name="name" placeholder="Nom" required/>
-					</div>
-					<div class="row align-center medium-5 large-3">
-						<input type="text" name="message" placeholder="Laissez votre message..." required/>
-					</div>
-					<div class="row align-center medium-5 large-3">
-						<button type="submit" class="button" name="submit">Réserver</button>
-					</div>
-				</form>';
-		}
-
 	}
 
 	public static function itemReserve ($item)

@@ -8,7 +8,8 @@ class Outils
 {
 
 	public static function getArbo() {
-		return '/MyWishList/';
+		$arbo = '/MyWishList/';
+		return $arbo;
 	}
 
     public static function headerHTML($title) {
