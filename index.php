@@ -63,7 +63,10 @@ $app->get('/liste/:one', function($token) {
 $app->get('/myliste', function() {
 	FL::displayOwnListe();
 });
-
+// Affiche les listes d'autres personnes enregistré par l'utilisateur
+$app->get('/saveliste', function() {
+	FL::displaySaveListe();
+});
 // Supprime un item de la liste (l'item ou juste effacer de la liste ?)
 $app->get('/liste-remove/:item', function($item) {
 	FL::delItem($item);

@@ -5,6 +5,7 @@ namespace wishlist\fonction;
 use wishlist\fonction\Authentification as AUTH;
 use wishlist\modele\Item;
 use wishlist\modele\User;
+use wishlist\modele\Save_liste;
 use wishlist\modele\Liste;
 use wishlist\modele\Message;
 use wishlist\fonction\CreateurItem as CI;
@@ -201,6 +202,30 @@ class FctnListe {
 			} else {
 				echo "Etat : en cours...";
 			}
+		}
+	}
+
+	public static function displaySaveListe() {
+		if (!AUTH::isConnect()) {
+			Outils::goTo('compte', "Veuillez vous connecter.");
+		}
+
+		$save_listes = Save_liste::select('no_liste')
+					->where('user_id', '=', $_SESSION['wishlist_userid'])
+					->get();
+
+		if (sizeof($save_listes) == 0) {
+			echo '<h4>Aucunes listes enregistré pour le moment</h4>';
+		}
+
+		foreach ($save_listes as $save_liste) {
+			$liste = Liste::where('no', '=', $save_liste->no_liste)->first();
+			echo '<a href="liste/'. $liste->token_publique . '"><h4>' . $liste->titre .'</h4></a>';
+
+			if ($liste->user) echo '<p>Createur : ' . $liste->user->email . '</p>';
+			
+			if (Outils::listeExpiration($liste->expiration)) echo "Etat : expiré";
+			else echo "Etat : en cours...";
 		}
 	}
 

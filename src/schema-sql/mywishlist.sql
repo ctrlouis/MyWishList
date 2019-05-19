@@ -63,6 +63,12 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 (2,	2,	'Liste de mariage d\'Alice et Bob',	'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)',	'2018-06-30',	'tokenprivate2', 'tokenpublic2');
 
 
+DROP TABLE IF EXISTS `save_liste`;
+CREATE TABLE `save_liste` (
+	`user_id` int(11) NOT NULL,
+  `no_liste` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 DROP TABLE IF EXISTS `cagnotte`;
 CREATE TABLE IF NOT EXISTS `cagnotte` (
