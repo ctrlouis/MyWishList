@@ -89,9 +89,9 @@ class Outils
 		$arbo = SELF::getArbo();
         echo '
 				</div>
-			<script src="' .$arbo. 'src/js/jquery.js"></script>
+			<script src="' .$arbo. 'src/js/jquery.min.js"></script>
 	    	<script src="' .$arbo. 'src/js/what-input.js"></script>
-	    	<script src="' .$arbo. 'src/js/foundation.js"></script>
+	    	<script src="' .$arbo. 'src/js/foundation.min.js"></script>
 	    	<script src="' .$arbo. 'src/js/app.js"></script>
 		</body></html>';
     }
