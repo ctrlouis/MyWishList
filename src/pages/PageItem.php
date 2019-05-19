@@ -2,6 +2,7 @@
 
 namespace wishlist\pages;
 
+use wishlist\divers\Formulaire as FORM;
 use wishlist\divers\Outils;
 
 use wishlist\fonction\CreateurItem as CI;
@@ -96,7 +97,7 @@ class PageItem {
 			GI::imageDeleteForm($item->nom);
 			//Si l'item n'est pas reserver
 			if($item->reservation == 0){
-				CI::itemEditForm($item->nom);
+				FORM::itemEdit($item->nom);
 				CI::itemDeleteForm($item->nom);
 				if($item->cagnotte == 0)
 					CG::boutonCreate($item->nom);

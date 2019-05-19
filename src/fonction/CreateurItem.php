@@ -79,34 +79,6 @@ class CreateurItem {
 		Outils::goTo(Outils::getArbo(). 'liste/' . $_SESSION['wishlist_liste_token'], 'Retour a la liste');
 	}
 
-	public static function itemEditForm($item_name) {
-		echo '
-			<form action="../edit-item/' . $item_name . '" method="post">
-
-				<div class= "row align-center medium-5 large-3">
-					<input type="text" name="nom" placeholder="Nom"/>
-				</div>
-				<div class="row align-center medium-5 large-3">
-					<input type="text" name="descr" placeholder="Description"/>
-				</div>
-				<div class= "row align-center medium-5 large-3">
-					<input type="number" name="tarif" placeholder="Prix en €"/>
-				</div>
-				<div class="row align-center medium-5 large-3">
-					<input type="text" name="url" placeholder="url"/>
-				</div>
-				<div class="row align-center medium-5 large-3">
-					<button type="submit" class="button">
-						<div class ="row">
-							<div class="columns small-2 fi-pencil"></div>
-							<div class="columns">Modifier</div>
-						</div>
-					</button>
-				</div>
-
-			</form>';
-	}
-
 	public static function itemEdit($item) {
 		if ($_POST['nom'] && $_POST['nom'] != '') $item->nom = strip_tags($_POST['nom']);
 		if ($_POST['descr'] && $_POST['descr'] != '') $item->descr = strip_tags($_POST['descr']);
