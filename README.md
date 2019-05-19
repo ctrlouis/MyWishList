@@ -39,32 +39,32 @@ git clone git@github.com:ctrlouis/MyWishList.git && cd MyWishList && composer in
 
 ## Taches
 ### Principales
-- [X] 1. Afficher une liste de souhaits
-- [X] 2. Afficher un item d'une liste
-- [X] 3. Réserver un item
-- [X] 4. Ajouter un message avec sa réservation
-- [ ] 5. Ajouter un message sur une liste
-- [X] 6. Créer une liste
-- [X] 7. Modifier les informations générales d'une de ses listes
-- [X] 8. Ajouter des items
-- [X] 9. Modifier un item
-- [X] 10. Supprimer un item
-- [X] 11. Rajouter une image à un item
-- [X] 12. Modifier une image d'un item
-- [X] 13 Supprimer une image d'un item
-- [X] 14. Partager une liste
-- [ ] 15. Consulter les réservation d'une de ses listes avant échéance
-- [ ] 16. Consulter les réservations et messages d'une de ses listes après échéance
+- [X] 1. Afficher une liste de souhaits (Bour Victor)
+- [X] 2. Afficher un item d'une liste (Bertschy Louis)
+- [X] 3. Réserver un item (Bertschy Louis)
+- [X] 4. Ajouter un message avec sa réservation (Bertschy Louis)
+- [X] 5. Ajouter un message sur une liste (Bour Victor)
+- [X] 6. Créer une liste (Bour Victor)
+- [X] 7. Modifier les informations générales d'une de ses listes (Bour Victor)
+- [X] 8. Ajouter des items (Bertschy Louis)
+- [X] 9. Modifier un item (Bertschy Louis)
+- [X] 10. Supprimer un item (Bertschy Louis)
+- [X] 11. Rajouter une image à un item (Bertschy Louis)
+- [X] 12. Modifier une image d'un item (Bertschy Louis)
+- [X] 13 Supprimer une image d'un item (Bertschy Louis)
+- [X] 14. Partager une liste (Bour Victor)
+- [X] 15. Consulter les réservation d'une de ses listes avant échéance (Bour Victor)
+- [X] 16. Consulter les réservations et messages d'une de ses listes après échéance (Bour Victor)
 ### Extensions
-- [X] 17. Créer un compte
-- [X] 18. S'authentifier
-- [ ] 19. Modifier son compte
-- [ ] 20. Rendre une liste publique
-- [ ] 21. Afficher les listes de souhaits publiques
-- [ ] 22. Créer une cagnotte sur un item
-- [ ] 23. Participer à une cagnotte
-- [ ] 24. Uploader une image
-- [X] 25. Créer un compte participant
+- [X] 17. Créer un compte (Bertschy Louis)
+- [X] 18. S'authentifier (Bertschy Louis)
+- [X] 19. Modifier son compte (Bertschy Louis)
+- [X] 20. Rendre une liste publique (Bour Victor)
+- [X] 21. Afficher les listes de souhaits publiques (Bour Victor)
+- [X] 22. Créer une cagnotte sur un item (Bour Victor)
+- [X] 23. Participer à une cagnotte (Bour Victor)
+- [X] 24. Uploader une image (Bertschy Louis)
+- [X] 25. Créer un compte participant (Bertschy Louis)
 - [ ] 26. Afficher la liste des créateurs
-- [ ] 27. Supprimer son compte
-- [X] 28 Joindre des listes à son compte
+- [X] 27. Supprimer son compte (Bertschy Louis)
+- [X] 28 Joindre des listes à son compte (Bour Victor)
