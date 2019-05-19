@@ -403,16 +403,19 @@ class FctnListe {
 				<p><input class="button" type="submit" name="Poster" value="Poster"></p>
 			</form></br>';
 
-		//Si le tokenprivé est renseigner, on peut modifier la liste et ajouter des items
-		if($liste->token_private == $_SESSION['wishlist_liste_token']) {
-			echo 'Modification de la liste</br>
-				<form action="../edit-liste/'. $token .'" method="post">
-					<p>Titre : <input type="text" name="titre" /></p>
-					<p>Description : <br/><input type="text" name="description" /></p>
-					<p><input class="button" type="submit" name="Modifier" value="Modifier"></p>
-				</form></br>
-				Ajout d un item dans votre liste';
-			Formulaire::ajoutItem ();
+			//Si le tokenprivé est renseigner, on peut modifier la liste et ajouter des items
+			if($liste->token_private == $_SESSION['wishlist_liste_token']) {
+				//Aucun ajout d'item ou de modification de liste si elle est expirer
+				if(!Outils::listeExpiration($liste->expiration)){
+					echo 'Modification de la liste</br>
+						<form action="../edit-liste/'. $token .'" method="post">
+							<p>Titre : <input type="text" name="titre" /></p>
+							<p>Description : <br/><input type="text" name="description" /></p>
+							<p><input class="button" type="submit" name="Modifier" value="Modifier"></p>
+						</form></br>
+						Ajout d un item dans votre liste';
+					Formulaire::ajoutItem();
+				}
 
 			//Partage de la liste via le token
 			echo '<h3>Token de partage<h3>
