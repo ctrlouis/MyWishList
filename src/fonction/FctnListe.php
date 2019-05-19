@@ -151,23 +151,9 @@ class FctnListe {
 	public static function displayAll() {
 		//Lorsqu'on utilise la recherche de liste
 		if(isset($_GET["token"])) {
-			//Affiche l'ensemble des items pour chaque liste
-			$liste = Liste::where('token_publique', 'like', $_GET["token"])->first();
-			if($liste) {
-				$_SESSION['wishlist_liste_token'] = $liste->token_publique;
-				$itemlist=$liste->item;
-				echo "<h1>Nom de la liste : " . $liste->titre . "</h1>"; // HTML CODE titre1
-				echo "<ul>";
-				foreach($itemlist as $item) {
-					SELF::affichageItemListe($item);
-				}
-				SELF::affichageMsgListe($liste);
-				echo "</ul>";
-			}
-			else {
-				echo "Erreur liste introuvable !";
-			}
-		} else {
+			SELF::liste($_GET["token"]);
+		}
+		else {
 			$_SESSION['wishlist_liste_token'] = null;
 			$lists=Liste::where('published', 'like', '1')->orderBy('expiration', 'asc')->whereDate('expiration', '>', date('Y-m-d'))->get();
 			echo "<h1>Listes de souhaits</h1>"; // HTML CODE titre
