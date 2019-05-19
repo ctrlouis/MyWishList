@@ -2,16 +2,18 @@
 
 namespace wishlist\fonction;
 
-use wishlist\fonction\Authentification as AUTH;
-use wishlist\modele\Item;
-use wishlist\modele\User;
-use wishlist\modele\Save_liste;
-use wishlist\modele\Liste;
-use wishlist\modele\Message;
-use wishlist\fonction\CreateurItem as CI;
-use wishlist\modele\Reservation;
 use wishlist\divers\Outils;
 use wishlist\divers\Formulaire;
+
+use wishlist\fonction\Authentification as AUTH;
+use wishlist\fonction\CreateurItem as CI;
+
+use wishlist\modele\Item;
+use wishlist\modele\Liste;
+use wishlist\modele\Message;
+use wishlist\modele\Reservation;
+use wishlist\modele\Save_liste;
+use wishlist\modele\User;
 
 
 class FctnListe {
@@ -127,7 +129,7 @@ class FctnListe {
 		$liste->titre = htmlspecialchars($_POST['titre']);
 		$liste->description = htmlspecialchars($_POST['description']);
 		$liste->save();
-  }
+	}
 
 
 	public static function ajouterMessage($token)
