@@ -67,6 +67,14 @@ $app->get('/myliste', function() {
 $app->get('/saveliste', function() {
 	FL::displaySaveListe();
 });
+// Enregistre une liste d'un autre utilisateur
+$app->post('/saveliste-add', function() {
+	FL::saveListe();
+});
+// Supprime une liste enregistré par l'utilisateur
+$app->post('/saveliste-remove/:token', function($token) {
+	FL::unsaveListe($token);
+});
 // Supprime un item de la liste (l'item ou juste effacer de la liste ?)
 $app->get('/liste-remove/:item', function($item) {
 	FL::delItem($item);

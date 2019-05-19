@@ -213,6 +213,14 @@ class FctnListe {
 			Outils::goTo('compte', "Veuillez vous connecter.");
 		}
 
+		Alerte::getErrorAlert('token_empty', "Veuillez insérer un token publique");
+		Alerte::getWarningAlert('own_token', "Vous ne pouvez pas enregistrer vos propres listes");
+		Alerte::getErrorAlert('token_error', "Aucune liste correspondant");
+		Alerte::getWarningAlert('already_save', "Vous ne pouvez pas enregistrer une liste plusieurs fois");
+		Alerte::getSuccesAlert('liste_save', "Liste enregistré");
+		Alerte::getWarningAlert('liste_unsave', "Liste oublié");
+		SELF::saveListeForm();
+
 		$save_listes = Save_liste::select('no_liste')
 					->where('user_id', '=', $_SESSION['wishlist_userid'])
 					->get();
@@ -229,7 +237,97 @@ class FctnListe {
 
 			if (Outils::listeExpiration($liste->expiration)) echo "Etat : expiré";
 			else echo "Etat : en cours...";
+
+			SELF::unsaveListeButton($liste->token_publique);
 		}
+	}
+
+	public static function saveListeForm() {
+		echo '
+		<form action="saveliste-add" method="post">
+			<p><input type="text" name="token" placeholder="Token publique*" required/></p>
+			<p><input type="submit" class="button" name="Ajouter item" value="Enregistrer liste"></p>
+		</form>';
+	}
+
+	public static function saveListe() {
+		if (!Outils::checkSession(array('wishlist_userid'))) {
+			Outils::goTo('index.php', 'Redirection en cours..');
+		}
+		if (!Outils::checkPost(array('token'))) {
+			Alerte::set('token_empty');
+			Outils::goTo('saveliste', 'Redirection en cours..');
+			exit();
+		}
+
+		$liste = Liste::where('user_id', '=', $_SESSION['wishlist_userid'])
+					->where('token_publique', '=', $_POST['token'])
+					->first();
+		if ($liste) {
+			Alerte::set('own_token');
+			Outils::goTo('saveliste', 'Redirection en cours..');
+			exit();
+		}
+
+		$liste = Liste::where('token_publique', '=', $_POST['token'])
+					->first();
+		if (!$liste) {
+			Alerte::set('token_error');
+			Outils::goTo('saveliste', 'Redirection en cours..');
+			exit();
+		}
+
+		$save_liste = Save_liste::where('user_id', '=', $_SESSION['wishlist_userid'])
+					->where('no_liste', '=', $liste->no)
+					->first();
+		if ($save_liste) {
+			Alerte::set('already_save');
+			Outils::goTo('saveliste', 'Redirection en cours..');
+			exit();
+		}
+
+		$save_liste = new Save_liste();
+		$save_liste->user_id = $_SESSION['wishlist_userid'];
+		$save_liste->no_liste = $liste->no;
+		$save_liste->save();
+
+		Alerte::set('liste_save');
+		Outils::goTo('saveliste', 'Redirection en cours..');
+	}
+
+	public static function unsaveListeButton($token) {
+		echo '
+		<form action="saveliste-remove/' . $token . '" method="POST">
+				<button type="submit" class="alert button">
+					<div class ="row">
+						<div class="columns small-2 fi-trash"></div>
+						<div class="columns">Oublier la liste</div>
+					</div>
+				</button>
+		</form>';
+	}
+
+	public static function unsaveListe($token) {
+		if (!Outils::checkSession(array('wishlist_userid'))) {
+			Outils::goTo('../index.php', 'Redirection en cours..');
+		}
+
+		$liste = Liste::select('no')->where('token_publique', '=', $token)->first();
+		if (!$liste) {
+			Outils::goTo('../index.php', "Redirection en cours..");
+		}
+
+		$save_liste = Save_liste::where('user_id', '=', $_SESSION['wishlist_userid'])
+					->where('no_liste', '=', $liste->no)
+					->first();
+
+		if (!$save_liste) {
+			Outils::goTo('../index.php', "Redirection en cours..");
+		}
+
+		$save_liste->delete();
+		Alerte::set('liste_unsave');
+		Outils::goTo('../saveliste', 'Redirection en cours..');
 	}
 
 	public static function delItem($id) {
