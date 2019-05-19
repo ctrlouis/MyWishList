@@ -29,15 +29,13 @@ class FctnListe {
 		// stop si une liste avec le même nom existe deja
 		$test = Liste::where('titre', 'like', $_POST['titre'])->first();
     	if ($test) {
-        	echo 'Une liste avec le même nom existe déjà </br>
-								<a href="add-liste-form">Retour vers la creation de liste</a>'; // alerte
-			exit();
+				Outils::goTo(Outils::getArbo().'add-liste-form', 'Une liste avec le même nom existe déjà !', 2);
+				exit(); //Evite de crée une nouvelle liste
     	}
 
 		if(Outils::listeExpiration($_POST['expiration']))
 		{
-			echo 'Date invalide ! </br>
-						<a href="add-liste-form">Retour vers la creation de liste</a>';
+			Outils::goTo(Outils::getArbo().'add-liste-form', 'Date saisie invalide', 2);
 		}
 		else {
 			// creation d'une liste
@@ -51,7 +49,7 @@ class FctnListe {
 			$liste->token_publique = Outils::generateToken();
 			$liste->save();
 			$_SESSION['wishlist_liste_token'] = $liste->token_private;
-			echo '<a href ="liste/' . $liste->token_private . '">URL de la liste : </a>';
+			Outils::goTo('liste/'. $liste->token_private, 'Redirection vers la liste crée', 1);
 		}
 	}
 
@@ -64,13 +62,13 @@ class FctnListe {
 		{
 			$liste->published = false;
 			$liste->save();
-			Outils::goTo(Outils::getArbo(). '/liste/'. $token, 'La liste a été rendu privée.', 2);
+			Outils::goTo('../liste/'. $token, 'La liste a été rendu privée.', 2);
 		}
 		else
 		{
 			$liste->published = true;
 			$liste->save();
-			Outils::goTo(Outils::getArbo(). '/liste/'. $token, 'La liste a été rendu publique.', 2);
+			Outils::goTo('../liste/'. $token, 'La liste a été rendu publique.', 2);
 		}
 
 	}
@@ -138,8 +136,7 @@ class FctnListe {
 		$message->no_liste=strip_tags($liste->no);
 		$message->msg=strip_tags($_POST['message']);
 		$message->save();
-		echo 'Message ajouté à la liste';
-		echo '<br/><a href="../liste/'. $_SESSION['wishlist_liste_token'] .'">Retourner sur la liste</a>';
+		Outils::goTo('../liste/'. $token, 'Message ajouté à la liste', 1);
 	}
 
 
@@ -428,7 +425,7 @@ class FctnListe {
 	}
 
 	public static function returnBouton() {
-		echo '<a href="'. Outils::getArbo().'liste/' . $_SESSION['wishlist_liste_token'] . '" class="button">Retour à la liste</a>';
+		echo '<a href="../liste/' . $_SESSION['wishlist_liste_token'] . '" class="button">Retour à la liste</a>';
 	}
 
 	public static function boutonPublication(){
