@@ -32,8 +32,24 @@ class Outils
 		'<div data-sticky-container>
   			<div class="title-bar" data-sticky data-options="marginTop:0;" style="width:100%">
 		    	<div class="title-bar-left">
-					<a class="item" href="' . $arbo .'"><i class="fi-home"></i> Accueil</a>
-				</div>
+					<a class="item" href="' . $arbo .'"><i class="fi-home"></i> Accueil</a>';
+
+		if (!AUTH::isConnect()) {
+			echo '<a href="' . $arbo .'auth-connexion">Connexion</a>';
+		} else {
+			echo '
+				<ul class="dropdown menu" data-dropdown-menu>
+					<li>
+						<a href="">Liste</i></strong></a>
+						<ul class="menu">
+							<li><a href="' . $arbo .'myliste">Mes listes</a></li>
+							<li><a href="' . $arbo .'saveliste">Listes enregistrée</a></li>
+						</ul>
+					</li>
+				</ul>';
+		}
+
+		echo 	'</div>
 		        <div class="title-bar-center">
 		          <span class="title-bar-title">MyWishList</span>
 		        </div>
