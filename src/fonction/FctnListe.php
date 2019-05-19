@@ -29,14 +29,16 @@ class FctnListe {
 		// stop si une liste avec le même nom existe deja
 		$test = Liste::where('titre', 'like', $_POST['titre'])->first();
     	if ($test) {
-				Outils::goTo(Outils::getArbo().'add-liste-form', 'Une liste avec le même nom existe déjà !', 2);
+				Alerte::set('existing_list');
+				Outils::goTo(Outils::getArbo().'add-liste-form', 'Une liste avec le même nom existe déjà !');
 				exit(); //Evite de crée une nouvelle liste
     	}
 
 		//Verifie que la date saisie soit pas expirer et qu'elle est un format valide (ex : 2019-13-052, ne sera pas accepter)
 		if(Outils::listeExpiration($_POST['expiration']) || preg_match('#^([0-9]{4})([/-])([0-9]{2})\2([0-9]{2})$#', $_POST['expiration'], $m) == 1 && checkdate($m[4], $m[3], $m[1]))
 		{
-			Outils::goTo(Outils::getArbo().'add-liste-form', 'Date saisie invalide', 2);
+			Alerte::set('date_fault');
+			Outils::goTo(Outils::getArbo().'add-liste-form', 'Date saisie invalide');
 		}
 		else {
 			// creation d'une liste
@@ -153,7 +155,6 @@ class FctnListe {
 		else {
 			$_SESSION['wishlist_liste_token'] = null;
 			$listes=Liste::where('published', 'like', '1')
-				->where('user_id', '!=', $_SESSION['wishlist_userid'])
 				->orderBy('expiration', 'asc')
 				->whereDate('expiration', '>', date('Y-m-d'))
 				->get();
@@ -325,7 +326,8 @@ class FctnListe {
 		if (!$liste) {
 			$liste = Liste::where('token_publique', 'like', $token)->first();
 			if (!$liste) {
-				echo 'Aucune liste trouvée'; // alerte
+				Alerte::set('list_missing');
+				Outils::goTo('../index.php', 'Aucune liste trouvée');
 				exit();
 			} else {
 				$_SESSION['wishlist_liste_token'] = $liste->token_publique;
