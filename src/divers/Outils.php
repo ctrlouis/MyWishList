@@ -36,7 +36,14 @@ class Outils
 					<a class="item" href="' . $arbo .'"><i class="fi-home"></i> Accueil</a>';
 
 		if (!AUTH::isConnect()) {
-			echo '<a href="' . $arbo .'auth-connexion"> Liste</a>';
+			echo '<ul class="dropdown menu" data-dropdown-menu>
+					<li>
+						<a href="">Liste</i></strong></a>
+						<ul class="menu">
+							<li><a href="' . $arbo .'add-liste-form">Créer une liste</a></li>
+						</ul>
+					</li>
+				</ul>';
 		} else {
 			echo '
 				<ul class="dropdown menu" data-dropdown-menu>
@@ -45,6 +52,7 @@ class Outils
 						<ul class="menu">
 							<li><a href="' . $arbo .'myliste">Mes listes</a></li>
 							<li><a href="' . $arbo .'saveliste">Listes enregistrée</a></li>
+							<li><a href="' . $arbo .'add-liste-form">Créer une liste</a></li>
 						</ul>
 					</li>
 				</ul>';
